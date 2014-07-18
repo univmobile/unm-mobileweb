@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>unm-webmobile-app</artifactId>
+	<artifactId>unm-mobileweb-app</artifactId>
 	<packaging>war</packaging>
 	
 	<parent>
@@ -13,7 +13,7 @@
 	</parent>
 
 	<build>
-		<finalName>unm-webmobile-app</finalName>
+		<finalName>unm-mobileweb-app</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -51,9 +51,9 @@
 		</plugins>
 	</build>
 
-	<name>unm-webmobile-app</name>
+	<name>unm-mobileweb-app</name>
 	<description>
-        J2EE webapp for UnivMobile web mobile.
+        J2EE webapp for UnivMobile mobile web app.
     </description>
 	<url>
         http://univmobile.vswip.com/nexus/content/sites/pub/${project.artifactId}/${project.version}
@@ -61,18 +61,18 @@
 
 	<scm>
 		<connection>
-            scm:git:https://github.com/univmobile/unm-webmobile.git
+            scm:git:https://github.com/univmobile/unm-mobileweb.git
         </connection>
 		<developerConnection>
-            scm:git:https://github.com/univmobile/unm-webmobile.git
+            scm:git:https://github.com/univmobile/unm-mobileweb.git
         </developerConnection>
 		<url>
-			https://github.com/univmobile/unm-webmobile/tree/master/unm-webmobile-app
+			https://github.com/univmobile/unm-mobileweb/tree/master/unm-mobileweb-app
         </url>
 	</scm>
 	<ciManagement>
 		<system>jenkins</system>
-		<url>http://univmobile.vswip.com/job/unm-webmobile-app</url>
+		<url>http://univmobile.vswip.com/job/unm-mobileweb-app</url>
 	</ciManagement>
 	<licenses>
 		<license>

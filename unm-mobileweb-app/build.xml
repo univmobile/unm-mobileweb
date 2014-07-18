@@ -1,4 +1,4 @@
-<project name="unm-webmobile-app" default="deploy-local">
+<project name="unm-mobileweb-app" default="deploy-local">
 
 	<exec executable="hostname" outputproperty="hostname"/>
 	
@@ -31,7 +31,7 @@
 	<taskdef name="tomcat-manager-reload" classname="org.apache.catalina.ant.ReloadTask" classpathref="catalina-ant.classpath" />
 
 	<!-- ${contextRoot}: e.g. "/", "/toto", etc. -->
-	<property name="contextRoot" value="/unm-webmobile" />
+	<property name="contextRoot" value="/unm-mobileweb" />
 
 	<target name="list" description="List installed applications on servlet container">
 
@@ -43,7 +43,7 @@
 
 	<target name="deploy-local" description="Deploy the webapp to the local Tomcat instance">
 
-		<property name="war.file" location="target/unm-webmobile-app.war" />
+		<property name="war.file" location="target/unm-mobileweb-app.war" />
 
 		<tomcat-manager-undeploy path="${contextRoot}" url="${tomcatManager.url}" username="${tomcatManager.username}" password="${tomcatManager.password}" />
 

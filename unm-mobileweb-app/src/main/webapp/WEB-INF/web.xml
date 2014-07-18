@@ -7,7 +7,7 @@
 
 	<servlet>
 		<servlet-name>UnivMobileServlet</servlet-name>
-		<servlet-class>fr.univmobile.webmobile.UnivMobileServlet</servlet-class>
+		<servlet-class>fr.univmobile.mobileweb.UnivMobileServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
