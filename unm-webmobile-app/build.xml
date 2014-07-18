@@ -1,0 +1,54 @@
+<project name="unm-webmobile-app" default="deploy-local">
+
+	<exec executable="hostname" outputproperty="hostname"/>
+	
+	<property name="propertyFile" location="src/ant/${user.name}.${hostname}.properties"/>
+
+	<echo>Reading properties from: ${propertyFile}</echo>
+	
+	<!-- Property file: e.g. "/src/ant/dandriana.Davids-MacBook-Pro.local.properties" -->
+	<property file="${propertyFile}" />
+
+	<fail message="tomcatManager.password is not set." unless="tomcatManager.password"/>
+		
+	<path id="catalina-ant.classpath">
+		<fileset dir="${catalina.home}/lib/">
+			<include name="catalina-ant.jar" />
+			<include name="tomcat-coyote.jar" />
+			<include name="tomcat-util.jar" />
+		</fileset>
+		<fileset dir="${catalina.home}/bin/">
+			<include name="tomcat-juli.jar" />
+		</fileset>
+	</path>
+
+	<taskdef name="tomcat-manager-list" classname="org.apache.catalina.ant.ListTask" classpathref="catalina-ant.classpath" />
+
+	<taskdef name="tomcat-manager-deploy" classname="org.apache.catalina.ant.DeployTask" classpathref="catalina-ant.classpath" />
+
+	<taskdef name="tomcat-manager-undeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="catalina-ant.classpath" />
+
+	<taskdef name="tomcat-manager-reload" classname="org.apache.catalina.ant.ReloadTask" classpathref="catalina-ant.classpath" />
+
+	<!-- ${contextRoot}: e.g. "/", "/toto", etc. -->
+	<property name="contextRoot" value="/unm-webmobile" />
+
+	<target name="list" description="List installed applications on servlet container">
+
+		<echo>catalina.home: ${catalina.home}</echo>
+
+		<tomcat-manager-list url="${tomcatManager.url}" username="${tomcatManager.username}" password="${tomcatManager.password}" />
+
+	</target>
+
+	<target name="deploy-local" description="Deploy the webapp to the local Tomcat instance">
+
+		<property name="war.file" location="target/unm-webmobile-app.war" />
+
+		<tomcat-manager-undeploy path="${contextRoot}" url="${tomcatManager.url}" username="${tomcatManager.username}" password="${tomcatManager.password}" />
+
+		<tomcat-manager-deploy path="${contextRoot}" url="${tomcatManager.url}" localWar="${war.file}" username="${tomcatManager.username}" password="${tomcatManager.password}" />
+
+	</target>
+
+</project>
