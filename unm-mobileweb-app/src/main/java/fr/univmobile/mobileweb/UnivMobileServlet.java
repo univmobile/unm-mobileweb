@@ -50,8 +50,11 @@ public class UnivMobileServlet extends HttpServlet {
 		String baseURL = servletConfig.getInitParameter("baseURL");
 
 		if (baseURL == null) {
-			throw new ServletException(
-					"Cannot find servlet init parameter: baseURL");
+
+			System.err.println( //
+					"UnivMobileServlet.init(): Cannot find servlet init parameter: baseURL -- Using servletContext.contextPath.");
+
+			baseURL = servletContext.getContextPath();
 		}
 
 		baseURL = baseURL.trim();

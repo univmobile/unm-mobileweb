@@ -147,7 +147,9 @@
 		<profile>
 			<id>dandriana</id>
 			<properties>
+				<!--  
 				<baseURL>http://localhost:8080/unm-mobileweb/</baseURL>
+				-->
 			</properties>
 		</profile>
 	</profiles>
