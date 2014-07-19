@@ -14,8 +14,11 @@ import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import fr.univmobile.it.commons.EnvironmentUtils;
 
@@ -46,6 +49,10 @@ public class SimpleAppiumTest {
 		try {
 
 			driver.get("http://localhost:8380/unm-mobileweb/");
+
+			new WebDriverWait(driver, 60).until(ExpectedConditions
+					.presenceOfElementLocated(By.id( //
+							"div-selectedUniversity")));
 
 			final File file = // ((TakesScreenshot) augmentedDriver)
 			driver.getScreenshotAs(OutputType.FILE);
