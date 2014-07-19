@@ -57,7 +57,7 @@ public class SimpleAppiumTest {
 
 			final String pageSource = driver.getPageSource();
 
-			FileUtils.write(new File("target", "pageSource.xml"), //
+			FileUtils.write(new File("target", "pageSource.html"), //
 					pageSource, UTF_8);
 
 		} finally {
