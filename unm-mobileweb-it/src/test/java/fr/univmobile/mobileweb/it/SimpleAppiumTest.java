@@ -4,6 +4,7 @@ import static fr.univmobile.it.commons.AppiumCapabilityType.DEVICE;
 import static fr.univmobile.it.commons.AppiumCapabilityType.DEVICE_NAME;
 import static fr.univmobile.it.commons.AppiumCapabilityType.PLATFORM_NAME;
 import static fr.univmobile.it.commons.AppiumCapabilityType.PLATFORM_VERSION;
+import static org.apache.commons.lang3.CharEncoding.UTF_8;
 import static org.openqa.selenium.remote.CapabilityType.BROWSER_NAME;
 import static org.openqa.selenium.remote.CapabilityType.PLATFORM;
 import io.appium.java_client.AppiumDriver;
@@ -12,7 +13,6 @@ import java.io.File;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -22,7 +22,6 @@ import fr.univmobile.it.commons.EnvironmentUtils;
 public class SimpleAppiumTest {
 
 	@Test
-	@Ignore
 	public void testAppiumSimple() throws Exception {
 
 		final DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -46,15 +45,20 @@ public class SimpleAppiumTest {
 				"http://localhost:4723/wd/hub"), capabilities);
 		try {
 
-			driver.get("http://localhost:8080/unm-mobileweb/");
+			driver.get("http://localhost:8380/unm-mobileweb/");
 
 			final File file = // ((TakesScreenshot) augmentedDriver)
 			driver.getScreenshotAs(OutputType.FILE);
 
-			FileUtils
-					.copyFile(file, new File("target", "testAppiumSimple.png"));
+			FileUtils.copyFile( //
+					file, new File("target", "testAppiumSimple.png"));
 
-			System.out.println(file.getCanonicalPath());
+			file.delete();
+
+			final String pageSource = driver.getPageSource();
+
+			FileUtils.write(new File("target", "pageSource.xml"), //
+					pageSource, UTF_8);
 
 		} finally {
 			driver.quit();
