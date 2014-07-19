@@ -53,7 +53,8 @@ public class UnivMobileServlet extends HttpServlet {
 		if (isBlank(baseURL)) {
 
 			System.err.println( //
-					"UnivMobileServlet.init(): Cannot find servlet init parameter: baseURL -- Using servletContext.contextPath.");
+					"UnivMobileServlet.init(): Cannot find servlet init parameter: baseURL"
+							+ " -- Using servletContext.contextPath instead.");
 
 			baseURL = servletContext.getContextPath();
 		}
