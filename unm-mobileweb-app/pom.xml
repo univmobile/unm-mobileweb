@@ -136,7 +136,7 @@
 	</repositories>
 	
 	<properties>
-		<appContextRoot>/${finalName}</appContextRoot>
+		<appContextRoot>/${build.finalName}</appContextRoot>
 		<BUILD_NUMBER>??</BUILD_NUMBER>
 		<BUILD_ID>????/??/?? ??:??:??</BUILD_ID>
 		<BUILD_DISPLAY_NAME>#??</BUILD_DISPLAY_NAME>
@@ -147,9 +147,7 @@
 		<profile>
 			<id>dandriana</id>
 			<properties>
-				<!--  
 				<baseURL>http://localhost:8080/unm-mobileweb/</baseURL>
-				-->
 			</properties>
 		</profile>
 	</profiles>
