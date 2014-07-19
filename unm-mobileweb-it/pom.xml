@@ -159,7 +159,7 @@
 			<properties>
 				<cargo.containerId>tomcat7x</cargo.containerId>
 				<cargo.home>
-					/var/lib/tomcat7/
+					/opt/apache-tomcat-7.0.39
 				</cargo.home>
 			</properties>
 		</profile>
