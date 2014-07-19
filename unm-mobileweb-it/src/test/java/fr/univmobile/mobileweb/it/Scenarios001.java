@@ -15,7 +15,7 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 	@Test
 	public void sc001() throws Exception {
 
-		get("http://localhost:8080/unm-mobileweb/");
+		get("http://localhost:8380/unm-mobileweb/");
 
 		waitForElementById(60, "div-selectedUniversity");
 
