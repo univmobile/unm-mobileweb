@@ -13,12 +13,11 @@
 	</parent>
 
 	<build>
-		<finalName>unm-mobileweb-app</finalName>
+		<finalName>unm-mobileweb</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.4</version>
 				<configuration>
 					<manifest>
 						<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -27,9 +26,14 @@
 						<manifestEntries>
 							<Specification-Title>${project.name}</Specification-Title>
 							<Specification-Version>${project.version}</Specification-Version>
+							<!--  
 							<Implementation-Version>${BUILD_TAG}</Implementation-Version>
+							-->
+							<Buildinfo-BuildNumber>${BUILD_NUMBER}</Buildinfo-BuildNumber>
+							<Buildinfo-BuildDisplayName>${BUILD_DISPLAY_NAME}</Buildinfo-BuildDisplayName>
+							<Buildinfo-BuildId>${BUILD_ID}</Buildinfo-BuildId>
 							<Buildinfo-Build>${JOB_NAME}-${BUILD_NUMBER}</Buildinfo-Build>
-							<Buildinfo-Date>${BUILD_ID}</Buildinfo-Date>
+							<Buildinfo-Rev>${GIT_COMMIT}</Buildinfo-Rev>
 						</manifestEntries>
 					</archive>
 					<webResources>
@@ -37,14 +41,27 @@
 							<directory>src/main/webapp/WEB-INF</directory>
 							<targetPath>WEB-INF</targetPath>
 							<filtering>false</filtering>
+							<excludes>
+								<exclude>web.xml</exclude>
+							</excludes>
 						</webResource>
-                        <!--  
+						<webResource>
+							<directory>src/main/webapp/WEB-INF</directory>
+							<targetPath>WEB-INF</targetPath>
+							<filtering>true</filtering>
+							<includes>
+								<include>web.xml</include>
+							</includes>
+						</webResource>
+						<!-- 
+				        <warSourceDirectory>src/main/webapp</warSourceDirectory>
+						<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+        				-->
                         <webResource>
                             <directory>src/main/webapp/META-INF</directory>
                             <targetPath>META-INF</targetPath>
                             <filtering>true</filtering>
                         </webResource>
-                        -->
 					</webResources>
 				</configuration>
 			</plugin>
@@ -117,5 +134,22 @@
 			</snapshots>
 		</repository>
 	</repositories>
+	
+	<properties>
+		<appContextRoot>/${finalName}</appContextRoot>
+		<BUILD_NUMBER>??</BUILD_NUMBER>
+		<BUILD_ID>????/??/?? ??:??:??</BUILD_ID>
+		<BUILD_DISPLAY_NAME>#??</BUILD_DISPLAY_NAME>
+		<GIT_COMMIT>????????????????????????????????????????</GIT_COMMIT>
+	</properties>
+	
+	<profiles>
+		<profile>
+			<id>dandriana</id>
+			<properties>
+				<baseURL>http://localhost:8080/unm-mobileweb/</baseURL>
+			</properties>
+		</profile>
+	</profiles>
 	
 </project>

@@ -1,0 +1,4 @@
+baseURL: ${baseURL}
+
+selectedUniversityId: up
+selectedUniversityLabel: Université de Poitiers      

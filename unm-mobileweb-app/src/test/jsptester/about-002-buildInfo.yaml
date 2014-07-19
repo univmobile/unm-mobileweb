@@ -1,0 +1,16 @@
+baseURL: ${baseURL}
+
+#selectedUniversityId: up
+
+buildInfo:
+  type: fr.univmobile.model.BuildInfo
+  value:
+    buildDisplayName: "#34"
+    buildId: 2014/07/16 15:45
+    gitCommitId: 6fa7922938635ec7dab6f894e7eaea4d1689ee70
+      
+lastDataRefresh:
+  type: fr.univmobile.model.DataRefresh
+  value:
+    dayAsString: 16/07/2014
+    timeAsString: "19:29:39"

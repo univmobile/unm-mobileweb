@@ -45,9 +45,12 @@
 
 		<property name="war.file" location="target/unm-mobileweb-app.war" />
 
+<!--
 		<tomcat-manager-undeploy path="${contextRoot}" url="${tomcatManager.url}" username="${tomcatManager.username}" password="${tomcatManager.password}" />
+-->
 
-		<tomcat-manager-deploy path="${contextRoot}" url="${tomcatManager.url}" localWar="${war.file}" username="${tomcatManager.username}" password="${tomcatManager.password}" />
+		<tomcat-manager-deploy path="${contextRoot}" url="${tomcatManager.url}" 
+		update="true" localWar="${war.file}" username="${tomcatManager.username}" password="${tomcatManager.password}" />
 
 	</target>
 
