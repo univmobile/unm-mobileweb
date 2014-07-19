@@ -150,6 +150,12 @@
 				<baseURL>http://localhost:8080/unm-mobileweb/</baseURL>
 			</properties>
 		</profile>
+		<profile>
+			<id>jenkins</id>
+			<properties>
+				<baseURL/>
+			</properties>
+		</profile>
 	</profiles>
 	
 </project>

@@ -1,6 +1,7 @@
 package fr.univmobile.mobileweb;
 
 import static org.apache.commons.lang3.CharEncoding.UTF_8;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.substringBeforeLast;
 
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class UnivMobileServlet extends HttpServlet {
 
 		String baseURL = servletConfig.getInitParameter("baseURL");
 
-		if (baseURL == null) {
+		if (isBlank(baseURL)) {
 
 			System.err.println( //
 					"UnivMobileServlet.init(): Cannot find servlet init parameter: baseURL -- Using servletContext.contextPath.");
