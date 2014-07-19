@@ -158,21 +158,21 @@
 			<id>jenkins</id>
 			<properties>
 				<cargo.containerId>tomcat7x</cargo.containerId>
-				<cargo.home>
-					/opt/apache-tomcat-7.0.39
-				</cargo.home>
+				<!-- <cargo.home>/opt/apache-tomcat-7.0.39</cargo.home> -->
 			</properties>
 		</profile>
 		<profile>
 			<id>unm_ios6a</id>
 			<properties>
 				<ios.platformVersion.shouldBe>6.1</ios.platformVersion.shouldBe>
+				<cargo.home>/usr/local/apache-tomcat-7.0.39/</cargo.home>
 			</properties>
 		</profile>
 		<profile>
-			<id>unm_temp2</id>
+			<id>unm_ios7</id>
 			<properties>
 				<ios.platformVersion.shouldBe>7.1</ios.platformVersion.shouldBe>
+				<cargo.home>/usr/local/apache-tomcat-7.0.39/</cargo.home>
 			</properties>
 		</profile>
 	</profiles>
