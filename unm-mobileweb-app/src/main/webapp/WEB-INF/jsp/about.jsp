@@ -40,7 +40,8 @@ Données récupérées
 </div>
 
 <div id="div-ok">
-<a href="${baseURL}/?univ=${selectedUniversityId}">OK</a>
+<a id="link-ok"
+	href="${baseURL}/?univ=${selectedUniversityId}">OK</a>
 </div>
 
 </div>

@@ -13,11 +13,12 @@
 <div class="body">
 
 <div id="div-about">
-<a href="${baseURL}/about/?univ=${selectedUniversityId}">À propos…</a>
+<a id="link-about"
+	href="${baseURL}/about/?univ=${selectedUniversityId}">À propos…</a>
 </div>
 
 <div class="h1">
-<h1>UnivMobile</h1>
+<h1 id="h1-title">UnivMobile</h1>
 </div>
 
 <div id="div-selectedUniversity">
@@ -25,7 +26,8 @@ Aucune université sélectionnée
 </div>
 
 <div id="div-choisir">
-<a href="${baseURL}/regions/?univ=${selectedUniversityId}">Choisir…</a>
+<a id="link-choisir"
+	href="${baseURL}/regions/?univ=${selectedUniversityId}">Choisir…</a>
 </div>
 
 </div>
