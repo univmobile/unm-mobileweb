@@ -57,14 +57,13 @@ public class SimpleAppiumTest {
 			final File file = // ((TakesScreenshot) augmentedDriver)
 			driver.getScreenshotAs(OutputType.FILE);
 
-			FileUtils.copyFile( //
-					file, new File("target", "testAppiumSimple.png"));
+			FileUtils.copyFile(file, new File("target", "home.png"));
 
 			file.delete();
 
 			final String pageSource = driver.getPageSource();
 
-			FileUtils.write(new File("target", "pageSource.html"), //
+			FileUtils.write(new File("target", "home.html"), //
 					pageSource, UTF_8);
 
 		} finally {
