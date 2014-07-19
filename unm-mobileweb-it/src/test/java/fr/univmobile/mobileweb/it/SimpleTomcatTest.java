@@ -20,7 +20,7 @@ public class SimpleTomcatTest {
 		final String content = wget("http://localhost:8380/unm-mobileweb/",
 				UTF_8);
 
-		assertTrue(content.contains("<h1>UnivMobile</h1>"));
+		assertTrue(content.contains(">UnivMobile</h1>"));
 	}
 
 	private static String wget(final String url, final String encoding)
