@@ -318,7 +318,7 @@ public abstract class DataBeans {
 
 				if (value == null) {
 
-					if (method.getAnnotation(Nullable.class) == null) {
+					if (!method.isAnnotationPresent(Nullable.class)) {
 						throw new IllegalStateException("Property "
 								+ propertyName + " should not be null in: "
 								+ clazz + " -- No @Nullable annotation on: "
@@ -337,7 +337,7 @@ public abstract class DataBeans {
 
 				if (value == null) {
 
-					if (method.getAnnotation(Nullable.class) == null) {
+					if (!method.isAnnotationPresent(Nullable.class)) {
 						throw new IllegalArgumentException("Property "
 								+ propertyName + " cannot be set to null in: "
 								+ clazz + " -- No @Nullable annotation on: "
