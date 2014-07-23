@@ -15,12 +15,10 @@
 		<dependency>
 			<groupId>fr.univmobile</groupId>
 			<artifactId>unm-it-commons</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>	
 		<dependency>
 			<groupId>fr.univmobile</groupId>
 			<artifactId>unm-mobileweb-app</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 			<type>war</type>
 			<scope>test</scope>
 		</dependency>
@@ -37,7 +35,6 @@
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
-				<version>1.4.8</version>
 				<executions>
 					<execution>
 						<id>start</id>
