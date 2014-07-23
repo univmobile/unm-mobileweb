@@ -21,7 +21,7 @@
 
 	<servlet>
 		<servlet-name>PlainContentServlet</servlet-name>
-		<servlet-class>fr.univmobile.mobileweb.PlainContentServlet</servlet-class>
+		<servlet-class>fr.univmobile.web.commons.PlainContentServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
