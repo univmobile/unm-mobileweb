@@ -17,6 +17,8 @@ import org.apache.commons.io.IOUtils;
 
 import com.avcompris.lang.NotImplementedException;
 
+import fr.univmobile.web.UnivMobileHttpUtils;
+
 public class PlainContentServlet extends HttpServlet {
 
 	/**

@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.avcompris.common.annotation.Nullable;
 
+import fr.univmobile.web.UnivMobileHttpUtils;
+
 public class UnivMobileServlet extends HttpServlet {
 
 	/**
