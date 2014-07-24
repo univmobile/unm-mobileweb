@@ -16,7 +16,6 @@
 		<dependency>
 			<groupId>fr.univmobile</groupId>
 			<artifactId>unm-webapp-commons</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	
