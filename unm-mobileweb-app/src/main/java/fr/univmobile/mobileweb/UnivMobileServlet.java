@@ -15,8 +15,8 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 	public void init() throws ServletException {
 
 		super.init( //
-				HomeController.class, //
-				AboutController.class //
+				new HomeController(), //
+				new AboutController() //
 		);
 	}
 }
