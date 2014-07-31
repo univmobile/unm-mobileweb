@@ -17,6 +17,31 @@
 			<groupId>fr.univmobile</groupId>
 			<artifactId>unm-webapp-commons</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>fr.univmobile</groupId>
+			<artifactId>unm-backend-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.univmobile</groupId>
+			<artifactId>unm-commons-datasource</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.univmobile</groupId>
+			<artifactId>unm-backend-client-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.univmobile</groupId>
+			<artifactId>unm-backend-client-jsonapi</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.univmobile</groupId>
+			<artifactId>unm-backend-client-json</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 	
 	<build>
