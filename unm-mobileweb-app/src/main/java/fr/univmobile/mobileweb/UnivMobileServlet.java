@@ -39,7 +39,8 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 
 		super.init( //
 				new HomeController(), //
-				new AboutController(regions) //
+				new AboutController(),
+				new RegionsController(regions) //
 		);
 	}
 
