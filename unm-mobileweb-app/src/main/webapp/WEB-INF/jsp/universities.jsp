@@ -17,7 +17,8 @@
 <a href="${baseURL}/regions/?selected=${region.id}">&lt;</a>
 </div>
 <h1>
-${region.label}</h1>
+${region.label}
+</h1>
 <div id="div-back">
 <a href="${baseURL}/">Retour</a>
 </div>
