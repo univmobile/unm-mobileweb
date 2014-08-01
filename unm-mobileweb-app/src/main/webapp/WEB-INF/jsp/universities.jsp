@@ -11,7 +11,6 @@
 </head>
 <body id="body-regions">
 <div class="body">
-
 <div class="h1">
 <div class="up">
 <a href="${baseURL}/regions/?selected=${region.id}">&lt;</a>

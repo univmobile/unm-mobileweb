@@ -9,7 +9,9 @@ body {
 }
 div.body {
 	margin: auto;
-	width: 300px;
+	xwidth: 300px;
+	width: 100%;
+	xbackground-color: #ff0;
 }
 div.h1 {
 	margin: auto;
@@ -72,6 +74,8 @@ body#body-about {
 	padding: 10px;
 	font-size: 74%;
 	margin-top: 20px;
+	margin-left: 8px;
+	margin-right: 8px;
 }
 #body-about #div-lastFetchedAt {
 	font-size: 74%;
@@ -115,6 +119,7 @@ body#body-about {
 	margin: 2px;
 	xpadding: 0;
 	font-weight: bold;
+	text-align: center;
 }
 #body-regions div.h1 div {
 	font-style: normal;
@@ -162,7 +167,7 @@ body#body-about {
 #body-regions td a,
 #body-regions #div-table div a {
 	display: block;
-	padding: 8px 4px;
+	padding: 8px 4px 8px 12px;
 }
 #body-regions td a:hover,
 #body-regions #div-table div a:hover {
@@ -172,4 +177,10 @@ body#body-about {
 #body-regions #div-table div a:active {
 	background-color: #ccc;
 	color: #f00;
+}
+#body-regions {
+	xmargin-left: -8px;
+	xmargin-right: -8px;
+	xpadding-left: 0;
+	xpadding-right: 0;
 }
