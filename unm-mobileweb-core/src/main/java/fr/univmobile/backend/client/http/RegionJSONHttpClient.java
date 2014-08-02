@@ -5,6 +5,8 @@ import static org.apache.commons.lang3.CharEncoding.UTF_8;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -18,6 +20,7 @@ import fr.univmobile.backend.client.json.RegionJSONClient;
 
 public class RegionJSONHttpClient implements RegionJSONClient {
 
+	@Inject
 	public RegionJSONHttpClient(final String url) {
 
 		this.url = checkNotNull(url, "url");
