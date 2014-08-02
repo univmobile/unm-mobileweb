@@ -13,6 +13,34 @@
 			<param-name>baseURL</param-name>
 			<param-value>${baseURL}</param-value>
 		</init-param>
+		<init-param>
+			<param-name>inject:String ref:jsonURL</param-name>
+			<param-value>http://localhost:8080/unm-backend/json/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject-packages</param-name>
+			<param-value>
+				fr.univmobile.mobileweb
+				fr.univmobile.commons.datasource
+				fr.univmobile.commons.datasource.impl
+				fr.univmobile.backend.core
+				fr.univmobile.backend.client
+				fr.univmobile.backend.client.json
+				fr.univmobile.backend.client.http
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:RegionClient into:UnivMobileServlet</param-name>
+			<param-value>RegionClientFromJSON</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:RegionJSONClient into:RegionClientFromJSON</param-name>
+			<param-value>RegionJSONHttpClient</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:ref:String into:RegionJSONHttpClient</param-name>
+			<param-value>ref:jsonURL</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UnivMobileServlet</servlet-name>
