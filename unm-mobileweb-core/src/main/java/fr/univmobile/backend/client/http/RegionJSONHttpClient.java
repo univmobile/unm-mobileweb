@@ -3,16 +3,17 @@ package fr.univmobile.backend.client.http;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.apache.commons.lang3.CharEncoding.UTF_8;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.inject.Inject;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.avcompris.lang.NotImplementedException;
 
@@ -28,27 +29,42 @@ public class RegionJSONHttpClient implements RegionJSONClient {
 
 	private final String url;
 
+	private static final Log log = LogFactory
+			.getLog(RegionJSONHttpClient.class);
+
 	@Override
 	public String getRegionsJSON() throws IOException {
 
-		final HttpGet httpGet = new HttpGet(url);
+		log.info("getRegionsJSON()...");
 
-		final CloseableHttpClient httpClient = HttpClients.createDefault();
+		log.debug("url: " + url);
+
+		final URL u = new URL(url);
+
+		final HttpURLConnection cxn = (HttpURLConnection) u.openConnection();
 		try {
 
-			final CloseableHttpResponse response = httpClient.execute(httpGet);
+			log.debug("openConnection() OK");
+
+			final InputStream is = new BufferedInputStream(cxn.getInputStream());
 			try {
 
-				final HttpEntity entity = response.getEntity();
+				log.debug("getInputStream() OK");
 
-				return IOUtils.toString(entity.getContent(), UTF_8);
+				return IOUtils.toString(is, UTF_8);
 
 			} finally {
-				response.close();
+
+				log.debug("is.close()...");
+
+				is.close();
 			}
 
 		} finally {
-			httpClient.close();
+
+			log.debug("cxn.disconnect()...");
+
+			cxn.disconnect();
 		}
 	}
 
