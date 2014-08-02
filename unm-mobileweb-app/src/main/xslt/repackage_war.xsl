@@ -20,7 +20,7 @@
 
 <xsl:template match="j2ee:servlet
 		[j2ee:servlet-name = 'UnivMobileServlet']/j2ee:init-param
-		[normalize-space(j2ee:param-name) = 'inject:String ref:dataDir']/j2ee:param-value">
+		[normalize-space(j2ee:param-name) = 'inject:File ref:dataDir']/j2ee:param-value">
 
 	<xsl:copy>
 	<xsl:copy-of select="@*"/>

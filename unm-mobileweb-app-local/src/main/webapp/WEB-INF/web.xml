@@ -14,7 +14,7 @@
 			<param-value>${baseURL}</param-value>
 		</init-param>
 		<init-param>
-			<param-name>inject:String ref:dataDir</param-name>
+			<param-name>inject:File ref:dataDir</param-name>
 			<param-value>/tmp/unm-backend/dataDir/regions</param-value>
 		</init-param>
 		<init-param>
