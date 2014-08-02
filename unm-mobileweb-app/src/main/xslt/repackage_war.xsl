@@ -19,8 +19,8 @@
 </xsl:template>
 
 <xsl:template match="j2ee:servlet
-		[j2ee:servlet-name = 'BackendServlet']/j2ee:init-param
-		[j2ee:param-name = 'dataDir']/j2ee:param-value">
+		[j2ee:servlet-name = 'UnivMobileServlet']/j2ee:init-param
+		[normalize-space(j2ee:param-name) = 'inject:String ref:dataDir']/j2ee:param-value">
 
 	<xsl:copy>
 	<xsl:copy-of select="@*"/>
@@ -32,7 +32,7 @@
 </xsl:template>
 
 <xsl:template match="j2ee:servlet
-		[j2ee:servlet-name = 'BackendServlet']/j2ee:init-param
+		[j2ee:servlet-name = 'UnivMobileServlet']/j2ee:init-param
 		[j2ee:param-name = 'baseURL']/j2ee:param-value">
 
 	<xsl:copy>

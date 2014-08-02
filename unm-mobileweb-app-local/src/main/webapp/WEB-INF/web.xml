@@ -14,6 +14,10 @@
 			<param-value>${baseURL}</param-value>
 		</init-param>
 		<init-param>
+			<param-name>inject:String ref:dataDir</param-name>
+			<param-value>/tmp/unm-backend/dataDir/regions</param-value>
+		</init-param>
+		<init-param>
 			<param-name>inject-packages</param-name>
 			<param-value>
 				fr.univmobile.mobileweb
@@ -45,8 +49,8 @@
 			<param-value>class:RegionDataSource</param-value>
 		</init-param>
 		<init-param>
-			<param-name>inject:File into:factory:BackendDataSourceFileSystem:regions</param-name>
-			<param-value>/tmp/unm-backend/dataDir/regions</param-value>
+			<param-name>inject:ref:File into:factory:BackendDataSourceFileSystem:regions</param-name>
+			<param-value>ref:dataDir</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
