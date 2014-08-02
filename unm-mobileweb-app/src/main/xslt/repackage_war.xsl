@@ -20,12 +20,12 @@
 
 <xsl:template match="j2ee:servlet
 		[j2ee:servlet-name = 'UnivMobileServlet']/j2ee:init-param
-		[normalize-space(j2ee:param-name) = 'inject:File ref:dataDir']/j2ee:param-value">
+		[normalize-space(j2ee:param-name) = 'inject:File ref:dataDirRegions']/j2ee:param-value">
 
 	<xsl:copy>
 	<xsl:copy-of select="@*"/>
 	
-		<xsl:value-of select="$dataDir"/>
+		<xsl:value-of select="concat($dataDir, '/regions')"/>
 	
 	</xsl:copy>
 	

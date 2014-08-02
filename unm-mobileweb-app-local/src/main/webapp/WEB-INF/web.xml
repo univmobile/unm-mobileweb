@@ -14,7 +14,7 @@
 			<param-value>${baseURL}</param-value>
 		</init-param>
 		<init-param>
-			<param-name>inject:File ref:dataDir</param-name>
+			<param-name>inject:File ref:dataDirRegions</param-name>
 			<param-value>/tmp/unm-backend/dataDir/regions</param-value>
 		</init-param>
 		<init-param>
@@ -50,7 +50,7 @@
 		</init-param>
 		<init-param>
 			<param-name>inject:ref:File into:factory:BackendDataSourceFileSystem:regions</param-name>
-			<param-value>ref:dataDir</param-value>
+			<param-value>ref:dataDirRegions</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
