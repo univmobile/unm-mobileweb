@@ -19,7 +19,7 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 	public void setUpData() throws Exception {
 
 		// "/tmp/unm-mobileweb/dataDir"
-		final String dataDir = TestBackend.readMobilewebAppDataDir(new File(
+		final String dataDir = TestBackend.readMobilewebAppLocalDataDir(new File(
 				"target", "unm-mobileweb-app-local/WEB-INF/web.xml"));
 
 		TestBackend.setUpData("001", new File(dataDir));
