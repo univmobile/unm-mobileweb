@@ -43,10 +43,15 @@ public class SimpleAppiumTest {
 				"unm-mobileweb-app/WEB-INF/classes/log4j.xml"));
 
 		System.out.println("Log file: " + logFile);
+
+		final String backendLogFile = TestBackend.readLog4jLogFile(new File(
+				"target", "unm-backend-app/WEB-INF/classes/log4j.xml"));
+
+		System.out.println("Backend Log file: " + backendLogFile);
 	}
 
 	private String baseURL;
-	
+
 	@Test
 	public void testAppiumSimple() throws Exception {
 
