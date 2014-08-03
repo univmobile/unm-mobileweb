@@ -13,6 +13,7 @@ import java.io.File;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -20,9 +21,21 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import fr.univmobile.backend.it.TestBackend;
 import fr.univmobile.it.commons.EnvironmentUtils;
 
 public class SimpleAppiumTest {
+
+	@Before
+	public void setUp() throws Exception {
+
+		// "/tmp/unm-mobileweb/dataDir"
+		final String dataDir = TestBackend.readMobilewebAppDataDir(new File(
+				"target", "unm-mobileweb-app-local/WEB-INF/web.xml"));
+
+		// TODO dans un artefact ! backend-testdata / testcase /
+		TestBackend.setUpData("001", new File(dataDir));
+	}
 
 	@Test
 	public void testAppiumSimple() throws Exception {
