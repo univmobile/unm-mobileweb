@@ -1,6 +1,5 @@
 package fr.univmobile.mobileweb;
 
-import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,17 +28,18 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 		regions = new DependencyInjection(initParams).getInject(
 				RegionClient.class).into(UnivMobileServlet.class);
 
-		try {
-
-			regions.getRegions();
-
-		} catch (final IOException e) {
-			throw new ServletException(e);
-		}
+		// --- Do not call the remote web service in init(), otherwise deadlock!
+		// try {  
+		//
+		// regions.getRegions();
+		//
+		// } catch (final IOException e) {
+		// throw new ServletException(e);
+		// }
 
 		super.init( //
 				new HomeController(), //
-				new AboutController(),
+				new AboutController(), //
 				new RegionsController(regions) //
 		);
 	}
