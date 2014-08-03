@@ -29,7 +29,6 @@ public class SimpleTomcatTest {
 		final String dataDir = TestBackend.readMobilewebAppDataDir(new File(
 				"target", "unm-mobileweb-app-local/WEB-INF/web.xml"));
 
-		// TODO dans un artefact ! backend-testdata / testcase /
 		TestBackend.setUpData("001", new File(dataDir));
 
 		final String logFile = TestBackend.readLog4jLogFile(new File("target",

@@ -22,7 +22,6 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 		final String dataDir = TestBackend.readMobilewebAppDataDir(new File(
 				"target", "unm-mobileweb-app-local/WEB-INF/web.xml"));
 
-		// TODO dans un artefact ! backend-testdata / testcase /
 		TestBackend.setUpData("001", new File(dataDir));
 	}
 
