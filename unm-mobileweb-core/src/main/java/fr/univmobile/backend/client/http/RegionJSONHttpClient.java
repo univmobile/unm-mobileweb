@@ -37,7 +37,9 @@ public class RegionJSONHttpClient implements RegionJSONClient {
 
 		log.info("getRegionsJSON()...");
 
-		log.debug("url: " + url);
+		if (log.isDebugEnabled()) {
+			log.debug("url: " + url);
+		}
 
 		final URL u = new URL(url);
 
