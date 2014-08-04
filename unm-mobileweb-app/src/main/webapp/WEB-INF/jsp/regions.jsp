@@ -15,7 +15,7 @@
 <div class="h1">
 <h1>Régions</h1>
 <div id="div-back">
-<a href="${baseURL}/">Retour</a>
+<a id="link-back" href="${baseURL}/">Retour</a>
 </div>
 </div>
 
@@ -24,7 +24,8 @@
 <c:forEach var="r" items="${regions}">
 <tr>
 <td>
-<a href="${baseURL}/regions/?region=${r.id}">${r.label}</a>
+<a id="link-region-${r.id}"
+	href="${baseURL}/regions/?region=${r.id}">${r.label}</a>
 </td>
 </tr>
 </c:forEach>
