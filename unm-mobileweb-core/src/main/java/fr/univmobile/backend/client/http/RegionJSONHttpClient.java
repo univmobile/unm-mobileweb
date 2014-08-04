@@ -25,6 +25,16 @@ public class RegionJSONHttpClient implements RegionJSONClient {
 	public RegionJSONHttpClient(final String url) {
 
 		this.url = checkNotNull(url, "url");
+
+		if (log.isInfoEnabled()) {
+			log.info("<init>.url: " + url);
+		}
+
+		if (!url.endsWith("/json/regions")
+				&& !url.endsWith("/json/regions.json")) {
+			log.warn("<init>.url doesn't have the conventional /json/region[.json] termination: "
+					+ url);
+		}
 	}
 
 	private final String url;
