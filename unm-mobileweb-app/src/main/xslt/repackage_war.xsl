@@ -4,6 +4,7 @@
 
 <xsl:param name="dataDir" select="'/tmp/unm-backend/data'"/>
 <xsl:param name="baseURL" select="'http://localhost:8080/unm-backend/'"/>
+<xsl:param name="jsonURL" select="'http://localhost:8080/unm-backend/json/regions'"/>
 
 <!-- TODO code is duplicated in: unm-backend-app, unm-mobileweb-app -->
 
@@ -39,6 +40,19 @@
 	<xsl:copy-of select="@*"/>
 	
 		<xsl:value-of select="$baseURL"/>
+	
+	</xsl:copy>
+	
+</xsl:template>
+
+<xsl:template match="j2ee:servlet
+		[j2ee:servlet-name = 'UnivMobileServlet']/j2ee:init-param
+		[j2ee:param-name = 'inject:String ref:jsonURL']/j2ee:param-value">
+
+	<xsl:copy>
+	<xsl:copy-of select="@*"/>
+	
+		<xsl:value-of select="$jsonURL"/>
 	
 	</xsl:copy>
 	
