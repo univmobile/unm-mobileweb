@@ -49,4 +49,27 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 
 		takeScreenshot("home2.png");
 	}
+
+	@Scenario("Aller-retour sur la page « Régions »")
+	@Test
+	public void Choix_de_région_000() throws Exception {
+
+		get("http://localhost:8380/unm-mobileweb/");
+
+		waitForElementById(60, "div-selectedUniversity");
+
+		takeScreenshot("home.png");
+
+		elementById("link-choisir").click();
+
+		waitForElementById(60, "div-back");
+
+		takeScreenshot("regions.png");
+
+		elementById("link-back").click();
+
+		waitForElementById(60, "div-selectedUniversity");
+
+		takeScreenshot("home2.png");
+	}
 }
