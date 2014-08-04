@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 
@@ -14,8 +13,8 @@
 			<param-value>http://localhost:8380/unm-mobileweb/</param-value>
 		</init-param>
 		<init-param>
-			<param-name>inject:String ref:jsonURL</param-name>
-			<param-value>http://localhost:8380/unm-backend/json/</param-value>
+			<param-name>inject:String ref:regionsJsonURL</param-name>
+			<param-value>http://localhost:8380/unm-backend/json/regions</param-value>
 		</init-param>
 		<init-param>
 			<param-name>inject-packages</param-name>
@@ -39,7 +38,7 @@
 		</init-param>
 		<init-param>
 			<param-name>inject:ref:String into:RegionJSONHttpClient</param-name>
-			<param-value>ref:jsonURL</param-value>
+			<param-value>ref:regionsJsonURL</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -63,7 +62,7 @@
 	<servlet-mapping>
 		<servlet-name>PlainContentServlet</servlet-name>
 		<url-pattern>/js</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>PlainContentServlet</servlet-name>
 		<url-pattern>/js/*</url-pattern>
