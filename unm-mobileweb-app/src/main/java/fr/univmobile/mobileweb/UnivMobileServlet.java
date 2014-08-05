@@ -25,11 +25,17 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 
 		final Map<String, String> initParams = loadInitParams();
 
-		regions = new DependencyInjection(initParams).getInject(
-				RegionClient.class).into(UnivMobileServlet.class);
+		final DependencyInjection dependencyInjection = new DependencyInjection(
+				initParams);
+
+		final String jsonURL = dependencyInjection.getInject(String.class).ref(
+				"jsonURL");
+
+		regions = dependencyInjection.getInject(RegionClient.class).into(
+				UnivMobileServlet.class);
 
 		// --- Do not call the remote web service in init(), otherwise deadlock!
-		// try {  
+		// try {
 		//
 		// regions.getRegions();
 		//
@@ -39,7 +45,7 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 
 		super.init( //
 				new HomeController(), //
-				new AboutController(), //
+				new AboutController(jsonURL), //
 				new RegionsController(regions) //
 		);
 	}

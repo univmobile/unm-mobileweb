@@ -21,7 +21,8 @@ UnivMobile
 <!-- e.g. Build #34 — 2014/07/16 15:45 -->
 Build ${buildInfo.buildDisplayName} — ${buildInfo.buildId}
 <p>
-<br>
+JSON: ${jsonURL}
+<p>
 https://github.com/univmobile/unm-mobileweb
 <p>
 <!-- e.g. 6fa7922938635ec7dab6f894e7eaea4d1689ee70 -->
