@@ -29,6 +29,10 @@
 			</param-value>
 		</init-param>
 		<init-param>
+			<param-name>inject:String ref:jsonURL</param-name>
+			<param-value>http://(dummy URL)/unm-backend/json</param-value>
+		</init-param>
+		<init-param>
 			<param-name>inject:RegionClient into:UnivMobileServlet</param-name>
 			<param-value>RegionClientFromJSON</param-value>
 		</init-param>
