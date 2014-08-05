@@ -13,8 +13,12 @@
 			<param-value>http://localhost:8380/unm-mobileweb/</param-value>
 		</init-param>
 		<init-param>
+			<param-name>inject:String ref:jsonURL</param-name>
+			<param-value>http://localhost:8380/unm-backend/json</param-value>
+		</init-param>
+		<init-param>
 			<param-name>inject:String ref:regionsJsonURL</param-name>
-			<param-value>http://localhost:8380/unm-backend/json/regions</param-value>
+			<param-value>${ref:jsonURL}/regions</param-value>
 		</init-param>
 		<init-param>
 			<param-name>inject-packages</param-name>
@@ -37,8 +41,8 @@
 			<param-value>RegionJSONHttpClient</param-value>
 		</init-param>
 		<init-param>
-			<param-name>inject:ref:String into:RegionJSONHttpClient</param-name>
-			<param-value>ref:regionsJsonURL</param-value>
+			<param-name>inject:String into:RegionJSONHttpClient</param-name>
+			<param-value>${ref:regionsJsonURL}</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
