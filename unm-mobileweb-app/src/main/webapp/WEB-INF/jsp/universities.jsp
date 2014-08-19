@@ -31,6 +31,6 @@ ${region.label}
 </c:forEach>
 </div>
 
-</div>
+</div> <!-- end of div.body -->
 </body>
 </html>

@@ -45,6 +45,6 @@ Données récupérées
 	href="${baseURL}/?univ=${selectedUniversityId}">OK</a>
 </div>
 
-</div>
+</div> <!-- end of div.body -->
 </body>
 </html>

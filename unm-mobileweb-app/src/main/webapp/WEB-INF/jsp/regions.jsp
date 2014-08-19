@@ -32,6 +32,6 @@
 </tbody>
 </table>
 
-</div>
+</div> <!-- end of div.body -->
 </body>
 </html>
