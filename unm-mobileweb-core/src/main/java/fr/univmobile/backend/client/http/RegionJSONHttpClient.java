@@ -1,17 +1,12 @@
 package fr.univmobile.backend.client.http;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.apache.commons.lang3.CharEncoding.UTF_8;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -22,9 +17,12 @@ import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.backend.client.RegionClientFromJSON;
 import fr.univmobile.backend.client.json.RegionJSONClient;
 
-public class RegionJSONHttpClient implements RegionJSONClient {
+public class RegionJSONHttpClient extends AbstractJSONHttpClient implements
+		RegionJSONClient {
 
 	protected RegionJSONHttpClient(final String url, final RegionClient client) {
+
+		super(url);
 
 		throw new NotImplementedException();
 	}
@@ -32,9 +30,10 @@ public class RegionJSONHttpClient implements RegionJSONClient {
 	private final RegionClient client;
 
 	@Inject
-	public RegionJSONHttpClient(final String url) {
+	public RegionJSONHttpClient(@Named("RegionJSONHttpClient")//
+			final String url) {
 
-		this.url = checkNotNull(url, "url");
+		super(url);
 
 		if (log.isInfoEnabled()) {
 			log.info("<init>.url: " + url);
@@ -49,8 +48,6 @@ public class RegionJSONHttpClient implements RegionJSONClient {
 		this.client = new RegionClientFromJSON(this);
 	}
 
-	private final String url;
-
 	private static final Log log = LogFactory
 			.getLog(RegionJSONHttpClient.class);
 
@@ -64,37 +61,6 @@ public class RegionJSONHttpClient implements RegionJSONClient {
 		}
 
 		return wget(url);
-	}
-
-	private static String wget(final String url) throws IOException {
-
-		final URL u = new URL(url);
-
-		final HttpURLConnection cxn = (HttpURLConnection) u.openConnection();
-		try {
-
-			log.debug("openConnection() OK");
-
-			final InputStream is = new BufferedInputStream(cxn.getInputStream());
-			try {
-
-				log.debug("getInputStream() OK");
-
-				return IOUtils.toString(is, UTF_8);
-
-			} finally {
-
-				log.debug("is.close()...");
-
-				is.close();
-			}
-
-		} finally {
-
-			log.debug("cxn.disconnect()...");
-
-			cxn.disconnect();
-		}
 	}
 
 	public Region getRegionById(final String regionId) throws IOException {

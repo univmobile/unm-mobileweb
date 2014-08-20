@@ -21,6 +21,10 @@
 			<param-value>${ref:jsonURL}/regions</param-value>
 		</init-param>
 		<init-param>
+			<param-name>inject:String ref:poisJsonURL</param-name>
+			<param-value>${ref:jsonURL}/pois</param-value>
+		</init-param>
+		<init-param>
 			<param-name>inject-packages</param-name>
 			<param-value>
 				fr.univmobile.mobileweb
@@ -43,6 +47,18 @@
 		<init-param>
 			<param-name>inject:String into:RegionJSONHttpClient</param-name>
 			<param-value>${ref:regionsJsonURL}</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:PoiClient into:UnivMobileServlet</param-name>
+			<param-value>PoiClientFromJSON</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:PoiJSONClient into:PoiClientFromJSON</param-name>
+			<param-value>PoiJSONHttpClient</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:String into:PoiJSONHttpClient</param-name>
+			<param-value>${ref:poisJsonURL}</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
+import fr.univmobile.backend.client.PoiClient;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.commons.DependencyInjection;
 import fr.univmobile.web.commons.AbstractUnivMobileServlet;
@@ -19,6 +20,9 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 	private static final long serialVersionUID = -3778148036214513471L;
 
 	private RegionClient regions;
+	
+	private PoiClient pois;
+	
 
 	@Override
 	public void init() throws ServletException {
@@ -34,6 +38,9 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 		regions = dependencyInjection.getInject(RegionClient.class).into(
 				UnivMobileServlet.class);
 
+		pois = dependencyInjection.getInject(PoiClient.class).into(
+				UnivMobileServlet.class);
+
 		// --- Do not call the remote web service in init(), otherwise deadlock!
 		// try {
 		//
@@ -46,7 +53,8 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 		super.init( //
 				new HomeController(), //
 				new AboutController(jsonURL), //
-				new RegionsController(regions) //
+				new RegionsController(regions), //
+				new GeocampusController(regions,pois) //
 		);
 	}
 
