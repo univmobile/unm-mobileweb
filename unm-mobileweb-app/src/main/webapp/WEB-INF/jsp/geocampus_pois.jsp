@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
 
 </style>
 <script type="text/javascript" src="${baseURL}/js/jquery-1.11.1.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+<script type="text/javascript" src="${baseURL}/js/jquery-ui.js"></script>
 <!--
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${API_KEY}"></script>
 -->
@@ -20,14 +21,17 @@
 <script type="text/javascript">
 	
 	// 0. GENERATED
-	
+
+	<% pageContext.setAttribute("newLine", "\n"); %>
+		
 	var pois = [<c:forEach
 			var="category" items="${pois}"><c:forEach
 			var="poi" items="${category.pois}">{
 		name: "${poi.name}",
 		lat: ${poi.latitude},
 		lng: ${poi.longitude},<c:if test="${poi.address != null and poi.address != ''}">
-		address: "${poi.address}",</c:if><c:if test="${poi.floor != null and poi.floor != ''}">
+		address: "${fn:replace(poi.address, newLine, ' ')}",</c:if><c:if
+			test="${poi.floor != null and poi.floor != ''}">
 		floor: "${poi.floor}",</c:if><c:if test="${poi.openingHours != null and poi.openingHours != ''}">
 		openingHours: "${poi.openingHours}",</c:if><c:if test="${poi.phone != null and poi.phone != ''}">
 		phone: "${poi.phone}",</c:if><c:if test="${poi.email != null and poi.email != ''}">
@@ -51,6 +55,8 @@
 			- $('div.bottom').height();
 			
 		$('#div-map').css('height', height);
+		
+		google.maps.event.trigger(map, 'resize');
 	}
 	
 	var markerImageBaseURL = '${baseURLbackend}/img/markers/marker_green';
@@ -447,6 +453,7 @@
 			$('div.bottomNav li.tab_list').removeClass('selected');
 			$('div.bottomNav li.tab_map').addClass('selected');
 			$('body').removeClass('list details').addClass('map');
+			resizeHeights();
 		});
 
 		// 9. END
@@ -482,12 +489,12 @@
 <td id="td-poi-${poi.id}" class="poi">
 	<a id="link-poi-${poi.id}" href="#" onclick="showDetails(${poi.id});">
 		${poi.name}
-	<c:if test="${poi.address != null}">
+		<c:if test="${poi.address != null}">
 		<br>
 		<span class="address">
 			${poi.address}
 		</span>
-	</c:if>
+		</c:if>
 	</a>
 </td>
 </tr>
@@ -564,12 +571,16 @@
 <li id="li-poiNav-${poi.id}" class="poiNav">
 	<a id="link-poiNav-${poi.id}" href="#" onclick="onclickPoi(${poi.id});">
 		${poi.name}
-	<c:if test="${poi.address != null}">
-		<br>
+	<br>
 		<span class="address">
+		<c:choose>
+		<c:when test="${poi.address != null}">
 			${poi.address}
-		</span>
-	</c:if>
+		</c:when>
+		<c:otherwise>
+			&#160;
+		</c:otherwise>
+		</c:choose>
 	</a>
 </c:forEach>
 </c:forEach>
