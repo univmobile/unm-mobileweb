@@ -91,7 +91,7 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 
 		elementById("link-tab_map").click();
 
-		pause(2000);
+		pause(10000);
 
 		takeScreenshot("geocampus_map.png");
 
@@ -108,6 +108,8 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 		takeScreenshot("geocampus_details.png");
 		
 		elementById("link-up").click();
+
+		pause(2000);
 
 		takeScreenshot("geocampus_back_to_map.png");
 	}
