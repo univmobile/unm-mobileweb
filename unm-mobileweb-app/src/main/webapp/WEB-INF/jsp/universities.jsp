@@ -7,11 +7,12 @@
 <meta http-equiv="Content-Language" content="en">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Régions</title>
-<link type="text/css" rel="stylesheet" href="${baseURL}/css/styles.css">
+<link type="text/css" rel="stylesheet" href="${baseURL}/css/mobile.css">
 </head>
 <body id="body-regions">
 <div class="body">
-<div class="h1">
+
+<div class="h1 nav">
 <div class="up">
 <a href="${baseURL}/regions/?selected=${region.id}">&lt;</a>
 </div>
@@ -21,7 +22,7 @@ ${region.label}
 <div id="div-back">
 <a href="${baseURL}/">Retour</a>
 </div>
-</div>
+</div> <!-- end of div.h1.nav -->
 
 <div id="div-table">
 <c:forEach var="u" items="${universities}">

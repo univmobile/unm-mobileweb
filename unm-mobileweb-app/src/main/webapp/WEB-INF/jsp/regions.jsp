@@ -7,17 +7,17 @@
 <meta http-equiv="Content-Language" content="en">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Régions</title>
-<link type="text/css" rel="stylesheet" href="${baseURL}/css/styles.css">
+<link type="text/css" rel="stylesheet" href="${baseURL}/css/mobile.css">
 </head>
 <body id="body-regions">
 <div class="body">
 
-<div class="h1">
+<div class="h1 nav">
 <h1>Régions</h1>
 <div id="div-back">
 <a id="link-back" href="${baseURL}/">Retour</a>
 </div>
-</div>
+</div> <!-- end of div.h1.nav -->
 
 <table>
 <tbody>

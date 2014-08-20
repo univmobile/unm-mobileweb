@@ -1,0 +1,502 @@
+/* ======== GENERAL ======== */
+
+body {
+	background-color: #79b8d9;
+	font-family: 'Helvetica Neue', Arial, sans-serif;
+	font-size: 105%;
+	padding: 0;
+	margin: 0;
+}
+div.body {
+	margin: auto;
+	xwidth: 300px;
+	width: 100%;
+	xbackground-color: #ff0;
+}
+div.h1 {
+	margin: auto;
+	display: table;
+	background-color: #fff;
+	border-collapse: collapse;
+	border: 0;
+	padding: 0;
+}
+h1 {
+	font-weight: normal;
+	font-size: 200%;
+	padding: 10px 21px;
+	margin: 0;
+	color: #79b8d9; 
+}
+a {
+	text-decoration: none;
+}
+#body-home #div-about {
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+#body-home #div-about a {
+	color: #009;
+} 
+#body-home #div-selectedUniversity {
+	width: 100%;
+	margin-top: 30px;
+	text-align: center;
+	overflow: hidden;
+	font-style: italic;
+}
+#body-home #div-choisir {
+	margin-top: 30px;
+	text-align: center;
+	color: #fff;
+}
+#body-home #div-choisir a,
+#body-about #div-fetchNow a,
+#body-about #div-ok a {
+	color: #fff;
+}
+#body-home #div-gotoGeocampus {
+	margin-top: 50px;
+	text-align: center;
+}
+#body-home #div-gotoGeocampus a {
+	display: table;
+	width: 8em;
+	border: 1px solid #fff;
+	padding: 8px 0;
+	margin: auto;
+	color: #eef;
+}
+#body-home #div-gotoGeocampus a:hover {
+	xbackground-color: #ff0;
+}
+a:active,
+#body-home #div-choisir a:active,
+#body-home #div-gotoGeocampus a:active,
+#body-about #div-fetchNow a:active,
+#body-about #div-ok a:active {
+	color: #0f0;
+}
+
+/* ======== ABOUT ======== */
+
+body#body-about {
+	background-color: #9bc9e1;
+}
+#body-about #div-info {
+	background-color: #fff;
+	opacity: 0.8;
+	padding: 10px;
+	font-size: 74%;
+	margin-top: 20px;
+	margin-left: 8px;
+	margin-right: 8px;
+}
+#body-about #div-lastFetchedAt {
+	font-size: 74%;
+	text-align: center;
+	margin-top: 20px;
+}
+#body-about #div-fetchNow {
+	text-align: center;
+	margin-top: 14px;
+	visibility: hidden;
+}
+#body-about #div-ok {
+	text-align: center;
+	margin-top: 10px;	
+}
+
+/* ======== NAVIGATION BARS ======== */
+
+div.h1.nav {
+	color: #000;
+	font-size: 120%;
+	xfont-style: italic;
+	width: 100%;
+	padding-left: 0;
+	padding-right: 0;
+	background-color: #9bc9e1;
+	display: table;
+}
+div.h1.nav h1 {
+	color: #fff;
+	font-size: 120%;
+	display: table-cell;
+	vertical-align: baseline;
+	margin: 2px;
+	xpadding: 0;
+	font-weight: bold;
+	text-align: center;
+}
+div.h1.nav div {
+	font-style: normal;
+	display: table-cell;
+	font-size: small;
+	font-weight: bold;
+	xmargin: 1.5em 1em 0 0;
+	text-align: right;
+	padding-right: 1em;
+	vertical-align: baseline;
+}
+div.h1.nav div.up {
+	font-size: 120%;
+	padding: 0;
+}
+div.h1.nav div.up a {
+	color: #00f;
+	display: inline;
+	padding: 0 0 0 8px;
+	background-color: transparent;
+}
+div.h1.nav div a {
+	color: #fff;
+	display: inline-block;
+	padding: 4px 8px;
+	background-color: #79b8d9;
+}
+
+/* ======== REGIONS ======== */
+
+#body-regions td,
+#body-regions #div-table div {
+	white-space: nowrap;
+	overflow: hidden;
+	width: 100%;
+	xdisplay: block;
+}
+#body-regions table,
+#body-regions #div-table div {
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0;
+	xdisplay: block;
+	xborder: 1px solid #f00;
+}
+#body-regions td,
+#body-regions #div-table div {
+	width: 100%;
+	border-top: 1px solid #fff;
+}
+#body-regions td,
+#body-regions #div-table {
+	border-bottom: 1px solid #fff;	
+}
+#body-regions td a,
+#body-regions #div-table div a {
+	display: block;
+	padding: 8px 4px 8px 12px;
+}
+#body-regions td a:hover,
+#body-regions #div-table div a:hover {
+	background-color: #9bc9e1;
+}
+#body-regions td a:active,
+#body-regions #div-table div a:active {
+	background-color: #ccc;
+	color: #f00;
+}
+#body-regions {
+	xmargin-left: -8px;
+	xmargin-right: -8px;
+	xpadding-left: 0;
+	xpadding-right: 0;
+}
+
+/* ======== POIS ======== */
+
+#body-pois table.pois td {
+	white-space: nowrap;
+	overflow: hidden;
+	width: 100%;
+	xdisplay: block;
+}
+#body-pois table.pois {
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0;
+}
+#body-pois table.pois td,
+#body-pois table.pois th {
+	width: 100%;
+	border-top: 1px solid #fff;
+}
+#body-pois table.pois th {
+	xbackground-color: #9bc9e1;
+	text-align: left;
+	color: #000;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+#body-pois table.pois td,
+#body-pois table.pois th {
+	border-bottom: 1px solid #fff;	
+}
+#body-pois table.pois td a {
+	display: block;
+	padding: 8px 4px 8px 12px;
+}
+#body-pois table.pois td a span.address,
+#body-pois #div-poiNav span.address {
+	color: #000;
+	font-size: small;
+}
+#body-pois table.pois td a:hover {
+	background-color: #9bc9e1;
+}
+#body-pois table.pois td a:active {
+	background-color: #ccc;
+	color: #f00;
+}
+#body-pois.map div.h1.nav div.up,
+#body-pois.map table.pois,
+#body-pois.map #div-details,
+#body-pois.map div.details.bottomNav {
+	display: none;
+}
+#body-pois.list div.h1.nav div.up,
+#body-pois.list #div-map,
+#body-pois.list #div-poiNav, 
+#body-pois.list #div-details,
+#body-pois.list div.details.bottomNav {
+	display: none;
+}
+#body-pois.details table.pois,
+#body-pois.details #div-map,
+#body-pois.details #div-poiNav,
+#body-pois.details div.list.bottomNav {
+	display: none;
+}
+div.bottom {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: #9bc9e1;
+}
+div.bottomNav {
+	border-top: 1px solid #fff; 
+}
+div.bottomNav ul {
+	display: table;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	border-collapse: collapse;
+	xbackground-color: #ccc;
+}
+div.bottomNav li {
+	display: table-cell;
+	margin: 0;
+	padding: 0 4px;
+	text-align: center;
+	xwidth: 50%;
+	border-collapse: collapse;
+	font-weight: bold;
+	background-color: #99a;
+	xcolor: #667;	
+}
+div.bottomNav li.selected a {
+	background-color: #667;
+	color: #ccd;	
+	xdisplay: block;
+}
+div.bottomNav li a:active {
+	background-color: #f00;
+}
+div.bottomNav li.tab_list,
+div.bottomNav li.tab_details {
+	border-right: 1px solid #fff;
+}
+div.bottomNav li.tab_map,
+div.bottomNav li.tab_comments {
+	border-left: 1px solid #fff;
+}
+div.bottomNav li a {
+	xwidth: 4em;
+	xdisplay: inline-block;
+	padding-left: 8px;
+	padding-right: 8px;
+	xpadding: 0;
+	margin: auto;
+	xbackground-color: #ff0;
+	color: #667;
+	xdisplay: block;
+	text-align: center;
+	xborder: 1px solid #f00;
+	overflow: hidden;
+}
+div.details.bottomNav li a {
+	xwidth: 6em;
+}
+#div-poiNav {
+	xposition: fixed;
+	xbottom: 0;
+	xwidth: 100%;
+	background-color: #9bc9e1;
+	border-top: 1px solid #fff; 
+}
+#div-poiNav ul {
+	margin: 0;
+	padding: 0;
+	xdisplay: table;
+	width: 100%;
+	background-color: #bddae9;
+	position: relative;
+}
+#div-poiNav li {
+	margin: 0;
+	padding: 0;
+	display: none;
+	background-color: transparent;
+}
+#div-poiNav li.prev,
+#div-poiNav li.next {
+	xdisplay: table-cell;
+	vertical-align: middle;
+	xbackground-color: #79b8d9;
+	background-color: #bddae9;
+}
+#div-poiNav li.prev.dimmed,
+#div-poiNav li.next.dimmed {
+	xbackground-color: #ff0;
+}
+#div-poiNav li.prev.dimmed a,
+#div-poiNav li.next.dimmed a {
+	color: transparent;
+}
+#div-poiNav li.prev {
+	xfloat: left;
+	text-align: left;
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	background-image: -webkit-linear-gradient(right, #79b8d9, #9bc9e1);
+}
+#div-poiNav li.next {
+	xfloat: right;
+	text-align: right;
+	display: block;
+	position: absolute;
+	height: 100%;
+	top: 0;
+	right: 0;
+	xdisplay: table-cell;
+	xbackground-color: #f00;
+	xheight: 100%;
+	background-image: -webkit-linear-gradient(left, #79b8d9, #9bc9e1);
+}
+#div-poiNav li.prev a,
+#div-poiNav li.next a {
+	display: block;
+	xbackground-color: #f00;
+	xheight: 100%;
+	padding: 8px 4px;	
+}
+#div-poiNav li.selected {
+	display: block;
+	xbackground-color: #ff0;
+	xdisplay: table-cell;
+	text-align: center;
+	xwidth: 90%;
+	white-space: nowrap;
+	overflow: hidden;
+	xbackground-color: #ff0;
+	margin: auto;
+	background-color: #79b8d9;
+	border-right: 1px solid #fff;
+	border-left: 1px solid #fff;
+	font-size: 95%;
+}
+div.bottomNav {
+	clear: both;
+}
+#div-map {
+	width: 100%;	
+}
+div.infoWindow {
+	width: 15em;
+	height: 4em;
+	position: relative;
+	font-size: 75%;
+}
+div.infoWindow .hidden {
+	display: none;
+}
+div.infoWindow div.img {
+	xposition: absolute;
+	xtop: 0px;
+	xright: 0px;
+	float: right;
+	width: 50px;
+	height: 50px;
+	overflow: hidden;
+	margin: 0;
+	background-color: #f00;
+}
+div.infoWindow img.width100 {
+	width: 100%;
+	margin: auto;
+}
+div.infoWindow img.height100 {
+	height: 100%;
+	margin: auto;
+}
+div.infoWindow span.name {
+	font-weight: bold;
+}
+#div-details div.field.hidden {
+	display: none;
+}
+#div-details {
+	font-size: 80%;
+	background-color: #fff;
+	padding-top: 0.8em;
+	padding-bottom: 0.8em;
+	border-bottom: 1px solid #666;
+}
+#div-details div.name {
+	font-size: 120%;
+	font-weight: bold;
+	margin: 0.8em 0 0.8em;
+	padding: 0 8px;
+}
+#div-details div.field.active div.title {
+	display: none;
+}
+#div-details div.field.active label,
+#div-details div.field.active span {
+	xfont-style: italic;
+}
+#div-details div.field.active label {
+	margin-left: 2em;
+}
+#div-details div.field {
+	margin-top: 0.4em;
+	border-top: 1px solid #333;
+	padding: 0.4em 8px;
+}
+#div-details div.field.name,
+#div-details div.field.active {
+	margin-top: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	border: none;
+}
+#div-details div.field div.title {
+	color: #999;
+	font-weight: bold;
+	margin-bottom: 0.2em;
+}
+#div-details-buttons {
+	margin-top: 0.4em;
+	border-top: 1px solid #ccc;
+	padding: 1em 8px 0;
+	font-size: 10px;
+}
+#div-detailsMap {
+	width: 100%; 
+	height: 260px;	
+}

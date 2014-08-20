@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Language" content="en">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>À propos d’UnivMobile</title>
-<link type="text/css" rel="stylesheet" href="${baseURL}/css/styles.css">
+<link type="text/css" rel="stylesheet" href="${baseURL}/css/mobile.css">
 </head>
 <body id="body-about">
 <div class="body">
