@@ -59,7 +59,6 @@ pois:
         value:
           - id: 21
             name: Université Panthéon-Sorbonne - Paris I
-            address: 12 place du Panthéon 75231 PARIS
             phone: 0144078000
             coordinates: 49.84650925911,2.3459243774
             latitude: 49.84650925911
