@@ -1,0 +1,135 @@
+baseURL: ${baseURL}
+baseURLbackend: ${baseURLbackend}
+API_KEY: ${API_KEY}
+
+user:
+  type: fr.univmobile.backend.core.User
+  value:
+    uid: paulBoudon
+    mail: toto.formica@univ-paris1.fr
+
+map:
+  type: fr.univmobile.model.MapOptions
+  value:
+    center: 48.84650925911,2.3459243774
+    zoom: 13
+
+mode: map
+
+pois:
+  type: fr.univmobile.model.PoiCategory[]
+  value:
+    - name: "Région : Bretagne"
+      pois:
+        type: fr.univmobile.model.Poi[]
+        value:
+          - id: 1
+            name: Université Panthéon-Sorbonne - Paris I
+            address: 12 place du Panthéon 75231 PARIS
+            phone: 0144078000
+            floor: null
+            email: null
+            fax: null
+            openingHours: null
+            itinerary: null
+            coordinates: 48.84650925911,2.3459243774
+            latitude: 48.84650925911
+            longitude: 2.3459243774
+            url: Http://www.univ-paris1.fr/
+            logo: http://admin.univmobile.fr/images/universities/logos/univ_paris1.jpg
+            image: null
+            imageWidth: 200
+            imageHeight: 100
+            markerType: green
+            markerIndex: A
+          - id: 931
+            name: Centre rue du Four
+            address: 13 rue du Four 75006 Paris
+            coordinates: 48.852771456599,2.3353672027588
+            latitude: 48.852771456599
+            longitude: 2.3353672027588
+            image: http://admin.univmobile.fr/uploads/poi/ac1b0ae97a6a010960a9c190f7a5f519bcc2ad34.jpg
+            imageWidth: 200
+            imageHeight: 300
+            markerType: green
+            markerIndex: B
+    - name: "Région : Île de France"
+      pois:
+        type: fr.univmobile.model.Poi[]
+        value:
+          - id: 21
+            name: Université Panthéon-Sorbonne - Paris I
+            address: 12 place du Panthéon 75231 PARIS
+            phone: 0144078000
+            coordinates: 49.84650925911,2.3459243774
+            latitude: 49.84650925911
+            longitude: 2.3459243774
+            url: Http://www.univ-paris1.fr/
+            logo: http://admin.univmobile.fr/images/universities/logos/univ_paris1.jpg 
+            markerType: green
+            markerIndex: C
+          - id: 2931
+            name: Centre rue du Four
+            address: 13 rue du Four 75006 Paris
+            coordinates: 49.852771456599,2.3353672027588
+            latitude: 49.852771456599
+            longitude: 2.3353672027588
+            markerType: green
+            markerIndex: D
+          - id: 211
+            name: Université Panthéon-Sorbonne - Paris I
+            address: 12 place du Panthéon 75231 PARIS
+            phone: 0144078000
+            coordinates: 49.84650925911,2.3459243774
+            latitude: 49.84650925911
+            longitude: 2.3459243774
+            url: Http://www.univ-paris1.fr/
+            logo: http://admin.univmobile.fr/images/universities/logos/univ_paris1.jpg 
+            markerType: green
+            markerIndex: C
+          - id: 29311
+            name: Centre rue du Four
+            address: 13 rue du Four 75006 Paris
+            coordinates: 49.852771456599,2.3353672027588
+            latitude: 49.852771456599
+            longitude: 2.3353672027588
+            markerType: green
+            markerIndex: D
+          - id: 212
+            name: Université Panthéon-Sorbonne - Paris I
+            address: 12 place du Panthéon 75231 PARIS
+            phone: 0144078000
+            coordinates: 49.84650925911,2.3459243774
+            latitude: 49.84650925911
+            longitude: 2.3459243774
+            url: Http://www.univ-paris1.fr/
+            logo: http://admin.univmobile.fr/images/universities/logos/univ_paris1.jpg 
+            markerType: green
+            markerIndex: C
+          - id: 29312
+            name: Centre rue du Four
+            address: 13 rue du Four 75006 Paris
+            coordinates: 49.852771456599,2.3353672027588
+            latitude: 49.852771456599
+            longitude: 2.3353672027588
+            markerType: green
+            markerIndex: D
+          - id: 213
+            name: Université Panthéon-Sorbonne - Paris I
+            address: 12 place du Panthéon 75231 PARIS
+            phone: 0144078000
+            coordinates: 49.84650925911,2.3459243774
+            latitude: 49.84650925911
+            longitude: 2.3459243774
+            url: Http://www.univ-paris1.fr/
+            logo: http://admin.univmobile.fr/images/universities/logos/univ_paris1.jpg 
+            markerType: green
+            markerIndex: C
+          - id: 29313
+            name: Centre rue du Four
+            address: 13 rue du Four 75006 Paris
+            coordinates: 49.852771456599,2.3353672027588
+            latitude: 49.852771456599
+            longitude: 2.3353672027588
+            markerType: green
+            markerIndex: D
