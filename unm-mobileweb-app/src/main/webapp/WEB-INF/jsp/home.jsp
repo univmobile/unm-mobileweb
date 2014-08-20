@@ -39,7 +39,8 @@
 
 <div id="div-gotoGeocampus">
 <div>
-	<a href="${baseURL}/geocampus">Géocampus</a>
+	<a id="link-geocampus"
+	   href="${baseURL}/geocampus">Géocampus</a>
 </div>
 </div>
 

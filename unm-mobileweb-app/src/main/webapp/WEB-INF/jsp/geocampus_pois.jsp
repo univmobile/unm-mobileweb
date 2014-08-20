@@ -334,6 +334,7 @@
 		
 		var div = $('#div-hidden div.infoWindow').clone();
 		
+		div.attr('id', 'div-infoWindow-' + poi.id);
 		div.children('span.name').html(poi.name);
 		div.children('span.address').html(poi.address);
 		div.click(function() { showDetails(poi.id); });
@@ -468,7 +469,8 @@
 
 <div class="h1 nav">
 <div class="up">
-<a href="#" onclick="$('body').removeClass('details map').addClass('list');">&lt;</a>
+<a href="#" onclick="$('body').removeClass('details map').addClass('list');"
+	id="link-up">&lt;</a>
 </div>
 <h1>POIs</h1>
 <div id="div-back">
@@ -603,11 +605,11 @@
 <div class="list bottomNav">
 <ul>
 	<li class="tab_list<c:if test="${mode == 'list'}"> selected</c:if>">
-		<a href="#">
+		<a href="#" id="link-tab_list">
 			Liste
 		</a>
 	<li class="tab_map<c:if test="${mode == 'map'}"> selected</c:if>">
-		<a href="#">
+		<a href="#" id="link-tab_map">
 			Plan
 		</a>
 </ul>

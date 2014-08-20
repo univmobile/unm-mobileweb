@@ -72,4 +72,43 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 
 		takeScreenshot("home2.png");
 	}
+
+	@Scenario("Géocampus")
+	@Test
+	public void Géocampus_000() throws Exception {
+
+		get("http://localhost:8380/unm-mobileweb/");
+
+		waitForElementById(60, "div-selectedUniversity");
+
+		takeScreenshot("home.png");
+
+		elementById("link-geocampus").click();
+
+		waitForElementById(60, "div-back");
+
+		takeScreenshot("geocampus_list.png");
+
+		elementById("link-tab_map").click();
+
+		pause(2000);
+
+		takeScreenshot("geocampus_map.png");
+
+		elementById("link-poiNav-3792").click(); // Cergy Pointoise
+
+		pause(2000);
+
+		takeScreenshot("geocampus_map_infoWindow.png");
+		
+		elementById("div-infoWindow-3792").click();
+
+		pause(2000);
+
+		takeScreenshot("geocampus_details.png");
+		
+		elementById("link-up").click();
+
+		takeScreenshot("geocampus_back_to_map.png");
+	}
 }
