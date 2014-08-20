@@ -414,7 +414,8 @@ div.bottomNav {
 	clear: both;
 }
 #div-map {
-	width: 100%;	
+	width: 100%;
+	height: 200px;	
 }
 div.infoWindow {
 	width: 15em;
