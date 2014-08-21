@@ -52,7 +52,7 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 
 	@Scenario("Aller-retour sur la page « Régions »")
 	@Test
-	public void Choix_de_région_000() throws Exception {
+	public void Choix_de_region_000() throws Exception {
 
 		get("http://localhost:8380/unm-mobileweb/");
 
@@ -75,7 +75,7 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 
 	@Scenario("Géocampus")
 	@Test
-	public void Géocampus_000() throws Exception {
+	public void Geocampus_000() throws Exception {
 
 		get("http://localhost:8380/unm-mobileweb/");
 
