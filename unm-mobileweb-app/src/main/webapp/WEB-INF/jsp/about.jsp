@@ -18,6 +18,9 @@ UnivMobile
 <p>
 ©2014 UNPIdF
 <p>
+<!-- e.g. Version 0.0.4-SNAPSHOT -->
+Version ${buildInfo.appVersion}
+<p>
 <!-- e.g. Build #34 — 2014/07/16 15:45 -->
 Build ${buildInfo.buildDisplayName} — ${buildInfo.buildId}
 <p>
