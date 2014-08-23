@@ -20,13 +20,11 @@
 			<groupId>fr.univmobile</groupId>
 			<artifactId>unm-mobileweb-app-local</artifactId>
 			<type>war</type>
-			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>fr.univmobile</groupId>
 			<artifactId>unm-backend-it-data</artifactId>
-			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

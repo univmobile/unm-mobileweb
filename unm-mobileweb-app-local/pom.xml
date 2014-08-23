@@ -17,17 +17,14 @@
 			<groupId>fr.univmobile</groupId>
 			<artifactId>unm-mobileweb-app</artifactId>
 			<type>war</type>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.univmobile</groupId>
 			<artifactId>unm-backend-client-jsonlocal</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.univmobile</groupId>
 			<artifactId>unm-backend-client-local</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 	
