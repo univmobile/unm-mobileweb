@@ -18,6 +18,12 @@
 			<type>war</type>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>fr.univmobile</groupId>
+			<artifactId>unm-backend-app</artifactId>
+			<type>war</type>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -100,7 +106,7 @@
 								</artifactItem>
 								<artifactItem>
 									<groupId>fr.univmobile</groupId>
-									<artifactId>unm-backend-app-noshib</artifactId>
+									<artifactId>unm-backend-app</artifactId>
 									<type>war</type>
 									<overWrite>true</overWrite>
 									<outputDirectory>${project.build.directory}/unm-backend-app</outputDirectory>
