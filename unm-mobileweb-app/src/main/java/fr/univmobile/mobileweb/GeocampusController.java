@@ -12,6 +12,7 @@ import fr.univmobile.backend.client.PoiGroup;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.web.commons.AbstractController;
 import fr.univmobile.web.commons.Paths;
+import fr.univmobile.web.commons.View;
 
 @Paths({ "geocampus", "geocampus/" })
 public class GeocampusController extends AbstractController {
@@ -27,7 +28,7 @@ public class GeocampusController extends AbstractController {
 	private final PoiClient pois;
 
 	@Override
-	public String action() throws IOException {
+	public View action() throws IOException {
 
 		setAttribute("mode", "list");
 
@@ -86,7 +87,7 @@ public class GeocampusController extends AbstractController {
 		 * 
 		 * setAttribute("selectedRegion", showSelectedRegion.selected()); }
 		 */
-		return "geocampus_pois.jsp";
+		return new View("geocampus_pois.jsp");
 	}
 
 	public static class Pois {

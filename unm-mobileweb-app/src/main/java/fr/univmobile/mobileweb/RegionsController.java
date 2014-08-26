@@ -15,6 +15,7 @@ import fr.univmobile.web.commons.HttpMethods;
 import fr.univmobile.web.commons.HttpParameter;
 import fr.univmobile.web.commons.HttpRequired;
 import fr.univmobile.web.commons.Paths;
+import fr.univmobile.web.commons.View;
 
 @Paths({ "regions", "regions/" })
 public class RegionsController extends AbstractController {
@@ -43,7 +44,7 @@ public class RegionsController extends AbstractController {
 	}
 
 	@Override
-	public String action() throws IOException {
+	public View action() throws IOException {
 
 		final Region[] r = regions.getRegions();
 
@@ -64,7 +65,7 @@ public class RegionsController extends AbstractController {
 
 				setAttribute("universities", universities);
 
-				return "universities.jsp";
+				return new View("universities.jsp");
 			}
 		}
 
@@ -75,7 +76,7 @@ public class RegionsController extends AbstractController {
 			setAttribute("selectedRegion", showSelectedRegion.selected());
 		}
 
-		return "regions.jsp";
+		return new View("regions.jsp");
 	}
 
 	@HttpMethods("GET")

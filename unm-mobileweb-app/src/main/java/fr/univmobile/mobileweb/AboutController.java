@@ -7,6 +7,7 @@ import java.io.IOException;
 import fr.univmobile.web.commons.AbstractController;
 import fr.univmobile.web.commons.BuildInfoUtils;
 import fr.univmobile.web.commons.Paths;
+import fr.univmobile.web.commons.View;
 
 @Paths({ "about", "about/" })
 public class AboutController extends AbstractController {
@@ -19,13 +20,13 @@ public class AboutController extends AbstractController {
 	private final String jsonURL;
 
 	@Override
-	public String action() throws IOException {
+	public View action() throws IOException {
 
 		setAttribute("buildInfo",
 				BuildInfoUtils.loadBuildInfo(getServletContext()));
 
 		setAttribute("jsonURL", jsonURL);
 
-		return "about.jsp";
+		return new View("about.jsp");
 	}
 }
