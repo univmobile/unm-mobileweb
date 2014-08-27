@@ -10,6 +10,7 @@ import fr.univmobile.backend.client.Region;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.backend.client.University;
 import fr.univmobile.web.commons.AbstractController;
+import fr.univmobile.web.commons.ControllerException;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
 import fr.univmobile.web.commons.HttpParameter;
@@ -44,7 +45,18 @@ public class RegionsController extends AbstractController {
 	}
 
 	@Override
-	public View action() throws IOException {
+	public View action() throws ControllerException {
+
+		try {
+
+			return actionWithIOException();
+
+		} catch (final IOException e) {
+			throw new ControllerException(e);
+		}
+	}
+
+	private View actionWithIOException() throws IOException {
 
 		final Region[] r = regions.getRegions();
 

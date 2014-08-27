@@ -11,6 +11,7 @@ import fr.univmobile.backend.client.PoiClient;
 import fr.univmobile.backend.client.PoiGroup;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.web.commons.AbstractController;
+import fr.univmobile.web.commons.ControllerException;
 import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
@@ -28,18 +29,27 @@ public class GeocampusController extends AbstractController {
 	private final PoiClient pois;
 
 	@Override
-	public View action() throws IOException {
+	public View action() throws ControllerException {
 
 		setAttribute("mode", "list");
 
-		setAttribute("map", new Map("48.84650925911,2.3459243774",
-				13));
+		setAttribute("map", new Map("48.84650925911,2.3459243774", 13));
 
 		final List<Pois> list = new ArrayList<Pois>();
 
 		setAttribute("pois", list);
-		
-		for (final PoiGroup poiGroup : pois.getPois()) {
+
+		final PoiGroup[] poiArray;
+
+		try {
+
+			poiArray = pois.getPois();
+
+		} catch (final IOException e) {
+			throw new ControllerException(e);
+		}
+
+		for (final PoiGroup poiGroup : poiArray) {
 
 			list.add(new Pois(poiGroup));
 		}
@@ -109,25 +119,25 @@ public class GeocampusController extends AbstractController {
 			return poiGroup.getPois();
 		}
 	}
-	
+
 	public static class Map {
-		
+
 		private Map(final String center, final int zoom) {
-			
-			this.center=center;
-			this.zoom=zoom;
+
+			this.center = center;
+			this.zoom = zoom;
 		}
-		
+
 		public String getCenter() {
-			
+
 			return center;
 		}
-		
+
 		public int getZoom() {
-			
+
 			return zoom;
 		}
-		
+
 		private final String center;
 		private final int zoom;
 	}

@@ -1,8 +1,7 @@
 package fr.univmobile.mobileweb;
 
-import java.io.IOException;
-
 import fr.univmobile.web.commons.AbstractController;
+import fr.univmobile.web.commons.ControllerException;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
 import fr.univmobile.web.commons.HttpParameter;
@@ -14,7 +13,7 @@ import fr.univmobile.web.commons.View;
 public class HomeController extends AbstractController {
 
 	@Override
-	public View action() throws IOException {
+	public View action() throws ControllerException {
 
 		return new View("home.jsp");
 	}
