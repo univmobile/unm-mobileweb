@@ -1,9 +1,11 @@
 package fr.univmobile.mobileweb;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.io.IOException;
+
 import fr.univmobile.web.commons.AbstractController;
 import fr.univmobile.web.commons.BuildInfoUtils;
-import fr.univmobile.web.commons.ControllerException;
 import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
@@ -18,7 +20,7 @@ public class AboutController extends AbstractController {
 	private final String jsonURL;
 
 	@Override
-	public View action() throws ControllerException {
+	public View action() throws IOException {
 
 		setAttribute("buildInfo",
 				BuildInfoUtils.loadBuildInfo(getServletContext()));

@@ -11,7 +11,6 @@ import fr.univmobile.backend.client.PoiClient;
 import fr.univmobile.backend.client.PoiGroup;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.web.commons.AbstractController;
-import fr.univmobile.web.commons.ControllerException;
 import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
@@ -29,7 +28,7 @@ public class GeocampusController extends AbstractController {
 	private final PoiClient pois;
 
 	@Override
-	public View action() throws ControllerException {
+	public View action() throws IOException {
 
 		setAttribute("mode", "list");
 
@@ -39,17 +38,7 @@ public class GeocampusController extends AbstractController {
 
 		setAttribute("pois", list);
 
-		final PoiGroup[] poiArray;
-
-		try {
-
-			poiArray = pois.getPois();
-
-		} catch (final IOException e) {
-			throw new ControllerException(e);
-		}
-
-		for (final PoiGroup poiGroup : poiArray) {
+		for (final PoiGroup poiGroup : pois.getPois()) {
 
 			list.add(new Pois(poiGroup));
 		}
