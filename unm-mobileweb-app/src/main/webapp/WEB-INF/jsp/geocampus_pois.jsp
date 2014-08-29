@@ -13,7 +13,7 @@
 
 </style>
 <script type="text/javascript" src="${baseURL}/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="${baseURL}/js/jquery-ui.js"></script>
+<script type="text/javascript" src="${baseURL}/js/jquery-ui-1.11.1.min.js"></script>
 <!--
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${API_KEY}"></script>
 -->
