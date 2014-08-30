@@ -1,3 +1,6 @@
 baseURL: ${baseURL}
 
+jsonURL: http://univmobile.vswip.com///unm-backend/json
+jsonBaseURL: http://univmobile.vswip.com/unm-backend/json
+
 #selectedUniversityId: up

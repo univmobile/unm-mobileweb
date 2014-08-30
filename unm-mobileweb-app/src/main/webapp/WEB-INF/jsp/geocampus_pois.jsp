@@ -46,7 +46,29 @@
 		id: ${poi.id}
 	},</c:forEach></c:forEach>];
 
-	// 1. LAYOUT
+	// 1. DATA
+	
+	/**
+	 *	return the POI with the given id, or null.
+	 */
+	function getPoiById(poiId) {
+	
+		console.log('poiId: ' + poiId);
+		
+		for (var i = 0; i < pois.length; ++i) {
+			
+			var poi = pois[i];
+			
+			if (poi.id == poiId) {
+			
+				return poi;
+			}
+		}
+		
+		return null;
+	}
+	
+	// 2. LAYOUT
 	
 	function resizeHeights() {
 	
@@ -83,67 +105,57 @@
 
 		swallowNextClick = false;
 
-		for (var i = 0; i < pois.length; ++i) {
-			
-			var poi = pois[i];
-			
-			if (poi.id == poiId) {
+		var poi = getPoiById(poiId);
 		
-				selectPoi(poi);
+		if (poi != null) {
+		
+			selectPoi(poi);
 							
-				var newCenter = new google.maps.LatLng(poi.lat, poi.lng);
+			var newCenter = new google.maps.LatLng(poi.lat, poi.lng);
 				
-				if (newCenter.equals(map.getCenter())) {
+			if (newCenter.equals(map.getCenter())) {
 
-					if (infoWindow == null || infoWindow.poi.id != poiId) {
+				if (infoWindow == null || infoWindow.poi.id != poiId) {
 				
-						swallowNextClick = true; // Do not toggle
-					}
+					swallowNextClick = true; // Do not toggle
 				}
-				
-				openInfoWindow(poi);	
-				
-				break;
 			}
+				
+			openInfoWindow(poi);	
 		}
 	}
 	
 	function onclickPoi(poiId) {
 
-		for (var i = 0; i < pois.length; ++i) {
-			
-			var poi = pois[i];
-			
-			if (poi.id == poiId) {
+		var poi = getPoiById(poiId);
 		
-				selectPoi(poi);
+		if (poi != null) {
+		
+			selectPoi(poi);
 			
-				var newCenter = new google.maps.LatLng(poi.lat, poi.lng);
+			var newCenter = new google.maps.LatLng(poi.lat, poi.lng);
 				
-				if (newCenter.equals(map.getCenter())) {
+			if (newCenter.equals(map.getCenter())) {
 
-					if (infoWindow != null && infoWindow.poi.id == poiId) {
+				if (infoWindow != null && infoWindow.poi.id == poiId) {
 				
-						if (!swallowNextClick) {
+					if (!swallowNextClick) {
 						
-							infoWindow.close(); // Toggle infoWindow
+						infoWindow.close(); // Toggle infoWindow
 					
-							infoWindow = null;
-						}
-
-					} else {
-				
-						openInfoWindow(poi);	
+						infoWindow = null;
 					}
-				
+
 				} else {
-				
-					map.setCenter(newCenter);
 				
 					openInfoWindow(poi);	
 				}
 				
-				break;
+			} else {
+				
+				map.setCenter(newCenter);
+				
+				openInfoWindow(poi);	
 			}
 		}
 		
@@ -156,6 +168,8 @@
 	function selectPoi(poi) {
 	
 		var tdId = 'td-poi-' + poi.id;
+		
+		console.log('tdId: ' + tdId);
 		
 		$('td.poi').each(function() {			
 			$(this).toggleClass('selected', $(this).attr('id') == tdId);
@@ -458,6 +472,11 @@
 		});
 
 		// 9. END
+		
+		<c:if test="${not empty selectedPoiId}"> <!-- used in devel tests -->
+		selectPoi(getPoiById(${selectedPoiId}));
+		showDetails(${selectedPoiId});
+		</c:if>
 	}
 	
 	google.maps.event.addDomListener(window, 'load', initialize);

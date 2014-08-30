@@ -8,7 +8,11 @@ buildInfo:
     buildDisplayName: "#34"
     buildId: 2014/07/16 15:45
     gitCommitId: 6fa7922938635ec7dab6f894e7eaea4d1689ee70
+    appVersion: 0.0.4-SNAPSHOT
       
+jsonURL: http://univmobile.vswip.com///unm-backend/json
+jsonBaseURL: http://univmobile.vswip.com/unm-backend/json
+
 lastDataRefresh:
   type: fr.univmobile.model.DataRefresh
   value:
