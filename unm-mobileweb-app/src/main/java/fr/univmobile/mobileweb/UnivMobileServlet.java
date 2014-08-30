@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
+import fr.univmobile.backend.client.HomeClient;
 import fr.univmobile.backend.client.PoiClient;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.commons.DependencyInjection;
@@ -19,9 +20,9 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 	 */
 	private static final long serialVersionUID = -3778148036214513471L;
 
-	private RegionClient regions;
-	
+	private RegionClient regions;	
 	private PoiClient pois;
+	private HomeClient home;
 	
 
 	@Override
@@ -34,6 +35,9 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 
 		final String jsonURL = dependencyInjection.getInject(String.class).ref(
 				"jsonURL");
+
+		home = dependencyInjection.getInject(HomeClient.class).into(
+				UnivMobileServlet.class);
 
 		regions = dependencyInjection.getInject(RegionClient.class).into(
 				UnivMobileServlet.class);
@@ -52,7 +56,7 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 
 		super.init( //
 				new HomeController(), //
-				new AboutController(jsonURL), //
+				new AboutController(jsonURL, home), //
 				new RegionsController(regions), //
 				new GeocampusController(regions,pois) //
 		);

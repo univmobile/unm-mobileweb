@@ -60,6 +60,18 @@
 			<param-name>inject:String into:PoiJSONHttpClient</param-name>
 			<param-value>${ref:poisJsonURL}</param-value>
 		</init-param>
+		<init-param>
+			<param-name>inject:HomeClient into:UnivMobileServlet</param-name>
+			<param-value>HomeClientFromJSON</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:HomeJSONClient into:RegionClientFromJSON</param-name>
+			<param-value>HomeJSONHttpClient</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:String into:HomeJSONHttpClient</param-name>
+			<param-value>${ref:jsonURL}</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UnivMobileServlet</servlet-name>

@@ -25,9 +25,11 @@ Version ${buildInfo.appVersion}
 Build ${buildInfo.buildDisplayName} — ${buildInfo.buildId}
 <p>
 JSON: ${jsonURL}
+<br>
+BASE: ${jsonBaseURL}
 <p>
 https://github.com/univmobile/unm-mobileweb
-<p>
+<br>
 <!-- e.g. 6fa7922938635ec7dab6f894e7eaea4d1689ee70 -->
 ${buildInfo.gitCommitId}
 </div>
