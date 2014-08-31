@@ -1,6 +1,6 @@
 baseURL: ${baseURL}
 
-jsonURL: http://univmobile.vswip.com///unm-backend/json
-jsonBaseURL: http://univmobile.vswip.com/unm-backend/json
+jsonURL: http://localhost:8380/unm-backend/json
+jsonBaseURL: ERREUR
 
 #selectedUniversityId: up
