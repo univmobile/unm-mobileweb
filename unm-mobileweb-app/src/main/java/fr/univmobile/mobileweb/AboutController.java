@@ -5,13 +5,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.IOException;
 
 import fr.univmobile.backend.client.HomeClient;
-import fr.univmobile.web.commons.AbstractController;
+import fr.univmobile.web.commons.AbstractJspController;
 import fr.univmobile.web.commons.BuildInfoUtils;
 import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
 @Paths({ "about", "about/" })
-public class AboutController extends AbstractController {
+public class AboutController extends AbstractJspController {
 
 	public AboutController(final String jsonURL, final HomeClient homeClient) {
 

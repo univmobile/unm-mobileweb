@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import fr.univmobile.backend.client.Region;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.backend.client.University;
-import fr.univmobile.web.commons.AbstractController;
+import fr.univmobile.web.commons.AbstractJspController;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
 import fr.univmobile.web.commons.HttpParameter;
@@ -18,7 +18,7 @@ import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
 @Paths({ "regions", "regions/" })
-public class RegionsController extends AbstractController {
+public class RegionsController extends AbstractJspController {
 
 	public RegionsController(final RegionClient regions) {
 

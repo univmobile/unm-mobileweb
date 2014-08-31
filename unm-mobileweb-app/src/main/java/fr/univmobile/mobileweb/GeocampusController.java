@@ -10,12 +10,12 @@ import fr.univmobile.backend.client.Poi;
 import fr.univmobile.backend.client.PoiClient;
 import fr.univmobile.backend.client.PoiGroup;
 import fr.univmobile.backend.client.RegionClient;
-import fr.univmobile.web.commons.AbstractController;
+import fr.univmobile.web.commons.AbstractJspController;
 import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
 @Paths({ "geocampus", "geocampus/" })
-public class GeocampusController extends AbstractController {
+public class GeocampusController extends AbstractJspController {
 
 	public GeocampusController(final RegionClient regions, final PoiClient pois) {
 

@@ -2,7 +2,7 @@ package fr.univmobile.mobileweb;
 
 import java.io.IOException;
 
-import fr.univmobile.web.commons.AbstractController;
+import fr.univmobile.web.commons.AbstractJspController;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
 import fr.univmobile.web.commons.HttpParameter;
@@ -11,7 +11,7 @@ import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
 @Paths({ "" })
-public class HomeController extends AbstractController {
+public class HomeController extends AbstractJspController {
 
 	@Override
 	public View action() throws IOException {
