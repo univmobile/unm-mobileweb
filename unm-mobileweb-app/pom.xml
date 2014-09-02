@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>fr.univmobile</groupId>
 		<artifactId>unm-webapp-parent</artifactId>
-		<version>0.0.3</version>
+		<version>0.0.4</version>
 		<relativePath/>
 	</parent>
 
@@ -17,10 +17,20 @@
 			<groupId>fr.univmobile</groupId>
 			<artifactId>unm-webapp-commons</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>fr.univmobile</groupId>
+			<artifactId>unm-mobileweb-core</artifactId>
+		</dependency>
 	</dependencies>
 	
 	<build>
 		<finalName>unm-mobileweb</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -80,7 +90,7 @@
         J2EE webapp for UnivMobile mobile web app.
     </description>
 	<url>
-        http://univmobile.vswip.com/nexus/content/sites/pub/${project.artifactId}/${project.version}
+        http://univmobile.vswip.com/nexus/content/sites/pub/${project.artifactId}/${project.version}/
     </url>
 
 	<scm>

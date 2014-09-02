@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Language" content="en">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>À propos d’UnivMobile</title>
-<link type="text/css" rel="stylesheet" href="${baseURL}/css/styles.css">
+<link type="text/css" rel="stylesheet" href="${baseURL}/css/mobile.css">
 </head>
 <body id="body-about">
 <div class="body">
@@ -18,12 +18,18 @@ UnivMobile
 <p>
 ©2014 UNPIdF
 <p>
+<!-- e.g. Version 0.0.4-SNAPSHOT -->
+Version ${buildInfo.appVersion}
+<p>
 <!-- e.g. Build #34 — 2014/07/16 15:45 -->
 Build ${buildInfo.buildDisplayName} — ${buildInfo.buildId}
 <p>
+JSON: ${jsonURL}
 <br>
-https://github.com/univmobile/unm-mobileweb
+BASE: ${jsonBaseURL}
 <p>
+https://github.com/univmobile/unm-mobileweb
+<br>
 <!-- e.g. 6fa7922938635ec7dab6f894e7eaea4d1689ee70 -->
 ${buildInfo.gitCommitId}
 </div>
@@ -44,6 +50,6 @@ Données récupérées
 	href="${baseURL}/?univ=${selectedUniversityId}">OK</a>
 </div>
 
-</div>
+</div> <!-- end of div.body -->
 </body>
 </html>

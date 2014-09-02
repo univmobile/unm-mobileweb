@@ -1,10 +1,24 @@
 package fr.univmobile.mobileweb.it;
 
+import java.io.File;
+
+import org.junit.Before;
 import org.junit.Test;
 
+import fr.univmobile.backend.it.TestBackend;
 import fr.univmobile.it.commons.AppiumSafariEnabledTest;
 
 public class AboutPageTest extends AppiumSafariEnabledTest {
+
+	@Before
+	public void setUpData() throws Exception {
+
+		// "/tmp/unm-mobileweb/dataDir"
+		final String dataDir = TestBackend.readBackendAppDataDir(new File(
+				"target", "unm-backend-app/WEB-INF/web.xml"));
+
+		TestBackend.setUpData("001", new File(dataDir));
+	}
 
 	@Test
 	public void testAboutPage_display() throws Exception {

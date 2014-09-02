@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 
@@ -11,7 +10,67 @@
 		<load-on-startup>1</load-on-startup>
 		<init-param>
 			<param-name>baseURL</param-name>
-			<param-value>${baseURL}</param-value>
+			<param-value>http://localhost:8380/unm-mobileweb/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:String ref:jsonURL</param-name>
+			<param-value>http://localhost:8380/unm-backend/json</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:String ref:regionsJsonURL</param-name>
+			<param-value>${ref:jsonURL}/regions</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:String ref:poisJsonURL</param-name>
+			<param-value>${ref:jsonURL}/pois</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject-packages</param-name>
+			<param-value>
+				fr.univmobile.mobileweb
+				fr.univmobile.commons.datasource
+				fr.univmobile.commons.datasource.impl
+				fr.univmobile.backend.core
+				fr.univmobile.backend.client
+				fr.univmobile.backend.client.json
+				fr.univmobile.backend.client.http
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:RegionClient into:UnivMobileServlet</param-name>
+			<param-value>RegionClientFromJSON</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:RegionJSONClient into:RegionClientFromJSON</param-name>
+			<param-value>RegionJSONHttpClient</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:String into:RegionJSONHttpClient</param-name>
+			<param-value>${ref:regionsJsonURL}</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:PoiClient into:UnivMobileServlet</param-name>
+			<param-value>PoiClientFromJSON</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:PoiJSONClient into:PoiClientFromJSON</param-name>
+			<param-value>PoiJSONHttpClient</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:String into:PoiJSONHttpClient</param-name>
+			<param-value>${ref:poisJsonURL}</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:HomeClient into:UnivMobileServlet</param-name>
+			<param-value>HomeClientFromJSON</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:HomeJSONClient into:RegionClientFromJSON</param-name>
+			<param-value>HomeJSONHttpClient</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:String into:HomeJSONHttpClient</param-name>
+			<param-value>${ref:jsonURL}</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -35,7 +94,7 @@
 	<servlet-mapping>
 		<servlet-name>PlainContentServlet</servlet-name>
 		<url-pattern>/js</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>PlainContentServlet</servlet-name>
 		<url-pattern>/js/*</url-pattern>

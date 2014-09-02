@@ -13,6 +13,7 @@ import java.io.File;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -20,9 +21,36 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import fr.univmobile.backend.it.TestBackend;
 import fr.univmobile.it.commons.EnvironmentUtils;
 
 public class SimpleAppiumTest {
+
+	@Before
+	public void setUp() throws Exception {
+
+		// "http://localhost:8380/unm-backend/"
+		baseURL = TestBackend.readMobilewebAppBaseURL(new File("target",
+				"unm-mobileweb-app/WEB-INF/web.xml"));
+
+		// "/tmp/unm-mobileweb/dataDir"
+		final String dataDir = TestBackend.readBackendAppDataDir(new File(
+				"target", "unm-backend-app/WEB-INF/web.xml"));
+
+		TestBackend.setUpData("001", new File(dataDir));
+
+		final String logFile = TestBackend.readLog4jLogFile(new File("target",
+				"unm-mobileweb-app/WEB-INF/classes/log4j.xml"));
+
+		System.out.println("Log file: " + logFile);
+
+		final String backendLogFile = TestBackend.readLog4jLogFile(new File(
+				"target", "unm-backend-app/WEB-INF/classes/log4j.xml"));
+
+		System.out.println("Backend Log file: " + backendLogFile);
+	}
+
+	private String baseURL;
 
 	@Test
 	public void testAppiumSimple() throws Exception {
@@ -34,7 +62,7 @@ public class SimpleAppiumTest {
 		capabilities.setCapability(PLATFORM, "Mac");
 		capabilities.setCapability(PLATFORM_NAME, "iOS");
 		capabilities.setCapability(PLATFORM_VERSION,
-				EnvironmentUtils.getCurrentPlatformVersion());
+				EnvironmentUtils.getCurrentPlatformVersion("iOS"));
 
 		capabilities.setCapability(DEVICE, "iPhone Simulator");
 		capabilities.setCapability(DEVICE_NAME, //
@@ -48,7 +76,7 @@ public class SimpleAppiumTest {
 				"http://localhost:4723/wd/hub"), capabilities);
 		try {
 
-			driver.get("http://localhost:8380/unm-mobileweb/");
+			driver.get(baseURL);
 
 			new WebDriverWait(driver, 60).until(ExpectedConditions
 					.presenceOfElementLocated(By.id( //

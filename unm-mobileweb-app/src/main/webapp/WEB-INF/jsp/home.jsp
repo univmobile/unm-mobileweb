@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Language" content="en">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UnivMobile</title>
-<link type="text/css" rel="stylesheet" href="${baseURL}/css/styles.css">
+<link type="text/css" rel="stylesheet" href="${baseURL}/css/mobile.css">
 </head>
 <body id="body-home">
 <div class="body">
@@ -22,7 +22,14 @@
 </div>
 
 <div id="div-selectedUniversity">
-Aucune université sélectionnée
+<c:choose>
+<c:when test="${selectedUniversityId != null}">
+	${selectedUniversityLabel}
+</c:when>
+<c:otherwise>
+	Aucune université sélectionnée
+</c:otherwise>
+</c:choose>
 </div>
 
 <div id="div-choisir">
@@ -30,6 +37,13 @@ Aucune université sélectionnée
 	href="${baseURL}/regions/?univ=${selectedUniversityId}">Choisir…</a>
 </div>
 
+<div id="div-gotoGeocampus">
+<div>
+	<a id="link-geocampus"
+	   href="${baseURL}/geocampus">Géocampus</a>
 </div>
+</div>
+
+</div> <!-- end of div.body -->
 </body>
 </html>

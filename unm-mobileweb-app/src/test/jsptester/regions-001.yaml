@@ -1,0 +1,17 @@
+baseURL: ${baseURL}
+
+#selectedUniversityId: up
+#selectedUniversityLabel: Université de Poitiers      
+
+regions:
+   type: fr.univmobile.backend.client.Region[]
+   value:
+     - id: bretagne
+       label: Bretagne
+       url: http://univmobile.vswip.com/unm-backend-mock/listUniversities_bretagne
+     - id: ile_de_france
+       label: Île de France
+       url: http://univmobile.vswip.com/unm-backend-mock/listUniversities_ile_de_france
+     - id: unrpcl
+       label: Limousin/Poitou-Charentes
+       url: http://univmobile.vswip.com/unm-backend-mock/listUniversities_unrpcl

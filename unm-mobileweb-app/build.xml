@@ -1,57 +1,31 @@
-<project name="unm-mobileweb-app" default="deploy-local">
+<project name="unm-mobileweb-app" default="repackage_war">
 
-	<exec executable="hostname" outputproperty="hostname"/>
+	<property name="warFile" location="target/unm-mobileweb.war"/>
+	<property name="dataDir" value="/tmp/unm-mobileweb/data"/>
+	<property name="baseURL" value="http://localhost:8080/unm-mobileweb/"/>
+	<property name="jsonURL" value="http://localhost:8080/unm-backend/json"/>
 	
-	<property name="propertyFile" location="src/ant/${user.name}.${hostname}.properties"/>
-
-	<echo>Reading properties from: ${propertyFile}</echo>
+	<target name="repackage_war">
 	
-	<!-- Property file: e.g. "/src/ant/dandriana.Davids-MacBook-Pro.local.properties" -->
-	<property file="${propertyFile}" />
-
-	<fail message="tomcatManager.password is not set." unless="tomcatManager.password"/>
+		<delete dir="target/unm-mobileweb"/>
 		
-	<path id="catalina-ant.classpath">
-		<fileset dir="${catalina.home}/lib/">
-			<include name="catalina-ant.jar" />
-			<include name="tomcat-coyote.jar" />
-			<include name="tomcat-util.jar" />
-		</fileset>
-		<fileset dir="${catalina.home}/bin/">
-			<include name="tomcat-juli.jar" />
-		</fileset>
-	</path>
-
-	<taskdef name="tomcat-manager-list" classname="org.apache.catalina.ant.ListTask" classpathref="catalina-ant.classpath" />
-
-	<taskdef name="tomcat-manager-deploy" classname="org.apache.catalina.ant.DeployTask" classpathref="catalina-ant.classpath" />
-
-	<taskdef name="tomcat-manager-undeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="catalina-ant.classpath" />
-
-	<taskdef name="tomcat-manager-reload" classname="org.apache.catalina.ant.ReloadTask" classpathref="catalina-ant.classpath" />
-
-	<!-- ${contextRoot}: e.g. "/", "/toto", etc. -->
-	<property name="contextRoot" value="/unm-mobileweb" />
-
-	<target name="list" description="List installed applications on servlet container">
-
-		<echo>catalina.home: ${catalina.home}</echo>
-
-		<tomcat-manager-list url="${tomcatManager.url}" username="${tomcatManager.username}" password="${tomcatManager.password}" />
-
-	</target>
-
-	<target name="deploy-local" description="Deploy the webapp to the local Tomcat instance">
-
-		<property name="war.file" location="target/unm-mobileweb-app.war" />
-
-<!--
-		<tomcat-manager-undeploy path="${contextRoot}" url="${tomcatManager.url}" username="${tomcatManager.username}" password="${tomcatManager.password}" />
--->
-
-		<tomcat-manager-deploy path="${contextRoot}" url="${tomcatManager.url}" 
-		update="true" localWar="${war.file}" username="${tomcatManager.username}" password="${tomcatManager.password}" />
-
-	</target>
+		<unzip dest="target/unm-mobileweb" src="${warFile}"/>
+		
+		<xslt style="src/main/xslt/repackage_war.xsl"
+				in="target/unm-mobileweb/WEB-INF/web.xml"
+				out="target/unm-mobileweb/WEB-INF/web.xml-repackaged">
+			<param name="dataDir" expression="${dataDir}"/>
+			<param name="baseURL" expression="${baseURL}"/>
+			<param name="jsonURL" expression="${jsonURL}"/>
+		</xslt>
+		
+		<move overwrite="true" tofile="target/unm-mobileweb/WEB-INF/web.xml"
+				file="target/unm-mobileweb/WEB-INF/web.xml-repackaged"/>
+			
+		<zip destfile="${warFile}">
+			<fileset dir="target/unm-mobileweb"/>
+		</zip>
+		
+	</target>	
 
 </project>
