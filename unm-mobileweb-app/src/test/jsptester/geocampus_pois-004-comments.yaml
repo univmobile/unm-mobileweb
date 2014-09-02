@@ -14,7 +14,9 @@ map:
     center: 48.84650925911,2.3459243774
     zoom: 13
 
-mode: map
+selectedPoiId: 1
+
+mode: comments
 
 pois:
   type: fr.univmobile.model.PoiCategory[]
@@ -54,12 +56,14 @@ pois:
             imageHeight: 300
             markerType: green
             markerIndex: B
+            commentsUrl: http://192.168.0.40:8080/unm-backend-mock/comments2
     - name: "Région : Île de France"
       pois:
         type: fr.univmobile.model.Poi[]
         value:
           - id: 21
             name: Université Panthéon-Sorbonne - Paris I
+            address: 12 place du Panthéon 75231 PARIS
             phone: 0144078000
             coordinates: 49.84650925911,2.3459243774
             latitude: 49.84650925911
@@ -76,6 +80,7 @@ pois:
             longitude: 2.3353672027588
             markerType: green
             markerIndex: D
+            commentsUrl: http://192.168.0.40:8080/unm-backend-mock/comments3
           - id: 211
             name: Université Panthéon-Sorbonne - Paris I
             address: 12 place du Panthéon 75231 PARIS

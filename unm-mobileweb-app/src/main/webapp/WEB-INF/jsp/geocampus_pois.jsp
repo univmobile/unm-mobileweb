@@ -43,7 +43,8 @@
 		url: "${poi.url}",</c:if>
 		markerType: "${poi.markerType}",
 		markerIndex: "${poi.markerIndex}",
-		id: ${poi.id}
+		id: ${poi.id},
+		commentsUrl: "${poi.commentsUrl}"
 	},</c:forEach></c:forEach>];
 
 	// 1. DATA
@@ -162,11 +163,15 @@
 		swallowNextClick = false;
 	}
 
+	var selectedPoi;
+	
 	/**
 	 *	select the corresponding POI within the list.
 	 */
 	function selectPoi(poi) {
 	
+		selectedPoi = poi;
+		
 		var tdId = 'td-poi-' + poi.id;
 		
 		console.log('tdId: ' + tdId);
@@ -192,17 +197,7 @@
 	
 	function showDetails(poiId) {
 		
-		var poi = null;
-		
-		for (var i = 0; i < pois.length; ++i) {
-		
-			if (pois[i].id == poiId) {
-			
-				poi = pois[i];
-				
-				break;
-			}
-		}
+		var poi = getPoiById(poiId);
 		
 		if (poi == null) return;
 	
@@ -231,7 +226,7 @@
 	
 		// UPDATE CONTEXT
 		
-		$('body').removeClass('list map').addClass('details');
+		$('body').removeClass('list map comments').addClass('details');
 		
 		$('div.bottomNav li.tab_details').addClass('selected');
 		
@@ -285,6 +280,41 @@
 		$('#div-details div.field.' + fieldName)
 			.toggleClass('hidden', content == null)
 			.children('div.content').html(content);
+	}
+
+	function showComments(poiId) {
+		
+		var poi = getPoiById(poiId);
+		
+		if (poi == null) return;
+	
+		var currentMode = 'list';
+		
+		if ($('body').hasClass('map')) currentMode = 'map';
+		
+		// "BACK"
+		$('div.h1.nav div.up a').click(function() {
+		
+			$('div.bottomNav li').removeClass('selected');
+			
+			$('div.bottomNav li.tab_' + currentMode).addClass('selected');
+		
+			$('body').removeClass('comments details list map').addClass(currentMode);
+			
+			selectPoi(poi);
+		});
+	
+		// UPDATE CONTEXT
+		
+		$('body').removeClass('list map details').addClass('comments');
+		
+		$('div.bottomNav li.tab_comments').addClass('selected');
+		
+		// $('#div-comments').removeClass('hidden');
+		
+		$('#div-comments div.name').html(poi.name);
+		
+		//$('#div-comments div.field.active span.id').html(poi.id);		
 	}
 	
 	function getSelectedLiPoiId() {
@@ -383,6 +413,94 @@
 		infoWindow.open(map, poi.marker);
 	}
 	
+	function loadPoiComments(poi) {
+	
+		var timeline = $('#div-comments-timeline');
+		
+		console.log('poi: ' + poi);
+		
+		console.log('poi.commentsUrl: ' + poi.commentsUrl);
+		
+		if (poi == null) {
+		
+			timeline.html('');
+			
+			return;
+		}
+		
+		$.ajax({
+			url: poi.commentsUrl,
+			dataType: 'json',
+			error: function(jqXHR, textStatus, errorThrown) {
+
+				var divError = $(document.createElement('div'));
+				var divErrorThrown = $(document.createElement('div'));
+					
+				divError.addClass('error').html(
+					'Une erreur s’est produite lors de la récupération des commentaires.'
+				);
+				
+				divError.append(divErrorThrown);
+				
+				divErrorThrown.addClass('errorThrown').html(
+					textStatus + ': ' + errorThrown
+				);
+				
+				timeline.html(divError);
+			},
+			success: function(json) {
+				
+				var comments = json.comments;
+				
+				// console.log('setComments');
+			
+				var ul = $(document.createElement('ul'));
+				
+				for (var i = 0; i < comments.length; ++i) {
+				
+					var comment = comments[i];
+					
+					var li = $(document.createElement('li'));
+					
+					ul.append(li);
+					
+					var imgProfileImage = $(document.createElement('img'));
+					var divDisplayName = $(document.createElement('div'));
+					var divUsername = $(document.createElement('div'));
+					var divText = $(document.createElement('div'));
+					var divTimestamp = $(document.createElement('div'));
+					var anchorTimestamp = $(document.createElement('a'));
+					
+					li.append(imgProfileImage);
+					li.append(divDisplayName);
+					li.append(divUsername);
+					li.append(divText);
+					li.append(divTimestamp);
+					
+					imgProfileImage.addClass('profileImage');
+					if (comment.author.profileImage != null) {
+						imgProfileImage.attr('src', comment.author.profileImage.url);
+					}
+					divDisplayName.addClass('displayName')
+						.html(comment.author.displayName);
+					divUsername.addClass('username')
+						.html('@' + comment.author.username);
+					divTimestamp.addClass('timestamp')
+						.append(anchorTimestamp);
+					anchorTimestamp.attr('href', comment.url)
+						.attr('title', comment.postedAt)
+						.html(comment.displayPostedAt);
+						
+					var message = comment.text;
+					
+					divText.addClass('text').html(message);
+				}
+				
+				timeline.html(ul); // Erase previous content
+			}
+		});
+	}
+
 	// 8. INIT
 	
 	function initialize() {
@@ -461,21 +579,43 @@
 		$('div.bottomNav li.tab_list').click(function() {
 			$('div.bottomNav li.tab_list').addClass('selected');
 			$('div.bottomNav li.tab_map').removeClass('selected');
-			$('body').removeClass('map details').addClass('list');
+			$('body').removeClass('map details comments').addClass('list');
 		});
 	
 		$('div.bottomNav li.tab_map').click(function() {
 			$('div.bottomNav li.tab_list').removeClass('selected');
 			$('div.bottomNav li.tab_map').addClass('selected');
-			$('body').removeClass('list details').addClass('map');
+			$('body').removeClass('list details comments').addClass('map');
 			resizeHeights();
+		});
+
+		$('div.bottomNav li.tab_details').click(function() {
+			$('div.bottomNav li.tab_details').addClass('selected');
+			$('div.bottomNav li.tab_comments').removeClass('selected');
+			$('body').removeClass('map list comments').addClass('details');
+		});
+
+		$('div.bottomNav li.tab_comments').click(function() {
+			$('div.bottomNav li.tab_details').removeClass('selected');
+			$('div.bottomNav li.tab_comments').addClass('selected');
+			$('body').removeClass('map list details').addClass('comments');
+			loadPoiComments(selectedPoi);
 		});
 
 		// 9. END
 		
 		<c:if test="${not empty selectedPoiId}"> <!-- used in devel tests -->
-		selectPoi(getPoiById(${selectedPoiId}));
-		showDetails(${selectedPoiId});
+			selectPoi(getPoiById(${selectedPoiId}));
+		<c:choose>
+		<c:when test="${mode == 'details'}">
+			showDetails(${selectedPoiId});
+		</c:when>
+		<c:when test="${mode == 'comments'}">
+			console.log('comments');
+			loadPoiComments(selectedPoi);
+			showComments(${selectedPoiId});
+		</c:when>
+		</c:choose>
 		</c:if>
 	}
 	
@@ -522,7 +662,7 @@
 </c:forEach>
 </c:forEach>
 </tbody>
-</table>
+</table> <!-- end of table.pois -->
 
 <div id="div-map"></div>
 
@@ -579,7 +719,26 @@
 	-->
 	<div class="field map" id="div-detailsMap">		
 	</div>
-</div>
+</div> <!-- end of #div-details -->
+
+<div id="div-comments">
+
+	<div class="field name"></div>
+	
+	<div id="div-comments-timeline"></div>
+	
+	<!--
+	<div id="div-comments-buttons">
+	
+	<button id="button-addComment" onclick="openAddCommentDialog(); return false;">
+		Ajouter un commentaire…
+	</button>
+	
+	</div>
+	-->
+	<!-- end of #div-comments-buttons -->
+	
+</div> <!-- end of #div-comments -->
 
 <div class="bottom">
 
@@ -611,11 +770,11 @@
 <div class="details bottomNav">
 <ul>
 	<li class="tab_details<c:if test="${mode == 'details'}"> selected</c:if>">
-		<a href="#">
+		<a href="#" id="link-tab_details">
 			Détails
 		</a>
 	<li class="tab_comments<c:if test="${mode == 'comments'}"> selected</c:if>">
-		<a href="#">
+		<a href="#" id="link-tab_comments">
 			Commentaires
 		</a>
 </ul>
