@@ -1,6 +1,10 @@
 package fr.univmobile.mobileweb.it;
 
+import static fr.univmobile.backend.core.impl.ConnectionType.MYSQL;
+
 import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +14,7 @@ import fr.univmobile.it.commons.AppiumSafariEnabledTest;
 import fr.univmobile.it.commons.DeviceNames;
 import fr.univmobile.it.commons.Scenario;
 import fr.univmobile.it.commons.Scenarios;
+import fr.univmobile.testutil.PropertiesUtils;
 
 @Scenarios("Scénarios simples")
 @DeviceNames({ "iPhone Retina (3.5-inch)", "iPhone Retina (4-inch)" })
@@ -22,7 +27,17 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 		final String dataDir = TestBackend.readBackendAppDataDir(new File(
 				"target", "unm-backend-app/WEB-INF/web.xml"));
 
-		TestBackend.setUpData("001", new File(dataDir));
+		final Connection cxn = DriverManager.getConnection(
+				PropertiesUtils.getTestProperty("mysqlUrl"),
+				PropertiesUtils.getTestProperty("mysqlUsername"),
+				PropertiesUtils.getTestProperty("mysqlPassword"));
+		try {
+
+			TestBackend.setUpData("001", new File(dataDir), MYSQL, cxn);
+
+		} finally {
+			cxn.close();
+		}
 	}
 
 	@Scenario("Aller-retour sur la page « À Propos »")

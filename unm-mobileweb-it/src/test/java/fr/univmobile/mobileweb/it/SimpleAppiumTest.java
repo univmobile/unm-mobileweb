@@ -1,5 +1,6 @@
 package fr.univmobile.mobileweb.it;
 
+import static fr.univmobile.backend.core.impl.ConnectionType.MYSQL;
 import static fr.univmobile.it.commons.AppiumCapabilityType.DEVICE;
 import static fr.univmobile.it.commons.AppiumCapabilityType.DEVICE_NAME;
 import static fr.univmobile.it.commons.AppiumCapabilityType.PLATFORM_NAME;
@@ -11,6 +12,8 @@ import io.appium.java_client.AppiumDriver;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
@@ -23,6 +26,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import fr.univmobile.backend.it.TestBackend;
 import fr.univmobile.it.commons.EnvironmentUtils;
+import fr.univmobile.testutil.PropertiesUtils;
 
 public class SimpleAppiumTest {
 
@@ -37,7 +41,17 @@ public class SimpleAppiumTest {
 		final String dataDir = TestBackend.readBackendAppDataDir(new File(
 				"target", "unm-backend-app/WEB-INF/web.xml"));
 
-		TestBackend.setUpData("001", new File(dataDir));
+		final Connection cxn = DriverManager.getConnection(
+				PropertiesUtils.getTestProperty("mysqlUrl"),
+				PropertiesUtils.getTestProperty("mysqlUsername"),
+				PropertiesUtils.getTestProperty("mysqlPassword"));
+		try {
+
+			TestBackend.setUpData("001", new File(dataDir), MYSQL, cxn);
+
+		} finally {
+			cxn.close();
+		}
 
 		final String logFile = TestBackend.readLog4jLogFile(new File("target",
 				"unm-mobileweb-app/WEB-INF/classes/log4j.xml"));

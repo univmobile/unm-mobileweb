@@ -1,11 +1,14 @@
 package fr.univmobile.mobileweb.it;
 
+import static fr.univmobile.backend.core.impl.ConnectionType.MYSQL;
 import static org.apache.commons.lang3.CharEncoding.UTF_8;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
@@ -15,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.univmobile.backend.it.TestBackend;
+import fr.univmobile.testutil.PropertiesUtils;
 
 public class SimpleTomcatTest {
 
@@ -29,7 +33,17 @@ public class SimpleTomcatTest {
 		final String dataDir = TestBackend.readBackendAppDataDir(new File(
 				"target", "unm-backend-app/WEB-INF/web.xml"));
 
-		TestBackend.setUpData("001", new File(dataDir));
+		final Connection cxn = DriverManager.getConnection(
+				PropertiesUtils.getTestProperty("mysqlUrl"),
+				PropertiesUtils.getTestProperty("mysqlUsername"),
+				PropertiesUtils.getTestProperty("mysqlPassword"));
+		try {
+
+			TestBackend.setUpData("001", new File(dataDir), MYSQL, cxn);
+
+		} finally {
+			cxn.close();
+		}
 
 		final String logFile = TestBackend.readLog4jLogFile(new File("target",
 				"unm-mobileweb-app/WEB-INF/classes/log4j.xml"));
