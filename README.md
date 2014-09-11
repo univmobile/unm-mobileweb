@@ -47,4 +47,11 @@ En intégration :
   * unm-mobileweb-app-local — —Packaging avec accès direct aux données, sans HTTP_
   * unm-mobileweb-app-local-it — _Tests d’intégration_ 
 
+### Autres repositories GitHub
+
+  * [unm-devel](https://github.com/univmobile/unm-devel "Repository GitHub unm-devel")
+  * [unm-ios](https://github.com/univmobile/unm-ios "Repository GitHub unm-ios")
+  * [unm-android](https://github.com/univmobile/unm-android "Repository GitHub unm-android")
+  * [unm-backend](https://github.com/univmobile/unm-backend "Repository GitHub unm-backend")
+  * [unm-integration](https://github.com/univmobile/unm-integration "Repository GitHub unm-integration")
 
