@@ -27,10 +27,10 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 		final String dataDir = TestBackend.readBackendAppDataDir(new File(
 				"target", "unm-backend-app/WEB-INF/web.xml"));
 
-		final Connection cxn = DriverManager.getConnection(
-				PropertiesUtils.getTestProperty("mysqlUrl"),
-				PropertiesUtils.getTestProperty("mysqlUsername"),
-				PropertiesUtils.getTestProperty("mysqlPassword"));
+		final Connection cxn = DriverManager.getConnection(PropertiesUtils
+				.getTestProperty("mysql.url"), PropertiesUtils
+				.getTestProperty("mysql.username"), PropertiesUtils
+				.getSettingsTestRefProperty("mysql.password.ref"));
 		try {
 
 			TestBackend.setUpData("001", new File(dataDir), MYSQL, cxn);
@@ -115,13 +115,13 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 		pause(2000);
 
 		takeScreenshot("geocampus_map_infoWindow.png");
-		
+
 		elementById("div-infoWindow-3792").click();
 
 		pause(2000);
 
 		takeScreenshot("geocampus_details.png");
-		
+
 		elementById("link-up").click();
 
 		pause(10000);
