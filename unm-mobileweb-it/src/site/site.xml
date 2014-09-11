@@ -4,8 +4,10 @@
 	<body>
 
 		<menu name="Workspace">
-			<item href="http://univmobile.vswip.com/job/unm-mobileweb-it"
-				name="Job Jenkins" />
+			<item href="http://univmobile.vswip.com/job/unm-mobileweb-it_ios7"
+				name="Job Jenkins: iOS 7" />
+			<item href="http://univmobile.vswip.com/job/unm-mobileweb-it_ios6"
+				name="Job Jenkins: iOS 6" />
 			<item href="../../unm-mobileweb/0.0.5-SNAPSHOT/index.html"
 				name="unm-mobileweb" />
 		</menu>
