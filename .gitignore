@@ -17,3 +17,7 @@ hs_err_pid*
 target/
 .DS_Store
 /bin
+src/site/apt/
+*/src/site/apt/
+src/site/xhtml/
+*/src/site/xhtml/
