@@ -9,7 +9,7 @@ Documentation parente : [unm-devel](../../../unm-devel/blob/develop/README.md "
 
 ### Architecture logicielle
 
-![](src/site/images/mobileweb.png?raw=true =600x "Mobile web + Backend")
+![](src/site/resources/images/mobileweb.png?raw=true =600x "Mobile web + Backend")
 
 L’application Mobile web UnivMobile récupère les données JSON du backend
 via une URL spécifiée avec le paramètre « jsonURL »
