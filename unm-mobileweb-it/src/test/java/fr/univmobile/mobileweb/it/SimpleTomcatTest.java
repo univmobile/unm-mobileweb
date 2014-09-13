@@ -1,6 +1,8 @@
 package fr.univmobile.mobileweb.it;
 
 import static fr.univmobile.backend.core.impl.ConnectionType.MYSQL;
+import static fr.univmobile.testutil.PropertiesUtils.getSettingsTestRefProperty;
+import static fr.univmobile.testutil.PropertiesUtils.getTestProperty;
 import static org.apache.commons.lang3.CharEncoding.UTF_8;
 import static org.junit.Assert.assertTrue;
 
@@ -18,7 +20,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.univmobile.backend.it.TestBackend;
-import fr.univmobile.testutil.PropertiesUtils;
 
 public class SimpleTomcatTest {
 
@@ -33,10 +34,10 @@ public class SimpleTomcatTest {
 		final String dataDir = TestBackend.readBackendAppDataDir(new File(
 				"target", "unm-backend-app/WEB-INF/web.xml"));
 
-		final Connection cxn = DriverManager.getConnection(PropertiesUtils
-				.getTestProperty("mysql.url"), PropertiesUtils
-				.getTestProperty("mysql.username"), PropertiesUtils
-				.getSettingsTestRefProperty("mysql.password.ref"));
+		final Connection cxn = DriverManager.getConnection(
+				getTestProperty("mysql.url"),
+				getTestProperty("mysql.username"),
+				getSettingsTestRefProperty("mysql.password.ref"));
 		try {
 
 			TestBackend.setUpData("001", new File(dataDir), MYSQL, cxn);
