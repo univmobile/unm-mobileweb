@@ -47,12 +47,12 @@ En intégration :
   * unm-mobileweb-app-local — —Packaging avec accès direct aux données, sans HTTP_
   * unm-mobileweb-app-local-it — _Tests d’intégration_ 
 
-### Autres repositories GitHub
+### Tous les repositories GitHub
 
-  * [unm-devel](https://github.com/univmobile/unm-devel/README.md "Repository GitHub unm-devel")
-  * [unm-ios](https://github.com/univmobile/unm-ios/README.md "Repository GitHub unm-ios")
-  * [unm-android](https://github.com/univmobile/unm-android/README.md "Repository GitHub unm-android")
+  * [unm-devel](https://github.com/univmobile/unm-devel/blob/develop/README.md "Repository GitHub unm-devel")
+  * [unm-ios](https://github.com/univmobile/unm-ios/blob/develop/README.md "Repository GitHub unm-ios")
+  * [unm-android](https://github.com/univmobile/unm-android/blob/develop/README.md "Repository GitHub unm-android")
   * **unm-mobileweb**
-  * [unm-backend](https://github.com/univmobile/unm-backend/README.md "Repository GitHub unm-backend")
-  * [unm-integration](https://github.com/univmobile/unm-integration/README.md "Repository GitHub unm-integration")
+  * [unm-backend](https://github.com/univmobile/unm-backend/blob/develop/README.md "Repository GitHub unm-backend")
+  * [unm-integration](https://github.com/univmobile/unm-integration/blob/develop/README.md "Repository GitHub unm-integration")
 
