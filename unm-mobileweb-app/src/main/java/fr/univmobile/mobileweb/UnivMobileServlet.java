@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import fr.univmobile.backend.client.HomeClient;
 import fr.univmobile.backend.client.PoiClient;
 import fr.univmobile.backend.client.RegionClient;
+import fr.univmobile.backend.client.SessionClient;
 import fr.univmobile.commons.DependencyInjection;
 import fr.univmobile.web.commons.AbstractUnivMobileServlet;
 
@@ -20,10 +21,9 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 	 */
 	private static final long serialVersionUID = -3778148036214513471L;
 
-	private RegionClient regions;	
-	private PoiClient pois;
-	private HomeClient home;
-	
+	// private RegionClient regions;
+	// private PoiClient pois;
+	// private HomeClient home;
 
 	@Override
 	public void init() throws ServletException {
@@ -36,14 +36,17 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 		final String jsonURL = dependencyInjection.getInject(String.class).ref(
 				"jsonURL");
 
-		home = dependencyInjection.getInject(HomeClient.class).into(
-				UnivMobileServlet.class);
+		final HomeClient home = dependencyInjection.getInject(HomeClient.class)
+				.into(UnivMobileServlet.class);
 
-		regions = dependencyInjection.getInject(RegionClient.class).into(
-				UnivMobileServlet.class);
+		final RegionClient regions = dependencyInjection.getInject(
+				RegionClient.class).into(UnivMobileServlet.class);
 
-		pois = dependencyInjection.getInject(PoiClient.class).into(
-				UnivMobileServlet.class);
+		final PoiClient pois = dependencyInjection.getInject(PoiClient.class)
+				.into(UnivMobileServlet.class);
+
+		final SessionClient sessions = dependencyInjection.getInject(
+				SessionClient.class).into(UnivMobileServlet.class);
 
 		// --- Do not call the remote web service in init(), otherwise deadlock!
 		// try {
@@ -54,11 +57,16 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 		// throw new ServletException(e);
 		// }
 
+		final String apiKey = "toto";
+
 		super.init( //
 				new HomeController(), //
+				new LoginController(), //
+				new LoginClassicController(apiKey, sessions), //
+				new LoginShibbolethController(), //
 				new AboutController(jsonURL, home), //
 				new RegionsController(regions), //
-				new GeocampusController(regions,pois) //
+				new GeocampusController(regions, pois) //
 		);
 	}
 

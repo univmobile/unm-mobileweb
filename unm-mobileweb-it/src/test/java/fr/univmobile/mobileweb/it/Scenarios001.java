@@ -129,4 +129,47 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 
 		takeScreenshot("geocampus_back_to_map.png");
 	}
+
+	@Scenario("Connexion OK")
+	@Test
+	public void login_000() throws Exception {
+
+		get("http://localhost:8380/unm-mobileweb/");
+
+		waitForElementById(60, "div-selectedUniversity");
+
+		takeScreenshot("home.png");
+
+		elementById("link-login").click();
+
+		waitForElementById(60, "div-button-login");
+
+		takeScreenshot("login.png");
+
+		elementById("link-classic").click();
+		
+		pause(10000);
+		
+		takeScreenshot("login-classic.png");
+		
+		elementById("text-login").sendKeys("crezvani");
+		elementById("text-password").sendKeys("Hello+World!");
+		elementById("button-login").click();
+
+		pause(10000);
+
+		takeScreenshot("profile.png");
+
+		elementById("link-menu").click(); 
+
+		pause(2000);
+
+		takeScreenshot("home2.png");
+
+		elementById("link-profile").click(); 
+
+		pause(2000);
+
+		takeScreenshot("profile2.png");
+	}
 }

@@ -47,7 +47,7 @@ a {
 	font-style: italic;
 }
 #body-home #div-choisir {
-	margin-top: 30px;
+	margin-top: 1em;
 	text-align: center;
 	color: #fff;
 }
@@ -77,6 +77,13 @@ a:active,
 #body-about #div-fetchNow a:active,
 #body-about #div-ok a:active {
 	color: #0f0;
+}
+#body-home #div-login {
+	text-align: center;
+	margin: 0.8em 0 0.6em;
+}
+#body-home #div-login a {
+	color: #fff;
 }
 
 /* ======== ABOUT ======== */
@@ -581,4 +588,134 @@ img.profileImage {
 	display: block;
 	width: 32px;
 	height: 32px;
+}
+
+/* ======== LOGIN ======== */
+
+#body-login h1 {
+	color: #fff;
+	padding: 0;
+	xmargin: 0;
+}
+#body-login div.h1 {
+	background-color: transparent;
+	margin: 1em auto 0;
+	padding: 0;
+	xbackground-color: #ff0;
+}
+#body-login.classic div.h1 {
+	display: none;
+}
+#body-login.classic #div-info {
+	margin-top: 8px;
+}
+#body-login div.login {
+	width: 240px;
+	border: 1px solid #fff;
+	margin: 2em auto;
+}
+#body-login div.login,
+#body-login div.login a {
+	color: #fff;
+	display: block;
+	padding: 8px;
+}
+#body-login div.login a:active {
+	color: #0f0;
+	background-color: #fff;
+}
+#body-login div.login span {
+	display: block;
+	text-align: center
+}
+#body-login div.login span.info {
+	margin-top: 0.6em;
+	font-size: small;
+	line-height: 160%;
+	opacity: 0.9;
+}
+#body-login div.login span.login {
+	font-weight: bold;
+}
+#body-login #div-cancel {
+	margin: 1em auto 0;
+	width: 4em;
+	text-align: center;
+}
+#body-login #div-cancel a {
+	color: #fff;
+}
+#body-login #div-cancel a:active {
+	color: #0f0;
+}
+#body-login div.label {
+	margin: 0 auto 0;
+	text-align: center;
+	color: #fff;
+}
+#body-login div.label span.info {
+	display: block;
+	xfont-style: italic;
+	font-size: small;
+	xopacity: 0.9
+}
+#body-login div.input {
+	margin: 0.5em auto 1em;
+	text-align: center;
+}
+#body-login div.input input {
+	text-align: center;
+	width: 224px;
+	xheight: 1.8em;
+	font-size: 110%;
+	padding: 1px 1px 2px;
+}
+#body-login #div-button-login a {
+	xcolor: #fff;
+}
+#body-login #div-button-login {
+	margin: 1.8em auto;
+	text-align: center;
+}
+#body-login #button-login {
+	width: 240px;
+	height: 1.8em;
+	xpadding: 8px;
+	font-weight: bold;
+	font-size: 100%;
+}
+#body-login.error #div-info {
+	background-color: #900;
+	color: #fff;
+}
+#body-login.error #div-info span.error {
+	xdisplay: block;
+	xbackground-color: #900;
+	xcolor: #fff;
+	xcolor: #00;
+	padding: 4px 0;
+	xfont-weight: bold;
+}
+#body-login.error div.label {
+	color: #900;
+}
+#body-login.error #div-cancel {
+	text-decoration: underline;
+	color: #fff;
+}
+
+/* ======== PROFILE ======== */
+
+#body-profile #div-logout {
+	margin: 1em auto 0;
+	width: 10em;
+	text-align: center;
+	xbackground-color: #00f;
+	xfont-style: italic;
+}
+#body-profile #div-logout a {
+	color: #fff;
+}
+#body-profile #div-logout a:active {
+	color: #0f0;
 }

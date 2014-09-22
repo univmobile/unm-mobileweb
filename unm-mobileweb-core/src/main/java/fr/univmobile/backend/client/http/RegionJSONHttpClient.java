@@ -10,8 +10,6 @@ import javax.inject.Named;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.avcompris.lang.NotImplementedException;
-
 import fr.univmobile.backend.client.Region;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.backend.client.RegionClientFromJSON;
@@ -19,13 +17,6 @@ import fr.univmobile.backend.client.json.RegionJSONClient;
 
 public class RegionJSONHttpClient extends AbstractJSONHttpClient implements
 		RegionJSONClient {
-
-	protected RegionJSONHttpClient(final String url, final RegionClient client) {
-
-		super(url);
-
-		throw new NotImplementedException();
-	}
 
 	private final RegionClient client;
 
@@ -63,7 +54,7 @@ public class RegionJSONHttpClient extends AbstractJSONHttpClient implements
 		return wget(url);
 	}
 
-	public Region getRegionById(final String regionId) throws IOException {
+	private Region getRegionById(final String regionId) throws IOException {
 
 		checkNotNull(regionId, "regionId");
 

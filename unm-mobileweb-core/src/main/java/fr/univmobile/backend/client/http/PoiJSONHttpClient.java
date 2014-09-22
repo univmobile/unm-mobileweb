@@ -8,22 +8,10 @@ import javax.inject.Named;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.avcompris.lang.NotImplementedException;
-
-import fr.univmobile.backend.client.PoiClient;
 import fr.univmobile.backend.client.json.PoiJSONClient;
 
 public class PoiJSONHttpClient extends AbstractJSONHttpClient implements
 		PoiJSONClient {
-
-	protected PoiJSONHttpClient(final String url, final PoiClient client) {
-
-		super(url);
-
-		throw new NotImplementedException();
-	}
-
-	// private final PoiClient client;
 
 	@Inject
 	public PoiJSONHttpClient(@Named("PoiJSONHttpClient")//

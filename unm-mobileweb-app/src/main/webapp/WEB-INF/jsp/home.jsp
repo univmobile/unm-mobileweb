@@ -17,6 +17,19 @@
 	href="${baseURL}/about/?univ=${selectedUniversityId}">À propos…</a>
 </div>
 
+<div id="div-login">
+<c:choose>
+<c:when test="${empty user}">
+	<a id="link-login"
+		href="${baseURL}/login/">Se connecter…</a>
+</c:when>
+<c:otherwise>
+	<a id="link-profile"
+		href="${baseURL}/profile/">Profil : ${user.uid}</a>
+</c:otherwise>
+</c:choose>
+</div>
+
 <div class="h1">
 <h1 id="h1-title">UnivMobile</h1>
 </div>

@@ -1,0 +1,11 @@
+baseURL: ${baseURL}
+
+#selectedUniversityId: up
+#selectedUniversityLabel: Université de Poitiers      
+
+user:
+  type: fr.univmobile.view.User
+  value:
+    uid: tformica
+    mail: Toto.Formica@univ-paris1.fr
+    displayName: Toto Formica
