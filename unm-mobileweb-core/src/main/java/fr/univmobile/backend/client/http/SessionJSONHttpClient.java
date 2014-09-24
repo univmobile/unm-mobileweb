@@ -38,7 +38,7 @@ public class SessionJSONHttpClient extends AbstractJSONHttpClient implements
 			final String password) throws IOException {
 
 		if (log.isDebugEnabled()) {
-			log.info("login():" + login + "...");
+			log.info("loginJSON():" + login + "...");
 		}
 
 		if (log.isDebugEnabled()) {
@@ -52,12 +52,34 @@ public class SessionJSONHttpClient extends AbstractJSONHttpClient implements
 	}
 
 	@Override
+	public String getAppTokenJSON(final String apiKey, final String appTokenId)
+			throws IOException {
+
+		if (log.isDebugEnabled()) {
+			log.info("getAppTokenJSON():" + appTokenId + "...");
+		}
+
+		if (log.isDebugEnabled()) {
+			log.debug("url: " + url);
+		}
+
+		return wpost(url,//
+				"apiKey", apiKey, //
+				"appTokenId", appTokenId);
+	}
+
+	@Override
 	public String logoutJSON(final String apiKey, final String appTokenId)
 			throws IOException {
+
+		if (log.isDebugEnabled()) {
+			log.info("logoutJSON():" + appTokenId + "...");
+		}
 
 		return wpost(url,//
 				"apiKey", apiKey, //
 				"appTokenId", appTokenId, //
-				"logout");
+				"logout", "" // No value for "logout" HTTP parameter
+		);
 	}
 }

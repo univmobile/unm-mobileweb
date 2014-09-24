@@ -38,7 +38,7 @@ public class GeocampusController extends AbstractJspController {
 
 		setAttribute("pois", list);
 
-		for (final PoiGroup poiGroup : pois.getPois()) {
+		for (final PoiGroup poiGroup : pois.getPois().getGroups()) {
 
 			list.add(new Pois(poiGroup));
 		}

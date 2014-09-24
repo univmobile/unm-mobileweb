@@ -44,4 +44,19 @@ public class PoiJSONHttpClient extends AbstractJSONHttpClient implements
 
 		return wget(url);
 	}
+
+	@Override
+	public String getPoisJSON(final double lat, final double lng)
+			throws IOException {
+
+		log.info("getPoisJSON()...");
+
+		final String url = this.url + "?lat" + lat + "&lng=" + lng;
+
+		if (log.isDebugEnabled()) {
+			log.debug("url: " + url);
+		}
+
+		return wget(url);
+	}
 }
