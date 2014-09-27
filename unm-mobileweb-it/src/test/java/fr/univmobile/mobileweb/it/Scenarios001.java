@@ -141,6 +141,10 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 		takeScreenshot("home.png");
 
 		elementById("link-login").click();
+		
+		pause(10000);
+
+		takeScreenshot("login-0.png");
 
 		waitForElementById(60, "div-button-login");
 
