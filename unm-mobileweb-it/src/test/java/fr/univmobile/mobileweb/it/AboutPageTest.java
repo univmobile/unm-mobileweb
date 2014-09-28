@@ -41,6 +41,10 @@ public class AboutPageTest extends AppiumSafariEnabledTest {
 
 		get("http://localhost:8380/unm-mobileweb/about/");
 
+		pause(4000);
+		
+		takeScreenshot("about0.png");
+
 		waitForElementById(60, "div-info");
 
 		takeScreenshot("about.png");
