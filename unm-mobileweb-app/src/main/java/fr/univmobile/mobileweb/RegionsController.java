@@ -1,10 +1,9 @@
 package fr.univmobile.mobileweb;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static fr.univmobile.mobileweb.RegionsUtils.getRegionById;
 
 import java.io.IOException;
-
-import javax.annotation.Nullable;
 
 import fr.univmobile.backend.client.Region;
 import fr.univmobile.backend.client.RegionClient;
@@ -27,22 +26,6 @@ public class RegionsController extends AbstractJspController {
 
 	private final RegionClient regions;
 
-	@Nullable
-	private Region getRegionById(final String id) throws IOException {
-
-		checkNotNull(id, "id");
-
-		for (final Region region : regions.getRegions()) {
-
-			if (id.equals(region.getId())) {
-
-				return region;
-			}
-		}
-
-		return null;
-	}
-
 	@Override
 	public View action() throws IOException {
 
@@ -54,7 +37,7 @@ public class RegionsController extends AbstractJspController {
 
 		if (selectRegion.isHttpValid()) {
 
-			final Region region = getRegionById(selectRegion.region());
+			final Region region = getRegionById(regions, selectRegion.region());
 
 			if (region != null) {
 

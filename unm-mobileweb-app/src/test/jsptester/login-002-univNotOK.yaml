@@ -1,0 +1,5 @@
+baseURL: ${baseURL}
+
+shibbolethEnabled: false
+selectedUniversityId: up
+selectedUniversityLabel: Université de Poitiers      

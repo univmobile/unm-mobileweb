@@ -21,7 +21,7 @@
 <c:choose>
 <c:when test="${empty user}">
 	<a id="link-login"
-		href="${baseURL}/login/">Se connecter…</a>
+		href="${baseURL}/login/?univ=${selectedUniversityId}">Se connecter…</a>
 </c:when>
 <c:otherwise>
 	<a id="link-profile"

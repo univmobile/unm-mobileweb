@@ -1,6 +1,7 @@
 package fr.univmobile.mobileweb;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static fr.univmobile.mobileweb.RegionsUtils.getUniversityById;
 
 import java.io.IOException;
 
@@ -9,7 +10,9 @@ import org.apache.commons.logging.LogFactory;
 
 import fr.univmobile.backend.client.AppToken;
 import fr.univmobile.backend.client.ClientException;
+import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.backend.client.SessionClient;
+import fr.univmobile.backend.client.University;
 import fr.univmobile.web.commons.AbstractJspController;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
@@ -21,14 +24,17 @@ import fr.univmobile.web.commons.View;
 @Paths({ "" })
 public class HomeController extends AbstractJspController {
 
-	public HomeController(final String apiKey, final SessionClient sessionClient) {
+	public HomeController(final String apiKey,
+			final SessionClient sessionClient, final RegionClient regions) {
 
 		this.apiKey = checkNotNull(apiKey, "apiKey");
 		this.sessionClient = checkNotNull(sessionClient, "sessionClient");
+		this.regions = checkNotNull(regions, "regions");
 	}
 
 	private final String apiKey;
 	private final SessionClient sessionClient;
+	private final RegionClient regions;
 
 	private static final Log log = LogFactory.getLog(HomeController.class);
 
@@ -56,12 +62,27 @@ public class HomeController extends AbstractJspController {
 
 					log.error(e);
 				}
-				
+
 				removeSessionAttribute("appToken");
 
 			} else {
 
 				setAttribute("user", appToken.getUser());
+			}
+		}
+
+		final SelectedUniversity selected = getHttpInputs(SelectedUniversity.class);
+
+		if (selected.isHttpValid()) {
+
+			final String univ = selected.univ();
+
+			final University university = getUniversityById(regions, univ);
+
+			if (university != null) {
+
+				setAttribute("selectedUniversityId", university.getId());
+				setAttribute("selectedUniversityLabel", university.getTitle());
 			}
 		}
 

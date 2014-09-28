@@ -614,6 +614,9 @@ img.profileImage {
 	border: 1px solid #fff;
 	margin: 2em auto;
 }
+#body-login div.login.error {
+	opacity: 0.6;
+}
 #body-login div.login,
 #body-login div.login a {
 	color: #fff;
@@ -657,7 +660,7 @@ img.profileImage {
 	display: block;
 	xfont-style: italic;
 	font-size: small;
-	xopacity: 0.9
+	xopacity: 0.9;
 }
 #body-login div.input {
 	margin: 0.5em auto 1em;

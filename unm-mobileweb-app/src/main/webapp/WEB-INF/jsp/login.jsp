@@ -16,18 +16,49 @@
 <h1 id="h1">Connexion</h1>
 </div>
 
+<c:choose>
+<c:when test="${shibbolethEnabled}">
 <div id="div-shibboleth" class="login">
 <a id="link-shibboleth"
 	href="${baseURL}/login/shibboleth/">
 <span class="login">Sécurité Shibboleth…</span>
-<span class="info">Dépend de l’université.<br>Sécurité renforcée.</span>
+<span class="info">
+	Sécurité renforcée :
+	<br>
+	<strong>
+	${selectedUniversityLabel}
+	</strong>
+</span>
 </a>
 </div>
+</c:when>
+<c:when test="${not empty selectedUniversityLabel}">
+<div id="div-shibboleth" class="login error">
+<span class="login">Sécurité Shibboleth…</span>
+<span class="info">
+	Non disponible :
+	<br>
+	<strong>
+	${selectedUniversityLabel}
+	</strong>
+</span>
+</div>
+</c:when>
+<c:otherwise>
+<div id="div-shibboleth" class="login error">
+<span class="login">Sécurité Shibboleth…</span>
+<span class="info">
+	Sécurité renforcée :
+	vous devez sélectionner une université.
+</span>
+</div>
+</c:otherwise>
+</c:choose>
 
 <div id="div-classic" class="login">
 <a id="link-classic"
 	href="${baseURL}/login/classic/">
-<span class="login">Identifiant spécifique…</span>
+<span class="login">Identifiant générique…</span>
 <span class="info">Sécurité standard.</span>
 </a>
 </div>
