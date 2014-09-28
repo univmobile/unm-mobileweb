@@ -1,7 +1,7 @@
 package fr.univmobile.mobileweb;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static fr.univmobile.mobileweb.RegionsUtils.getUniversityById;
+import static fr.univmobile.backend.client.RegionsUtils.getUniversityById;
 
 import java.io.IOException;
 
