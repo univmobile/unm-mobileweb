@@ -143,6 +143,7 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 		takeScreenshot("regions.png");
 
 		elementById("link-region-ile_de_france").click();
+		pause(8000);
 		waitForElementById(60, "div-back");
 		takeScreenshot("universities.png");
 
@@ -168,6 +169,7 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 		takeScreenshot("regions.png");
 
 		elementById("link-region-ile_de_france").click();
+		pause(8000);
 		waitForElementById(60, "div-back");
 		takeScreenshot("universities.png");
 
