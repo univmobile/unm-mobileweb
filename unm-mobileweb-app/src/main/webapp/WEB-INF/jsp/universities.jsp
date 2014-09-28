@@ -27,7 +27,8 @@ ${region.label}
 <div id="div-table">
 <c:forEach var="u" items="${universities}">
 <div>
-<a href="${baseURL}/?region=${region.id}&univ=${u.id}">${u.title}</a>
+<a id="link-univ-${u.id}"
+	href="${baseURL}/?region=${region.id}&univ=${u.id}">${u.title}</a>
 </div>
 </c:forEach>
 </div>

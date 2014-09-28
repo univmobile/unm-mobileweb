@@ -82,4 +82,18 @@ public class SessionJSONHttpClient extends AbstractJSONHttpClient implements
 				"logout", "" // No value for "logout" HTTP parameter
 		);
 	}
+
+	@Override
+	public String prepareJSON(final String apiKey)
+			throws IOException {
+
+		if (log.isDebugEnabled()) {
+			log.info("prepareJSON():" + apiKey+ "...");
+		}
+
+		return wpost(url,//
+				"apiKey", apiKey, //
+				"prepare", "" // No value for "logout" HTTP parameter
+		);
+	}
 }

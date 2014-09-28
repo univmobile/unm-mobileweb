@@ -130,6 +130,56 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 		takeScreenshot("geocampus_back_to_map.png");
 	}
 
+	@Scenario("Écran de login si université sélectionnée, sans Shibboleth")
+	@Test
+	public void login_002_login_enscachan() throws Exception {
+
+		get("http://localhost:8380/unm-mobileweb/");
+		waitForElementById(60, "div-selectedUniversity");
+		takeScreenshot("home.png");
+
+		elementById("link-choisir").click();
+		waitForElementById(60, "div-back");
+		takeScreenshot("regions.png");
+
+		elementById("link-region-ile_de_france").click();
+		waitForElementById(60, "div-back");
+		takeScreenshot("universities.png");
+
+		elementById("link-univ-enscachan").click();
+		waitForElementById(60, "div-selectedUniversity");
+		takeScreenshot("home2.png");
+
+		elementById("link-login").click();		
+		pause(10000);
+		takeScreenshot("login0.png");
+	}
+
+	@Scenario("Écran de login si université sélectionnée")
+	@Test
+	public void login_001_login_paris1() throws Exception {
+
+		get("http://localhost:8380/unm-mobileweb/");
+		waitForElementById(60, "div-selectedUniversity");
+		takeScreenshot("home.png");
+
+		elementById("link-choisir").click();
+		waitForElementById(60, "div-back");
+		takeScreenshot("regions.png");
+
+		elementById("link-region-ile_de_france").click();
+		waitForElementById(60, "div-back");
+		takeScreenshot("universities.png");
+
+		elementById("link-univ-paris1").click();
+		waitForElementById(60, "div-selectedUniversity");
+		takeScreenshot("home2.png");
+
+		elementById("link-login").click();		
+		pause(10000);
+		takeScreenshot("login0.png");
+	}
+	
 	@Scenario("Connexion OK")
 	@Test
 	public void login_000() throws Exception {

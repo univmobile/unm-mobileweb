@@ -20,7 +20,7 @@
 <c:when test="${shibbolethEnabled}">
 <div id="div-shibboleth" class="login">
 <a id="link-shibboleth"
-	href="${baseURL}/login/shibboleth/">
+	href="${baseURL}/login/shibboleth/?univ=${selectedUniversityId}">
 <span class="login">Sécurité Shibboleth…</span>
 <span class="info">
 	Sécurité renforcée :

@@ -1,9 +1,10 @@
 package fr.univmobile.mobileweb;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static fr.univmobile.mobileweb.RegionsUtils.getUniversityById;
 
 import java.io.IOException;
-import static fr.univmobile.mobileweb.RegionsUtils.*;
+
 import fr.univmobile.backend.client.AppToken;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.backend.client.University;
@@ -44,14 +45,23 @@ public class LoginController extends AbstractJspController {
 
 		final SelectedUniversity selected = getHttpInputs(SelectedUniversity.class);
 
-		final String univ = selected.isHttpValid() ? selected.univ() : null;
+		final University university = selected.isHttpValid() ? getUniversityById(
+				regions, selected.univ()) : null;
 
-		final University university = getUniversityById(regions, univ);
-		
-		if (university!=null) {
-			
+		if (university != null) {
+
+			setAttribute("selectedUniversityId", university.getId());
+			setAttribute("selectedUniversityLabel", university.getTitle());
+
+			final String shibbolethIdentityProvider = university
+					.getShibbolethIdentityProvider();
+
+			if (shibbolethIdentityProvider != null) {
+
+				setAttribute("shibbolethEnabled", true);
+			}
 		}
-		
+
 		return new View("login.jsp");
 	}
 

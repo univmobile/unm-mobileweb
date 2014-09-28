@@ -81,6 +81,18 @@ public class HomeController extends AbstractJspController {
 
 			if (university != null) {
 
+				setSessionAttribute("univ", univ);
+			}
+		}
+
+		if (hasSessionAttribute("univ")) {
+
+			final String univ = getSessionAttribute("univ", String.class);
+
+			final University university = getUniversityById(regions, univ);
+
+			if (university != null) {
+
 				setAttribute("selectedUniversityId", university.getId());
 				setAttribute("selectedUniversityLabel", university.getTitle());
 			}
