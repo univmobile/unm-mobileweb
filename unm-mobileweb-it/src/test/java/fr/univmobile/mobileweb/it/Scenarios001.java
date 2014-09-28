@@ -144,6 +144,8 @@ public class Scenarios001 extends AppiumSafariEnabledTest {
 		
 		pause(10000);
 
+		takeScreenshot("login0.png");
+
 		waitForElementById(60, "div-classic");
 
 		takeScreenshot("login.png");
