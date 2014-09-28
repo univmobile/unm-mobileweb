@@ -20,7 +20,7 @@
 		</dependency>
 		<dependency>
 			<groupId>fr.univmobile</groupId>
-			<artifactId>unm-backend-app</artifactId>
+			<artifactId>unm-backend-app-noshib</artifactId>
 			<type>war</type>
 			<scope>test</scope>
 		</dependency>
@@ -69,7 +69,7 @@
 					<deployables>
 						<deployable>
 							<groupId>fr.univmobile</groupId>
-							<artifactId>unm-backend-app</artifactId>
+							<artifactId>unm-backend-app-noshib</artifactId>
 							<type>war</type>
 							<properties>
 								<context>/unm-backend</context>
@@ -107,7 +107,7 @@
 								</artifactItem>
 								<artifactItem>
 									<groupId>fr.univmobile</groupId>
-									<artifactId>unm-backend-app</artifactId>
+									<artifactId>unm-backend-app-noshib</artifactId>
 									<type>war</type>
 									<overWrite>true</overWrite>
 									<outputDirectory>${project.build.directory}/unm-backend-app</outputDirectory>
