@@ -1,7 +1,6 @@
 <project name="unm-mobileweb-app" default="repackage_war">
 
 	<property name="warFile" location="target/unm-mobileweb.war"/>
-	<property name="dataDir" value="/tmp/unm-mobileweb/data"/>
 	<property name="baseURL" value="http://localhost:8080/unm-mobileweb/"/>
 	<property name="jsonURL" value="http://localhost:8080/unm-backend/json"/>
 	
@@ -14,7 +13,6 @@
 		<xslt style="src/main/xslt/repackage_war.xsl"
 				in="target/unm-mobileweb/WEB-INF/web.xml"
 				out="target/unm-mobileweb/WEB-INF/web.xml-repackaged">
-			<param name="dataDir" expression="${dataDir}"/>
 			<param name="baseURL" expression="${baseURL}"/>
 			<param name="jsonURL" expression="${jsonURL}"/>
 		</xslt>

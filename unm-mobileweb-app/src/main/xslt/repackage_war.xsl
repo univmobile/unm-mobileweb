@@ -2,9 +2,8 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:j2ee="http://java.sun.com/xml/ns/j2ee">
 
-<xsl:param name="dataDir" select="'/tmp/unm-backend/data'"/>
 <xsl:param name="baseURL" select="'http://localhost:8080/unm-backend/'"/>
-<xsl:param name="jsonURL" select="'http://localhost:8080/unm-backend/json/regions'"/>
+<xsl:param name="jsonURL" select="'http://localhost:8080/unm-backend/json'"/>
 
 <!-- TODO code is duplicated in: unm-backend-app, unm-mobileweb-app -->
 
@@ -17,19 +16,6 @@
 	
 	</xsl:copy>
 
-</xsl:template>
-
-<xsl:template match="j2ee:servlet
-		[j2ee:servlet-name = 'UnivMobileServlet']/j2ee:init-param
-		[normalize-space(j2ee:param-name) = 'inject:File ref:dataDirRegions']/j2ee:param-value">
-
-	<xsl:copy>
-	<xsl:copy-of select="@*"/>
-	
-		<xsl:value-of select="concat($dataDir, '/regions')"/>
-	
-	</xsl:copy>
-	
 </xsl:template>
 
 <xsl:template match="j2ee:servlet
