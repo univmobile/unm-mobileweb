@@ -13,8 +13,7 @@ import javax.annotation.Nullable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.avcompris.lang.NotImplementedException;
-
+import fr.univmobile.backend.client.AppToken;
 import fr.univmobile.backend.client.ClientException;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.backend.client.SessionClient;
@@ -51,19 +50,6 @@ public class LoginShibbolethController extends AbstractJspController {
 	@Nullable
 	public View action() throws IOException, ClientException {
 
-		/*
-		 * final String loginToken = getSessionAttribute("loginToken",
-		 * String.class); final String key = getSessionAttribute("key",
-		 * String.class);
-		 * 
-		 * if (!prepared.loginToken().equals(loginToken)) {
-		 * 
-		 * log.error("Expected loginToken (memory): " + loginToken +
-		 * ", but was: " + prepared.loginToken());
-		 * 
-		 * return sendError400(); }
-		 */
-
 		final PreparedLogin prepared = getHttpInputs(PreparedLogin.class);
 
 		if (prepared.isHttpValid()) {
@@ -79,8 +65,22 @@ public class LoginShibbolethController extends AbstractJspController {
 
 				return sendError400();
 			}
-			
-			throw new NotImplementedException();
+
+			final AppToken appToken = sessionClient.retrieve(key, loginToken,
+					key);
+
+			if (appToken == null) {
+
+				throw new IllegalStateException("Invalid loginToken");
+			}
+
+			// Valid login
+
+			setSessionAttribute("appToken", appToken);
+
+			setAttribute("user", appToken.getUser());
+
+			return new View("profile.jsp");
 		}
 
 		final SelectedUniversity selected = getHttpInputs(SelectedUniversity.class);
