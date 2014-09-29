@@ -86,7 +86,7 @@ abstract class AbstractJSONHttpClient {
 
 			if (i < params.length) {
 
-				sb.append('=').append(URLEncoder.encode(params[i], UTF_8));
+				sb.append('=').append(urlEncode(params[i]));
 
 			} else {
 
@@ -95,6 +95,11 @@ abstract class AbstractJSONHttpClient {
 		}
 
 		return sb.toString().getBytes(UTF_8);
+	}
+
+	static String urlEncode(final String s) throws UnsupportedEncodingException {
+
+		return URLEncoder.encode(s, UTF_8);
 	}
 
 	protected static String wpost(final String url, final String... params)
