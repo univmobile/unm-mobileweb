@@ -1,0 +1,21 @@
+baseURL: ${baseURL}
+
+#selectedUniversityId: up
+#selectedUniversityLabel: Université de Poitiers      
+
+user:
+  type: fr.univmobile.view.User
+  value:
+    uid: tformica
+    mail: Toto.Formica@univ-paris1.fr
+    displayName: Toto Formica
+    twitterFollowers:
+      type: fr.univmobile.view.User.TwitterFollower[]
+      value:
+        - screenName: riri
+          name: Riri
+        - screenName: fifi
+          name: Fifi
+        - screenName: loulou
+          name: Loulou
+          

@@ -56,6 +56,17 @@
 			<c:out value="${user.mail}"/>
 		</div>
 	</div>
+	<c:forEach var="twitterFollower" items="${user.twitterFollowers}">
+	<div class="field twitterFollower">
+		<div class="title">
+			Twitter Follower:
+			<c:out value="${twitterFollower.screenName}"/>
+		</div>
+		<div class="content">
+			<c:out value="${twitterFollower.name}"/>
+		</div>
+	</div>
+	</c:forEach>
 </div> <!-- end of #div-details -->
 
 <div id="div-logout">
