@@ -6,7 +6,7 @@
 		<menu name="Workspace">
 			<item href="http://univmobile.vswip.com/job/unm-mobileweb-core"
 				name="Job Jenkins" />
-			<item href="../../unm-mobileweb/0.0.5-SNAPSHOT/index.html"
+			<item href="../../unm-mobileweb/0.1.0-SNAPSHOT/index.html"
 				name="unm-mobileweb" />
 		</menu>
 
