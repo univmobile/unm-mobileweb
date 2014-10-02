@@ -8,7 +8,7 @@
 				name="Job Jenkins: iOS 7" />
 			<item href="http://univmobile.vswip.com/job/unm-mobileweb-app-local-it_ios6"
 				name="Job Jenkins: iOS 6" />
-			<item href="../../unm-mobileweb/0.0.5-SNAPSHOT/index.html"
+			<item href="../../unm-mobileweb/0.1.0-SNAPSHOT/index.html"
 				name="unm-mobileweb" />
 		</menu>
 
