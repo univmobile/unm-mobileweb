@@ -117,6 +117,8 @@ public class LoginShibbolethController extends AbstractJspController {
 
 		}
 
+		// The "?loginToken=xx" HTTP parameter will be added by the
+		// unm-backend webapp.
 		final String callbackURL = getBaseURL() + "/login/shibboleth/";
 
 		final LoginConversation conversation = sessionClient.prepare(apiKey);
