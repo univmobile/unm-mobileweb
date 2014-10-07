@@ -66,7 +66,7 @@ public class LoginShibbolethController extends AbstractJspController {
 				return sendError400();
 			}
 
-			final AppToken appToken = sessionClient.retrieve(key, loginToken,
+			final AppToken appToken = sessionClient.retrieve(apiKey, loginToken,
 					key);
 
 			if (appToken == null) {
