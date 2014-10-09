@@ -16,6 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import fr.univmobile.backend.client.AppToken;
 import fr.univmobile.backend.client.ClientException;
 import fr.univmobile.backend.client.RegionClient;
+import fr.univmobile.backend.client.SSOConfiguration;
 import fr.univmobile.backend.client.SessionClient;
 import fr.univmobile.backend.client.SessionClient.LoginConversation;
 import fr.univmobile.backend.client.University;
@@ -66,8 +67,8 @@ public class LoginShibbolethController extends AbstractJspController {
 				return sendError400();
 			}
 
-			final AppToken appToken = sessionClient.retrieve(apiKey, loginToken,
-					key);
+			final AppToken appToken = sessionClient.retrieve(apiKey,
+					loginToken, key);
 
 			if (appToken == null) {
 
@@ -134,17 +135,26 @@ public class LoginShibbolethController extends AbstractJspController {
 		setSessionAttribute("loginToken", loginToken);
 		setSessionAttribute("key", key);
 
-		final String target = "https://univmobile-dev.univ-paris1.fr/testSP/" //
-				+ "?loginToken=" + loginToken //
-				+ "&callback=" + encodeURL(callbackURL);
+		final SSOConfiguration sso = sessionClient.getSSOConfiguration();
+
+		final String targetURL =
+		// "https://univmobile-dev.univ-paris1.fr/testSP/" //
+		// + "?loginToken=" + loginToken //
+		// + "&callback=" + encodeURL(callbackURL);
+		sso.getTargetURL().replace("${loginToken}", loginToken)
+				.replace("${callback.url}", encodeURL(callbackURL));
 
 		final String ssoURL = //
 		// "https://univmobile-dev.univ-paris1.fr/testSP/shibboleth/" //
 		// + "paris1" + "?service=" + encodeURL(callbackURL);
-		"https://univmobile-dev.univ-paris1.fr/Shibboleth.sso/Login" //
-				+ "?target=" + encodeURL(target) //
-				// + "&entityID=https://idp-test.univ-paris1.fr";
-				+ "&entityID=" + encodeURL(shibbolethIdentityProvider);
+		// "https://univmobile-dev.univ-paris1.fr/Shibboleth.sso/Login" //
+		// + "?target=" + encodeURL(target) //
+		// + "&entityID=https://idp-test.univ-paris1.fr";
+		// + "&entityID=" + encodeURL(shibbolethIdentityProvider);
+		sso.getURL()
+				.replace("${target.url}", encodeURL(targetURL))
+				.replace("${shibboleth.entityProvider}",
+						encodeURL(shibbolethIdentityProvider));
 
 		// service=https://idp-test.univ-paris1.fr/idp/Authn/RemoteUser
 

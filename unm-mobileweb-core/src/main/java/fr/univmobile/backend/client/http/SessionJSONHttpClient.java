@@ -110,4 +110,14 @@ public class SessionJSONHttpClient extends AbstractJSONHttpClient implements
 				"key", key //
 		);
 	}
+
+	@Override
+	public String getSSOConfigurationJSON() throws IOException {
+
+		if (log.isDebugEnabled()) {
+			log.info("getSSOConfigurationJSON()...");
+		}
+
+		return wget(url);
+	}
 }
