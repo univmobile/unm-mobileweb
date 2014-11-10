@@ -8,7 +8,6 @@
 	<servlet>
 		<servlet-name>UnivMobileServlet</servlet-name>
 		<servlet-class>fr.univmobile.mobileweb.UnivMobileServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<init-param>
 			<param-name>baseURL</param-name>
 			<param-value>http://localhost:8380/unm-mobileweb/</param-value>
@@ -60,6 +59,7 @@
 			<param-name>inject:File into:factory:BackendDataSourceFileSystem:regions</param-name>
 			<param-value>${ref:dataDirRegions}</param-value>
 		</init-param>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UnivMobileServlet</servlet-name>
