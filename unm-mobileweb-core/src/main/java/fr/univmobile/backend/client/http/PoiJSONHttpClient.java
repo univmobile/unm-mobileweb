@@ -59,4 +59,30 @@ public class PoiJSONHttpClient extends AbstractJSONHttpClient implements
 
 		return wget(url);
 	}
+
+	@Override
+	public String getPoisByRegionJSON(String regionId) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPoisByCategoryJSON(int categoryId) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPoisByRegionAndCategoryJSON(String regionId,
+			Integer categoryId) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getNearestPoisJSON(double lat, double lon, double metersAway)
+			throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
