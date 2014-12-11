@@ -85,4 +85,13 @@ public class PoiJSONHttpClient extends AbstractJSONHttpClient implements
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getPoisByRegionAndCategoryJSON(String regionId,
+			Integer categoryId, int[] excludeCategories,
+			String filterByUniversity,
+			boolean completeWholeTree) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
