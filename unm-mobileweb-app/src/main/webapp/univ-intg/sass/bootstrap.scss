@@ -1,0 +1,12 @@
+// Set custom variables
+$font-family-base:  'Exo', sans-serif;
+$max-widht: 640px;
+$screen-md: $max-widht;
+$screen-desktop: $max-widht;
+$screen-lg-desktop: $max-widht;
+$container-desktop:  $max-widht;
+$container-large-desktop:  $max-widht;
+
+
+// Import Bootstrap Core
+@import "bootstrap/bootstrap";

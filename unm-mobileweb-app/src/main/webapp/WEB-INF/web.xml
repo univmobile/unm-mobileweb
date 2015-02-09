@@ -9,11 +9,11 @@
 		<servlet-class>fr.univmobile.mobileweb.UnivMobileServlet</servlet-class>
 		<init-param>
 			<param-name>baseURL</param-name>
-			<param-value>http://localhost:8380/unm-mobileweb/</param-value>
+			<param-value>http://localhost:8080/unm-mobileweb/</param-value>
 		</init-param>
 		<init-param>
 			<param-name>inject:String ref:jsonURL</param-name>
-			<param-value>http://localhost:8380/unm-backend/json</param-value>
+			<param-value>http://vps111534.ovh.net/unm-backend/api</param-value>
 		</init-param>
 		<init-param>
 			<param-name>inject:String ref:regionsJsonURL</param-name>
@@ -106,6 +106,18 @@
 	<servlet-mapping>
 		<servlet-name>PlainContentServlet</servlet-name>
 		<url-pattern>/css/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.png</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jpg</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.jpeg</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>PlainContentServlet</servlet-name>

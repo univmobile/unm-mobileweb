@@ -60,7 +60,7 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 		final String apiKey = "toto";
 
 		super.init( //
-				new HomeController(apiKey, sessions,regions), //
+				new HomeController(jsonURL, apiKey, sessions,regions), //
 				new LoginController(regions), //
 				new LoginClassicController(apiKey, sessions), //
 				new LoginShibbolethController(apiKey, sessions, regions), //

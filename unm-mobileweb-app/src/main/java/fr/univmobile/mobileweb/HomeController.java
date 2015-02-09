@@ -7,13 +7,15 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import fr.univmobile.backend.client.AppToken;
 import fr.univmobile.backend.client.ClientException;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.backend.client.SessionClient;
 import fr.univmobile.backend.client.University;
-import fr.univmobile.web.commons.AbstractJspController;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
 import fr.univmobile.web.commons.HttpParameter;
@@ -22,20 +24,22 @@ import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
 @Paths({ "" })
-public class HomeController extends AbstractJspController {
+public class HomeController extends AsbtractMobileWebJspController {
 
-	public HomeController(final String apiKey,
+	public HomeController(final String jsonUrl, final String apiKey,
 			final SessionClient sessionClient, final RegionClient regions) {
 
+		this.jsonUrl = jsonUrl;
 		this.apiKey = checkNotNull(apiKey, "apiKey");
 		this.sessionClient = checkNotNull(sessionClient, "sessionClient");
 		this.regions = checkNotNull(regions, "regions");
 	}
 
+	private final String jsonUrl;
 	private final String apiKey;
 	private final SessionClient sessionClient;
 	private final RegionClient regions;
-
+	
 	private static final Log log = LogFactory.getLog(HomeController.class);
 
 	@Override
@@ -97,10 +101,16 @@ public class HomeController extends AbstractJspController {
 				setAttribute("selectedUniversityLabel", university.getTitle());
 			}
 		}
-
+		
+		// Get the list of region
+		RestTemplate template = restTemplate();
+		
+		RegionEmbedded regionContainer = template.getForObject("http://vps111534.ovh.net:8082/regions", RegionEmbedded.class);
+		log.debug("Region size : " + regionContainer._embedded.getRegions().length);
+		
 		return new View("home.jsp");
 	}
-
+	
 	@HttpMethods("GET")
 	private interface SelectedUniversity extends HttpInputs {
 
@@ -119,5 +129,21 @@ public class HomeController extends AbstractJspController {
 		@HttpRequired
 		@HttpParameter
 		String logout();
+	}
+	
+	private class RegionEmbedded {
+
+		@JsonProperty("_embedded")
+		public RegionList _embedded;
+	}
+	
+	public class RegionList {
+
+		private Region[] regions;
+
+		public Region[] getRegions() {
+			return regions;
+		}
+		
 	}
 }

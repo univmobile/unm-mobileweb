@@ -36,6 +36,7 @@
 				<filtering>true</filtering>
 			</testResource>
 		</testResources>
+		<pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
@@ -107,6 +108,7 @@
 				</executions>
 			</plugin>
 		</plugins>
+		</pluginManagement>
 	</build>
 
 	<name>unm-mobileweb-app-local-it</name>
