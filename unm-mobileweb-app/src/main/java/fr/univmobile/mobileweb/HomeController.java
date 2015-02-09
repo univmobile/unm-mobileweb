@@ -45,6 +45,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 	@Override
 	public View action() throws IOException {
 
+		/*
 		if (hasSessionAttribute("appToken")) {
 
 			final AppToken appToken = getSessionAttribute("appToken",
@@ -74,6 +75,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 				setAttribute("user", appToken.getUser());
 			}
 		}
+		*/
 
 		final SelectedUniversity selected = getHttpInputs(SelectedUniversity.class);
 
@@ -81,12 +83,12 @@ public class HomeController extends AsbtractMobileWebJspController {
 
 			final String univ = selected.univ();
 
-			final University university = getUniversityById(regions, univ);
+		/*	final University university = getUniversityById(regions, univ);
 
 			if (university != null) {
 
 				setSessionAttribute("univ", univ);
-			}
+			}*/
 		}
 
 		if (hasSessionAttribute("univ")) {
@@ -102,11 +104,21 @@ public class HomeController extends AsbtractMobileWebJspController {
 			}
 		}
 		
+		
 		// Get the list of region
 		RestTemplate template = restTemplate();
 		
 		RegionEmbedded regionContainer = template.getForObject("http://vps111534.ovh.net:8082/regions", RegionEmbedded.class);
-		log.debug("Region size : " + regionContainer._embedded.getRegions().length);
+		setAttribute("regionsList", regionContainer._embedded.getRegions());
+		
+		int i = 0;
+		for (Region region : regionContainer._embedded.getRegions()) {
+			i++;
+			UniversityEmbedded universityContainer = template.getForObject(jsonUrl + "/regions/" + i/*region.getId()*/ + "/universities", UniversityEmbedded.class);
+			region.setUniversities(universityContainer._embedded.getUniversities());
+		}
+		
+		//log.debug("Region size : " + regionContainer._embedded.getRegions().length);
 		
 		return new View("home.jsp");
 	}
@@ -114,24 +126,21 @@ public class HomeController extends AsbtractMobileWebJspController {
 	@HttpMethods("GET")
 	private interface SelectedUniversity extends HttpInputs {
 
-		@HttpRequired
-		@HttpParameter(trim = true)
-		String region();
 
 		@HttpRequired
 		@HttpParameter(trim = true)
 		String univ();
 	}
 
-	@HttpMethods({ "GET", "POST" })
+/*	@HttpMethods({ "GET", "POST" })
 	private interface Logout extends HttpInputs {
 
 		@HttpRequired
 		@HttpParameter
 		String logout();
-	}
+	}*/
 	
-	private class RegionEmbedded {
+	/*public class RegionEmbedded {
 
 		@JsonProperty("_embedded")
 		public RegionList _embedded;
@@ -145,5 +154,5 @@ public class HomeController extends AsbtractMobileWebJspController {
 			return regions;
 		}
 		
-	}
+	}*/
 }

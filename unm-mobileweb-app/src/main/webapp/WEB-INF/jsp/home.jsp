@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -40,12 +43,19 @@
                   <div class="universite-form-wrap">
                       <form id="select-universite">
                           <div class="form-group">
-                              <label>Choisir son université :</label>
-                              <select class="form-control">
-                                  <option>Universite1</option>
-                                  <option>Universite2</option>
-                                  <option>Universite3</option>
-                              </select>
+                          	<label>Choisir son université :</label>
+                                                      
+                         	<select class="form-control">
+                            	<c:forEach var="region" items="${regionsList}">
+     						    	<optgroup label="${region.getName()}">
+     						    	
+     						    		<c:forEach var="university" items = "${region.getUniversities()}">
+     						    			<option>${university.getTitle()}</option>
+     						    		</c:forEach>
+     						    	
+   									</optgroup>
+    							</c:forEach>
+                          	</select>
                           </div>
                           <button type="submit" class="btn confirm center-block">Valider</button>
                       </form>
