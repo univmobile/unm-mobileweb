@@ -2,11 +2,11 @@ package fr.univmobile.mobileweb;
 
 public class University {
 
-	private Long id;
+	private int id;
 	private String title;
 	private String logoUrl;
 	
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 

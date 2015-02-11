@@ -94,12 +94,29 @@ public class HomeController extends AsbtractMobileWebJspController {
 		
 		//a.k.a. if(getUniversity() == null)
 		if (hasSessionAttribute("univ")) {
-					
+			
+			// Get the list of news
+			RestTemplate template = restTemplate();
+			NewsEmbedded newsContainer = template.getForObject(jsonUrl + "/news/search/findNewsForUniversity?universityId=" + getUniversity().getId() + "&size=5", NewsEmbedded.class);
+			
+			if (newsContainer._embedded == null) {
+				//must be prevented somewhere else, because if news does not exist the view gonna be empty
+				throw new IOException("News does not exist");
+			}
+			
+			//provide all attributes below
+			
+			//menu attributes
 			setAttribute("universityLogo", getUniversityLogo());
 			setAttribute("university", getUniversity());
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
+			
+			//home attributes
+			setAttribute("newsList", newsContainer._embedded.getNews());
+			setAttribute("mapUrl", generateMapUrl(getUniversity().getId(), 21));
+			
 			return new View("home.jsp");
 		} else {
 		
@@ -155,4 +172,27 @@ public class HomeController extends AsbtractMobileWebJspController {
 		}
 		
 	}*/
+	
+	private String generateMapUrl(int universityId, int categoryId) {
+		
+		String base = "https://maps.googleapis.com/maps/api/staticmap?";
+		String center = "center=Paris";
+		String zoom = "&zoom=2";
+		String size = "&size=640x640";
+		String markers = "&markers=";
+		
+		// Get the list of news
+		RestTemplate template = restTemplate();
+		PoiEmbedded poiContainer = template.getForObject(jsonUrl + "/pois/search/findByUniversityAndCategory?universityId=" + universityId + "&categoryId=" + categoryId, PoiEmbedded.class);
+		
+		if (poiContainer._embedded != null) {
+			for (Poi poi : poiContainer._embedded.getPois()) {
+				if (poi.isActive()) {
+					markers += "|" + poi.getLat() + "," + poi.getLng();
+				}
+			}
+		}
+		
+		return base/*+center*/+zoom+size+markers;
+	}
 }
