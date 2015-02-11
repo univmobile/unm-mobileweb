@@ -15,7 +15,6 @@ import fr.univmobile.backend.client.AppToken;
 import fr.univmobile.backend.client.ClientException;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.backend.client.SessionClient;
-import fr.univmobile.backend.client.University;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
 import fr.univmobile.web.commons.HttpParameter;
@@ -45,6 +44,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 	@Override
 	public View action() throws IOException {
 
+		/*
 		if (hasSessionAttribute("appToken")) {
 
 			final AppToken appToken = getSessionAttribute("appToken",
@@ -74,64 +74,70 @@ public class HomeController extends AsbtractMobileWebJspController {
 				setAttribute("user", appToken.getUser());
 			}
 		}
+		*/
 
 		final SelectedUniversity selected = getHttpInputs(SelectedUniversity.class);
 
 		if (selected.isHttpValid()) {
 
 			final String univ = selected.univ();
+			
+			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + univ, University.class);
 
-			final University university = getUniversityById(regions, univ);
+		/*	final University university = getUniversityById(regions, univ);
 
 			if (university != null) {
 
 				setSessionAttribute("univ", univ);
-			}
+			}*/
+			setSessionAttribute("univ", univObj);
 		}
 
 		if (hasSessionAttribute("univ")) {
 
-			final String univ = getSessionAttribute("univ", String.class);
+			final University univ = getSessionAttribute("univ", University.class);
 
-			final University university = getUniversityById(regions, univ);
-
-			if (university != null) {
-
-				setAttribute("selectedUniversityId", university.getId());
-				setAttribute("selectedUniversityLabel", university.getTitle());
+			return new View("home.jsp");
+		} else {
+		
+		
+			// Get the list of region
+			RestTemplate template = restTemplate();
+			
+			RegionEmbedded regionContainer = template.getForObject("http://vps111534.ovh.net:8082/regions", RegionEmbedded.class);
+			setAttribute("regionsList", regionContainer._embedded.getRegions());
+			
+			int i = 0;
+			for (Region region : regionContainer._embedded.getRegions()) {
+				i++;
+				UniversityEmbedded universityContainer = template.getForObject(jsonUrl + "/regions/" + i/*region.getId()*/ + "/universities", UniversityEmbedded.class);
+				region.setUniversities(universityContainer._embedded.getUniversities());
 			}
+			
+			//log.debug("Region size : " + regionContainer._embedded.getRegions().length);
+			
+			return new View("splashscreen.jsp");
 		}
-		
-		// Get the list of region
-		RestTemplate template = restTemplate();
-		
-		RegionEmbedded regionContainer = template.getForObject("http://vps111534.ovh.net:8082/regions", RegionEmbedded.class);
-		log.debug("Region size : " + regionContainer._embedded.getRegions().length);
-		
-		return new View("home.jsp");
 	}
 	
-	@HttpMethods("GET")
+	@HttpMethods("POST")
 	private interface SelectedUniversity extends HttpInputs {
 
-		@HttpRequired
-		@HttpParameter(trim = true)
-		String region();
 
 		@HttpRequired
 		@HttpParameter(trim = true)
 		String univ();
 	}
 
-	@HttpMethods({ "GET", "POST" })
+/*	@HttpMethods({ "GET", "POST" })
 	private interface Logout extends HttpInputs {
 
 		@HttpRequired
 		@HttpParameter
 		String logout();
-	}
+	}*/
 	
-	private class RegionEmbedded {
+	/*public class RegionEmbedded {
 
 		@JsonProperty("_embedded")
 		public RegionList _embedded;
@@ -145,5 +151,5 @@ public class HomeController extends AsbtractMobileWebJspController {
 			return regions;
 		}
 		
-	}
+	}*/
 }
