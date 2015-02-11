@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1">
+        <script>
+            (function (doc) {
+                var viewport = document.getElementById('viewport');
+                if (document.documentElement.clientWidth > 640) {
+                    viewport.setAttribute("content", "width=640, user-scalable=yes");
+                }
+            }(document));
+        </script>
+        <title>Univmobile</title>
+        <link href='http://fonts.googleapis.com/css?family=Exo:400,600,300,700,400italic,500' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- Bootstrap -->
+        <link href="./css/bootstrap.css" rel="stylesheet">
+        <link href="./css/style.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="mask"></div>
+        <nav class="navbar-menu" id="mobile-nav">
+            <header>
+                <a class="universite-logo" href="#"><img class="img-responsive" alt="Universite Paris" src="./img/universite-logo.jpg"></a>
+                <span class="close-btn"></span>
+            </header>
+            <ul class="menu navbar-nav">
+                <li class="menu-item one active dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">Mes services<span class="menu-item-icon"><i class="icon"></i></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Mon profil</a></li>
+                        <li><a href="#">Mes Bibliothèques</a></li>
+                        <li><a href="#">ENT</a></li>
+                        <li><a href="#">Ma médiathèque</a></li>
+                        <li><a href="#">Futurs étudiants</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item two dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">Act’Universitaire<span class="menu-item-icon"><i class="icon"></i></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Menu 1</a></li>
+                        <li><a href="#">Menu 2</a></li>
+                        <li><a href="#">Menu 3</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item three dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Tou’Trouver<span class="menu-item-icon"><i class="icon"></i></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">GéoCampus</a></li>
+                        <li><a href="#">Que faire à Paris</a></li>
+                        <li><a href="#">Les bons plans</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item four dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Ma vie U<span class="menu-item-icon"><i class="icon"></i></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Catalogue SUDOC</a></li>
+                        <li><a href="#">Rue des facs</a></li>
+                        <li><a href="#">Guide de l'étudiant</a></li>
+                        <li><a href="#">Mon CROUS</a></li>
+                        <li><a href="#">Primo arrivant / Erasmus</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="main-wrap">
+            <header class="main-navbar clearfix">
+                <button type="button" class="navbar-menu-toggle">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="user-nav">
+                    <div class="user">
+                        <span class="welcome-msg">Bonjour</span>
+                        <div class="user-name">Patrick</div>
+                    </div>
+                    <div class="universite-name">
+                        Université Paris I <br>
+                        Panthéon<br>
+                        La Sorbonne
+                    </div>
+                    <div class="notifications">
+                        <i class="icon"></i>
+                    </div>
+                </div>
+            </header>
+            <div class="content-wrap geo category-three">
+                <div class="search-wrap">
+                    <div class="container">
+                        <form class="search">
+                            <div class="form-group">
+                                <span class="btn go-search"><i class="icon"></i></span>
+                                <input type="text" class="form-control search-field" placeholder="Tappez votre recherche">
+                                <span class="btn hide-search show-hide-search"><i class="icon"></i></span>
+                            </div>
+                        </form>
+                        <section class="search-results">
+                            <div class="results-title">Recherches précédentes</div>
+                            <ul class="results-list">
+                                <li class="list-item">
+                                    <i class="icon"></i>
+                                    <div class="title">Bureau des éléves</div>
+                                </li>
+                                <li class="list-item">
+                                    <i class="icon"></i>
+                                    <div class="title">Sorbonne</div>
+                                </li>
+                                <li class="list-item">
+                                    <i class="icon"></i>
+                                    <div class="title">Salle de sport </div>
+                                </li>
+                                <li class="list-item">
+                                    <i class="icon"></i>
+                                    <div class="title">Administration</div>
+                                </li>
+                                <li class="list-item">
+                                    <i class="icon"></i>
+                                    <div class="title">Direction</div>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+                <div class="main-container container">
+                    <div class="map show-hide-poi">
+                        <img src="./img/map-green.jpg" alt="main article" class="img-responsive">
+                    </div>
+                    <div class="add-poi-wrap">
+                        <button class="btn show-hide-add-poi show-add-poi"><i class="icon text-hide"></i></button>
+                        <div class="add-poi-screen">
+                            <button class="btn show-hide-add-poi hide-add-poi"><i class="icon text-hide"></i></button>
+                            <div class="title">Soumettre un nouveau Bon Plan</div>
+                            <form id="add-poi" class="add-poi">
+                                <div class="add-poi-name-field">
+                                    <div class="form-pad row">
+                                        <div class="form-group name col-xs-8 col-xs-offset-4">
+                                            <input type="text" class="form-control" id="InputName" placeholder="Nom du bon plan *">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-pad">
+                                    <div class="fields-wrap row">
+                                        <div class="col-xs-4">
+                                            <div class="form-group category">
+                                                <select class="form-control">
+                                                    <option>Séléctionnez une catégorie*</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <div class="form-group address">
+                                                <i class="fa fa-map-marker fa-fw"></i>
+                                                <input type="text" class="form-control" id="InputAddress" placeholder="Adresse *">
+                                            </div>
+                                            <div class="form-group phone">
+                                                <i class="fa fa-phone fa-fw"></i>
+                                                <input type="text" class="form-control" id="InputPhone" placeholder="Numéro de téléphone">
+                                            </div>
+                                            <div class="form-group email">
+                                                <i class="fa fa-envelope fa-fw"></i>
+                                                <input type="email" class="form-control" id="InputEmail" placeholder="Adresse email">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group message">
+                                        <textarea class="form-control" rows="6" placeholder="Entrez une déscription du lieux, des services proposés et des infos pratiques pouvant être utiles à la communauté*"></textarea>
+                                    </div>
+                                    <div class="form-info"><p>Champs obligatoires*</p></div>
+                                </div>
+                                <button class="btn confirm long-button center-block" type="submit">Valider</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="poi-wrap">
+                        <div class="poi-screen">
+                            <div class="poi-header">
+                                <span class="category-icon category-7"><i class="icon text-hide"></i></span>
+                                <div class="title">Infirmerie du campus - Sorbonne</div>
+                                <button class="btn show-hide-poi hide-poi"><i class="icon text-hide"></i></button>
+                            </div>
+                            <div class="poi-info">
+                                <address><i class="fa fa-map-marker fa-fw"></i>Campus Censier, bâtiment A, porte 22 (RdC)</address>
+                                <div class="phone"><i class="fa fa-phone fa-fw"></i>01 45 87 40 30</div>
+                                <div class="email"><i class="fa fa-envelope fa-fw"></i>infirmerie@univ-paris3.fr</div>
+                            </div>
+                            <div class="tabpanel" role="tabpanel">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="one active"><a href="#plan" aria-controls="plan" role="tab" data-toggle="tab"><i class="fa fa-info-circle"></i></a></li>
+                                    <li role="presentation" class="two"><a href="#comments" aria-controls="comments" role="tab" data-toggle="tab"><i class="fa fa-comments"></i></a></li>
+                                    <li role="presentation" class="three"><a href="#menu" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-cutlery"></i></a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade in active" id="plan">
+                                        <div class="body">
+                                            <p>La raison première de l'infirmerie au sein de la Sorbonne Nouvelle est l'Accueil. Cet accueil permet ensuite la formulation d'une demande plus personnelle si besoin.</p>
+                                            <p>Les réponses peuvent être de l'ordre de l'information, du conseil, de l'orientation, du soins, de l'écoute et/ou de l'entretien d'aide.</p>
+
+                                            <h2>SERVICES</h2>
+                                            <ul>
+                                                <li>Soins divers - urgence - malaise</li>
+                                                <li>Médicaments de base - pansements</li>
+                                                <li>Écoute - conseil de santé - orientation</li>
+                                                <li>Salle de repos - espace calme</li>
+                                                <li>Attention : pas de médecin ni d'ordonnance</li>
+                                                <li>Lieu de prise de rendez-vous à la demande ou sur convocation pour les visites médicales avec le médecin de Médecine de prévention pour les personnels.</li>
+                                                <li>Transmission d'informations et ou de documents au médecin de médecine de prévention pour le personnel.</li>
+                                            </ul>
+                                        </div>
+                                        <button class="btn show-hide-search show-search-long"><i class="icon"></i>Rechercher</button>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="comments">
+                                        <ul class="comments-list">
+                                            <li class="comment-item">
+                                                <div class="author">Jeremy D.</div>
+                                                <time>il y a 8 heures</time>
+                                                <p class="comment-text">« Très bon accueil, personnel serviable et très à l’écoute. Prise en charge très rapide ! »</p>
+                                            </li>
+                                            <li class="comment-item">
+                                                <div class="author">Jeremy D.</div>
+                                                <time>il y a 8 heures</time>
+                                                <p class="comment-text">« Très bon accueil, personnel serviable et très à l’écoute. Prise en charge très rapide ! »</p>
+                                            </li>
+                                        </ul>
+                                        <div class="new-comment-wrap">
+                                            <form id="new-comment" class="new-comment">
+                                                <div class="form-group comment-field">
+                                                    <textarea class="form-control" rows="6" placeholder=""></textarea>
+                                                </div>
+                                                <button type="submit" class="btn long-button submit center-block">Valider</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="menu">...menu</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-wrap">
+                        <div class="list-wrap">
+                            <div class="category-nav-button top row">
+                                <button class="col-xs-3 btn show-hide-search show-search"><i class="icon text-hide"></i></button>
+                                <button class="col-xs-9 btn show-hide-category hide-category">Trier par categories<i class="icon"></i></button>
+                            </div>
+                            <ul class="category-list row">
+                                <li class="list-item">                                
+                                    <button class="btn category-btn button-1">
+                                        <i class="icon"></i>
+                                        <span>Bibliothèque Universitaire</span>
+                                    </button>
+                                </li>
+                                <li class="list-item">                                
+                                    <button class="btn category-btn button-2 active">
+                                        <i class="icon"></i>
+                                        <span>Orientation & Insertion professionnelle</span>
+                                    </button>
+                                </li>
+                                <li class="list-item">                                
+                                    <button class="btn category-btn button-3">
+                                        <i class="icon"></i>
+                                        <span>Plan</span>
+                                    </button>
+                                </li>
+                                <li class="list-item">                                
+                                    <button class="btn category-btn button-4">
+                                        <i class="icon"></i>
+                                        <span>Restauration Universitaire</span>
+                                    </button>
+                                </li>
+                                <li class="list-item">                                
+                                    <button class="btn category-btn button-5">
+                                        <i class="icon"></i>
+                                        <span>Equipements sportifs & service des sports</span>
+                                    </button>
+                                </li>
+                                <li class="list-item">                                
+                                    <button class="btn category-btn button-6 active">
+                                        <i class="icon"></i>
+                                        <span>Culture</span>
+                                    </button>
+                                </li>
+                                <li class="list-item">                                
+                                    <button class="btn category-btn button-7">
+                                        <i class="icon"></i>
+                                        <span>Santé & Social</span>
+                                    </button>
+                                </li>
+                                <li class="list-item">                                
+                                    <button class="btn category-btn button-8">
+                                        <i class="icon"></i>
+                                        <span>Centres administratifs</span>
+                                    </button>
+                                </li>
+                                <li class="list-item">
+                                    <button class="btn category-btn button-9 active">
+                                        <i class="icon"></i>
+                                        <span>Scolarité & Inscription</span>
+                                    </button>
+                                </li>
+                                <li class="list-item">                                
+                                    <button class="btn category-btn button-10 active">
+                                        <i class="icon"></i>
+                                        <span>Relais handicap</span>
+                                    </button>
+                                </li>
+                                <li class="list-item">                                
+                                    <button class="btn category-btn button-11">
+                                        <i class="icon"></i>
+                                        <span>Institut & École</span>
+                                    </button>
+                                </li>
+                                <li class="list-item">                                
+                                    <button class="btn category-btn button-12">
+                                        <i class="icon"></i>
+                                        <span>Recherche</span>
+                                    </button>
+                                </li> 
+                            </ul>
+                        </div>
+                        <div class="bottom-buttons">
+                            <div class="category-nav-button bottom row">
+                                <button class="col-xs-3 btn show-hide-search show-search"><i class="icon text-hide"></i></button>
+                                <button class="col-xs-9 btn show-hide-category show-category">Trier par categories<i class="icon"></i></button>
+                            </div>
+                            <div class="category-buttons row">
+                                <a href="geo1.html" class="category-link one col-xs-4"><i class="icon"></i></a>
+                                <a href="geo2.html" class="category-link two col-xs-4"><i class="icon"></i></a>
+                                <a href="geo3.html" class="active category-link three col-xs-4"><i class="icon"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+        <script src="./js/bootstrap.min.js"></script>
+        <script src="./js/jquery.customSelect.min.js"></script>
+        <script src="./js/script.js"></script>
+    </body>
+</html>
