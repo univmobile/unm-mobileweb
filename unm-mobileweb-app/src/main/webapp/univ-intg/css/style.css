@@ -682,7 +682,9 @@ time {
   font-size: 1.1em;
   width: 100%;
   font-family: 'Exo', sans-serif;
-  font-weight: 500; }
+  font-weight: 500;
+  position: absolute;
+  bottom: 0; }
   .show-search-long .icon {
     background-position: -30px -240px; }
   .category-one .show-search-long {
@@ -854,6 +856,7 @@ time {
   right: 14px;
   top: 15px;
   transition: background-color 1s;
+  padding: 0;
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
   -ms-border-radius: 30px;
@@ -870,6 +873,7 @@ time {
   right: 15px;
   top: -22px;
   position: absolute;
+  padding: 0;
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
   -ms-border-radius: 30px;
@@ -979,18 +983,25 @@ form.add-poi .confirm {
   font-family: 'Exo', sans-serif;
   font-weight: 500; }
 
-.poi-screen {
+.poi-wrap {
+  bottom: 0;
+  min-height: 100%;
   position: absolute;
-  top: 15px;
+  top: 0;
+  width: 100%;
+  padding-top: 15px; }
+  .poi-wrap.qr-code {
+    top: 50%;
+    min-height: auto; }
+
+.poi-screen {
+  position: relative;
+  top: 0;
   bottom: 0;
   width: 100%;
-  z-index: 10; }
-  .category-one .poi-screen {
-    background-color: #ffb103; }
-  .category-two .poi-screen {
-    background-color: #a54078; }
-  .category-three .poi-screen {
-    background-color: #34c978; }
+  z-index: 10;
+  min-height: 100%;
+  background-color: #FFF; }
   .poi-screen .poi-header {
     position: relative; }
     .category-one .poi-screen .poi-header {
@@ -999,8 +1010,6 @@ form.add-poi .confirm {
       background-color: #7f2456; }
     .category-three .poi-screen .poi-header {
       background-color: #21a25c; }
-  .qr-code .poi-screen {
-    top: 50%; }
   .poi-screen .category-icon {
     display: inline-block;
     width: 50px;
@@ -1075,6 +1084,12 @@ form.add-poi .confirm {
     padding: 10px;
     padding-left: 70px;
     padding-right: 20px; }
+    .category-one .poi-screen .poi-info {
+      background-color: #ffb103; }
+    .category-two .poi-screen .poi-info {
+      background-color: #a54078; }
+    .category-three .poi-screen .poi-info {
+      background-color: #34c978; }
     .poi-screen .poi-info address, .poi-screen .poi-info .phone, .poi-screen .poi-info .email {
       margin-bottom: 7px;
       font-style: normal;
@@ -1091,16 +1106,15 @@ form.add-poi .confirm {
     color: #000;
     background-color: #FFF;
     font-size: 0.9em;
-    min-height: 350px;
     font-family: 'Exo', sans-serif;
     font-weight: 500; }
     .qr-code .poi-screen .tab-content {
       min-height: auto; }
     .poi-screen .tab-content .body {
-      padding: 10px 15px; }
+      padding: 10px 15px 40px;
+      overflow: auto; }
       .qr-code .poi-screen .tab-content .body {
-        height: 200px;
-        overflow: auto; }
+        height: 200px; }
     .poi-screen .tab-content p {
       font-family: 'Exo', sans-serif;
       font-weight: 500; }
@@ -1129,6 +1143,7 @@ form.add-poi .confirm {
   .poi-screen #comments .comments-list {
     list-style: none;
     padding: 10px 15px;
+    padding-bottom: 194px;
     margin-bottom: 15px;
     margin-top: 0; }
   .poi-screen .comment-item .author {
@@ -1151,8 +1166,7 @@ form.add-poi .confirm {
     font-weight: 500; }
   .poi-screen .comment-field {
     padding: 15px 5px 5px;
-    margin: 0 10px;
-    margin-top: 20%; }
+    margin: 0 10px; }
     .category-one .poi-screen .comment-field {
       background-color: #ffb103; }
     .category-two .poi-screen .comment-field {
@@ -1160,9 +1174,7 @@ form.add-poi .confirm {
     .category-three .poi-screen .comment-field {
       background-color: #34c978; }
   .poi-screen .submit {
-    left: 0;
-    position: absolute;
-    right: 0; }
+    background-color: #df6138; }
     .category-one .poi-screen .submit {
       border-color: #ffb103; }
     .category-two .poi-screen .submit {
@@ -1191,11 +1203,20 @@ form.add-poi .confirm {
   height: 40px;
   line-height: 1; }
 
+.new-comment-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #FFF; }
+
 .back-to-geo {
   width: 100%;
   background-color: #df6138;
   height: auto;
-  padding: 5px; }
+  padding: 5px;
+  position: absolute;
+  bottom: 0; }
   .category-one .back-to-geo {
     border-color: #ffb103; }
   .category-two .back-to-geo {
