@@ -1,76 +1,12 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1">
-    <script>
-    (function(doc) {
-        var viewport = document.getElementById('viewport');
-        if ( document.documentElement.clientWidth > 640 ) {
-            viewport.setAttribute("content", "width=640, user-scalable=yes");
-                }
-            }(document));
-    </script>
-    <title>Univmobile</title>
-    <link href='http://fonts.googleapis.com/css?family=Exo:400,600,300,700,400italic,500' rel='stylesheet' type='text/css'>
-    <!-- Bootstrap -->
-    <link href="./css/bootstrap.css" rel="stylesheet">
-    <link href="./css/style.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
+  <jsp:include page="includes/head.jsp" />
   <body>
       <div class="mask"></div>
-      <nav class="navbar-menu" id="mobile-nav">
-          <header>
-              <a class="universite-logo" href="#"><img class="img-responsive" alt="Universite Paris" src="./img/universite-logo.jpg"></a>
-              <span class="close-btn"></span>
-          </header>
-          <ul class="menu navbar-nav">
-              <li class="menu-item one active dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">Mes services<span class="menu-item-icon"><i class="icon"></i></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Mon profil</a></li>
-                      <li><a href="#">Mes Bibliothèques</a></li>
-                      <li><a href="#">ENT</a></li>
-                      <li><a href="#">Ma médiathèque</a></li>
-                      <li><a href="#">Futurs étudiants</a></li>
-                  </ul>
-              </li>
-              <li class="menu-item two dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">Act’Universitaire<span class="menu-item-icon"><i class="icon"></i></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Menu 1</a></li>
-                      <li><a href="#">Menu 2</a></li>
-                      <li><a href="#">Menu 3</a></li>
-                  </ul>
-              </li>
-              <li class="menu-item three dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Tou’Trouver<span class="menu-item-icon"><i class="icon"></i></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">GéoCampus</a></li>
-                      <li><a href="#">Que faire à Paris</a></li>
-                      <li><a href="#">Les bons plans</a></li>
-                  </ul>
-              </li>
-              <li class="menu-item four dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Ma vie U<span class="menu-item-icon"><i class="icon"></i></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Catalogue SUDOC</a></li>
-                      <li><a href="#">Rue des facs</a></li>
-                      <li><a href="#">Guide de l'étudiant</a></li>
-                      <li><a href="#">Mon CROUS</a></li>
-                      <li><a href="#">Primo arrivant / Erasmus</a></li>
-                  </ul>
-              </li>
-          </ul>
-      </nav>
+      <jsp:include page="includes/nav.jsp" />
       <div class="main-wrap">
           <header class="main-navbar clearfix">
                       <button type="button" class="navbar-menu-toggle">
@@ -81,9 +17,7 @@
                       <div class="user-nav">
                           <div class="contact-link">Connectez-vous</div>
                           <div class="universite-name">
-                              Université Paris I <br>
-                              Panthéon<br>
-                              La Sorbonne
+                          	${university.getTitle()}
                           </div>
                           <div class="notifications">
                               <i class="icon"></i>

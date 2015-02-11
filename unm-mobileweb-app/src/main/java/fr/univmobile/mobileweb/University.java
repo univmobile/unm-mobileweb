@@ -3,9 +3,9 @@ package fr.univmobile.mobileweb;
 public class University {
 
 	private Long id;
-	
 	private String title;
-
+	private String logoUrl;
+	
 	public Long getId() {
 		return id;
 	}
@@ -14,5 +14,8 @@ public class University {
 		return title;
 	}
 	
+	public String getLogoUrl() {
+		return logoUrl;
+	}
 	
 }

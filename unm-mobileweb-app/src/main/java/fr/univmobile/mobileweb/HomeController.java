@@ -72,8 +72,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 			} else {
 
 				setAttribute("user", appToken.getUser());
-			}
-		}
+			}		}
 		*/
 
 		final SelectedUniversity selected = getHttpInputs(SelectedUniversity.class);
@@ -92,11 +91,15 @@ public class HomeController extends AsbtractMobileWebJspController {
 			}*/
 			setSessionAttribute("univ", univObj);
 		}
-
+		
+		//a.k.a. if(getUniversity() == null)
 		if (hasSessionAttribute("univ")) {
-
-			final University univ = getSessionAttribute("univ", University.class);
-
+					
+			setAttribute("universityLogo", getUniversityLogo());
+			setAttribute("university", getUniversity());
+			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
+			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
+			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
 			return new View("home.jsp");
 		} else {
 		
