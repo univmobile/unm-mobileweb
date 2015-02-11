@@ -825,6 +825,8 @@ time{
     font-size: 1.1em;
     width:100%;
     @include ff(500);
+    position:absolute;
+    bottom:0;
     .icon{
         background-position: -30px -240px;
     }
@@ -1058,6 +1060,7 @@ time{
     right: 14px;
     top: 15px;
     transition:background-color 1s;
+    padding: 0;
     @include border-radius(30px);
     .icon{
         background-position: -30px 0;
@@ -1073,6 +1076,7 @@ time{
     right: 15px;
     top: -22px;
     position: absolute;
+    padding: 0;
     @include border-radius(30px);
     .icon{
         background-position: 0 -240px;
@@ -1186,21 +1190,26 @@ form.add-poi{
         @include ff(500);
     }
 }
-.poi-screen{
+.poi-wrap{
+    bottom: 0;
+    min-height: 100%;
     position: absolute;
-    top:15px;
+    top: 0;
+    width: 100%;
+    padding-top: 15px;
+    &.qr-code {
+        top:50%;
+        min-height: auto;
+    }
+}
+.poi-screen{
+    position: relative;
+    top:0;
     bottom: 0;
     width:100%;
     z-index:10;
-    .category-one &{
-        background-color: $yellow       
-    }
-    .category-two &{
-        background-color: $violet;       
-    }
-    .category-three &{
-        background-color: $green       
-    }
+    min-height: 100%;
+    background-color: #FFF;
     .poi-header{
         position: relative;
         .category-one &{
@@ -1212,9 +1221,6 @@ form.add-poi{
         .category-three &{
             background-color: $dgreen       
         }
-    }
-    .qr-code &{
-        top:50%;
     }
     .category-icon{
         display: inline-block;
@@ -1330,6 +1336,15 @@ form.add-poi{
         padding: 10px;
         padding-left: 70px;
         padding-right: 20px;
+        .category-one &{
+            background-color: $yellow       
+        }
+        .category-two &{
+            background-color: $violet;       
+        }
+        .category-three &{
+            background-color: $green       
+        }
         address,.phone,.email{
             margin-bottom: 7px;
             font-style: normal;
@@ -1349,16 +1364,15 @@ form.add-poi{
         color: #000;
         background-color: #FFF;
         font-size: 0.9em;
-        min-height: 350px;
         @include ff(500);
         .qr-code &{
             min-height:auto;
         }
         .body{
-            padding: 10px 15px;
+            padding: 10px 15px 40px;
+            overflow: auto;
             .qr-code &{
                 height:200px;
-                overflow: auto;
             }
         }
         p{
@@ -1401,6 +1415,7 @@ form.add-poi{
         .comments-list{
             list-style: none;
             padding:10px 15px;
+            padding-bottom: 194px;
             margin-bottom: 15px;
             margin-top: 0;
         }
@@ -1432,7 +1447,6 @@ form.add-poi{
     .comment-field{
         padding: 15px 5px 5px;
         margin: 0 10px;
-        margin-top: 20%;
         .category-one &{
             background-color: $yellow;     
         }
@@ -1444,9 +1458,7 @@ form.add-poi{
         }
     }
     .submit{
-        left: 0;
-        position: absolute;
-        right: 0;
+        background-color: #df6138;
         .category-one &{
             border-color: $yellow;     
         }
@@ -1479,11 +1491,20 @@ form.add-poi{
     height: 40px;
     line-height: 1;
 }
+.new-comment-wrap{
+    position:absolute;
+    bottom: 0;
+    left:0;
+    width: 100%;
+    background-color: #FFF;
+}
 .back-to-geo{
     width: 100%;
     background-color: #df6138;
     height:auto;
     padding: 5px;
+    position:absolute;
+    bottom:0;
     .category-one &{
         border-color: $yellow;     
     }

@@ -26,7 +26,7 @@
             $('.add-poi-wrap').toggleClass('open');
         });
         $('.show-hide-poi').click(function () {
-            $('.poi-screen').toggle("slide", {direction: "down"});
+            $('.poi-wrap').toggle("slide", {direction: "down"});
             $('.poi-wrap').toggleClass('open');
         });
 
