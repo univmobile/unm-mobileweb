@@ -177,7 +177,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 		
 		String base = "https://maps.googleapis.com/maps/api/staticmap?";
 		String center = "center=Paris";
-		String zoom = "&zoom=2";
+		String zoom = "&zoom=10";
 		String size = "&size=640x640";
 		String markers = "&markers=";
 		
@@ -187,7 +187,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 		
 		if (poiContainer._embedded != null) {
 			for (Poi poi : poiContainer._embedded.getPois()) {
-				if (poi.isActive()) {
+				if (poi.isActive() && poi.getLat() != 0 && poi.getLng() != 0) {
 					markers += "|" + poi.getLat() + "," + poi.getLng();
 				}
 			}
