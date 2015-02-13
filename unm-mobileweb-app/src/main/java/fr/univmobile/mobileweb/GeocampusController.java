@@ -4,6 +4,143 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.springframework.web.client.RestTemplate;
+
+import fr.univmobile.backend.client.RegionClient;
+import fr.univmobile.backend.client.SessionClient;
+import fr.univmobile.web.commons.HttpInputs;
+import fr.univmobile.web.commons.HttpMethods;
+import fr.univmobile.web.commons.HttpParameter;
+import fr.univmobile.web.commons.HttpRequired;
+import fr.univmobile.web.commons.Paths;
+import fr.univmobile.web.commons.View;
+
+@Paths({ "geocampus" })
+public class GeocampusController extends AsbtractMobileWebJspController {
+	
+	private final String jsonUrl;
+	
+	/*******************************************************
+	 * Constructor #1
+	 * @param jsonUrl
+	 *******************************************************/
+	public GeocampusController(final String jsonUrl) {
+
+		this.jsonUrl = jsonUrl;
+	}
+
+
+	/********************************************************
+	 * This method is called automatically on /geocampus view
+	 ********************************************************/
+	@Override
+	public View action() throws IOException {
+		
+		//___________________________________________________________________________________________________________________________________
+		//temporary for testing, delete later
+		if (!hasSessionAttribute("univ")) {
+			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + 13, University.class);
+			setSessionAttribute("univ", univObj);
+		}
+		//___________________________________________________________________________________________________________________________________
+		
+		if (!hasSessionAttribute("univ")) {
+			
+			//redirect here to root url
+			
+		}  else {
+			
+			//get pois
+			RestTemplate template = restTemplate();
+			PoiEmbedded poiContainer = template.getForObject(jsonUrl + "/pois/search/findByUniversity?universityId=" + getUniversity().getId()+"&size=200", PoiEmbedded.class);
+			if (poiContainer._embedded != null) {
+				
+				Poi[] pois = filterPois(poiContainer._embedded.getPois());
+				setAttribute("allPois", pois);
+			}
+			
+			//get categories
+			CategoryEmbedded categoryContainer = template.getForObject(jsonUrl + "/categories/1/children", CategoryEmbedded.class);
+			if (categoryContainer._embedded != null) {
+				
+				Category[] categories = filterCategories(categoryContainer._embedded.getCategories());
+				setAttribute("allCategories", categories);
+			}
+			
+			//provide all attributes below
+			
+			//menu attributes
+			setAttribute("universityLogo", getUniversityLogo());
+			setAttribute("university", getUniversity());
+			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
+			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
+			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
+			
+			//map attributes
+			setAttribute("API_KEY", "AIzaSyC8uD1y1Dgx0W6JJMCQm7V1OJx_nsbRmBE");
+			
+			return new View("geocampus.jsp");
+		}
+		return null;		
+	}
+	
+	private Poi[] filterPois(Poi[] pois) {
+		
+		ArrayList<Poi> filteredPois = new ArrayList<Poi>();
+		for (Poi poiItem : pois) {
+			if (poiItem.isActive() && poiItem.getLat() != 0 && poiItem.getLng() != 0) {
+				filteredPois.add(poiItem);
+			}
+		}
+		return (Poi[]) filteredPois.toArray(new Poi[filteredPois.size()]);
+	}
+	
+private Category[] filterCategories(Category[] categories) {
+		
+		ArrayList<Category> filteredCategories = new ArrayList<Category>();
+		for (Category categoryItem : categories) {
+			if (categoryItem.isActive()) {
+				filteredCategories.add(categoryItem);
+			}
+		}
+		return (Category[]) filteredCategories.toArray(new Category[filteredCategories.size()]);
+	}
+}
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* old code 1
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.univmobile.backend.client.Poi;
@@ -41,7 +178,8 @@ public class GeocampusController extends AbstractJspController {
 		for (final PoiGroup poiGroup : pois.getPois().getGroups()) {
 
 			list.add(new Pois(poiGroup));
-		}
+		} 
+*/ //end of old code 1
 
 		/*
 		 * baseURL: ${baseURL}
@@ -86,6 +224,8 @@ public class GeocampusController extends AbstractJspController {
 		 * 
 		 * setAttribute("selectedRegion", showSelectedRegion.selected()); }
 		 */
+
+/* old code 2
 		return new View("geocampus_pois.jsp");
 	}
 
@@ -131,3 +271,4 @@ public class GeocampusController extends AbstractJspController {
 		private final int zoom;
 	}
 }
+*/ //end of old code 2

@@ -178,10 +178,10 @@ public class HomeController extends AsbtractMobileWebJspController {
 		String base = "https://maps.googleapis.com/maps/api/staticmap?";
 		String center = "center=Paris";
 		String zoom = "&zoom=10";
-		String size = "&size=640x640";
+		String size = "&size=640x400";
 		String markers = "&markers=";
 		
-		// Get the list of news
+		// Get the list of pois
 		RestTemplate template = restTemplate();
 		PoiEmbedded poiContainer = template.getForObject(jsonUrl + "/pois/search/findByUniversityAndCategory?universityId=" + universityId + "&categoryId=" + categoryId, PoiEmbedded.class);
 		
@@ -193,6 +193,6 @@ public class HomeController extends AsbtractMobileWebJspController {
 			}
 		}
 		
-		return base/*+center*/+zoom+size+markers;
+		return base/*+center+zoom*/+size+markers;
 	}
 }

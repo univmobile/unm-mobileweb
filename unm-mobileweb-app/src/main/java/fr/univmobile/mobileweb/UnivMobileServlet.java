@@ -66,7 +66,7 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 				new LoginShibbolethController(apiKey, sessions, regions), //
 				new AboutController(jsonURL, home), //
 				new RegionsController(regions), //
-				new GeocampusController(regions, pois) //
+				new GeocampusController(jsonURL) //
 		);
 	}
 

@@ -159,7 +159,7 @@
 				  </c:if>
 				  <!-- map iamge -->
 				  <div class="img-wrap">
-		          	<img class="img-responsive" src="${mapUrl}">
+		          	<a href="geocampus"><img class="img-responsive" src="${mapUrl}"></a>
 		          </div>
               </div>
           </div>

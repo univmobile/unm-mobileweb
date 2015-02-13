@@ -21,6 +21,14 @@
         $('.show-hide-search').click(function(){
             $('.search-wrap').toggle("slide", {direction: "up"});
         });
+        $('.show-hide-add-poi').click(function () {
+            $('.add-poi-screen').toggle("slide", {direction: "down"});
+            $('.add-poi-wrap').toggleClass('open');
+        });
+        $('.show-hide-poi').click(function () {
+            $('.poi-wrap').toggle("slide", {direction: "down"});
+            $('.poi-wrap').toggleClass('open');
+        });
 
         $(window).resize(function () {
             $('select').trigger('render');

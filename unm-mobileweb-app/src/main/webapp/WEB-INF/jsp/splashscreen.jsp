@@ -19,7 +19,7 @@
                   <div class="universite-form-wrap">
                       <form id="select-universite" method="post">
                           <div class="form-group">
-                          	<label>Choisir son université 333:</label>
+                          	<label>Choisir son universitï¿½  :</label>
                                                       
                          	<select class="form-control" name="univ">
                             	<c:forEach var="region" items="${regionsList}">
