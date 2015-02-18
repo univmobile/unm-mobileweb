@@ -5,6 +5,10 @@
 	version="2.4">
 
 	<servlet>
+		<servlet-name>JsonServlet</servlet-name>
+		<servlet-class>fr.univmobile.mobileweb.UnivMobileServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>UnivMobileServlet</servlet-name>
 		<servlet-class>fr.univmobile.mobileweb.UnivMobileServlet</servlet-class>
 		<init-param>
@@ -106,6 +110,10 @@
 	<servlet-mapping>
 		<servlet-name>PlainContentServlet</servlet-name>
 		<url-pattern>/css/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>JsonServlet</servlet-name>
+		<url-pattern>/json/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
