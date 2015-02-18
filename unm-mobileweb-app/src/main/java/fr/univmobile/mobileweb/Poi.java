@@ -36,6 +36,15 @@ public class Poi {
 		return description;
 	}
 	
+	public String getDescriptionClean() {
+		if (description != null) {
+			return description.replace("\n", "\\n");
+		} else {
+			return description;
+		}
+		
+	}
+	
 	public float getLat() {
 		return lat;
 	}
@@ -56,8 +65,17 @@ public class Poi {
 		return logo;
 	}
 	
-	public String getAddressItem() {
+	public String getAddress() {
 		return address;
+	}
+	
+	public String getAddressClean() {
+		if (address != null) {
+			return address.replace("\n", "\\n");
+		} else {
+			return address;
+		}
+		
 	}
 	
 	public String getFloor() {

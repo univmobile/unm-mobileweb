@@ -35,7 +35,19 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 
 		final String jsonURL = dependencyInjection.getInject(String.class).ref(
 				"jsonURL");
-
+		
+		final String universiteCategoryId = dependencyInjection.getInject(String.class).ref(
+				"universiteCategoryId");
+		
+		final String bonplansCategoryId = dependencyInjection.getInject(String.class).ref(
+				"bonplansCategoryId");
+		
+		final String parisCategoryId = dependencyInjection.getInject(String.class).ref(
+				"parisCategoryId");
+		
+		final String restaurationUniversitaireCategoryId = dependencyInjection.getInject(String.class).ref(
+				"restaurationUniversitaireCategoryId");
+	
 		final HomeClient home = dependencyInjection.getInject(HomeClient.class)
 				.into(UnivMobileServlet.class);
 
@@ -66,7 +78,10 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 				new LoginShibbolethController(apiKey, sessions, regions), //
 				new AboutController(jsonURL, home), //
 				new RegionsController(regions), //
-				new GeocampusController(jsonURL) //
+				new UniversityMapController(jsonURL, universiteCategoryId, restaurationUniversitaireCategoryId), //
+				new GoodPlansMapController(jsonURL, /*bonplansCategoryId*/universiteCategoryId, restaurationUniversitaireCategoryId), //
+				new ParisMapController(jsonURL, /*parisCategoryId*/universiteCategoryId, restaurationUniversitaireCategoryId) //
+				
 		);
 	}
 

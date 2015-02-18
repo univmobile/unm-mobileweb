@@ -87,6 +87,24 @@
 			<param-name>inject:String into:SessionJSONHttpClient</param-name>
 			<param-value>${ref:sessionJsonURL}</param-value>
 		</init-param>
+		
+		<init-param>
+			<param-name>inject:String ref:universiteCategoryId</param-name>
+			<param-value>1</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:String ref:bonplansCategoryId</param-name>
+			<param-value>2</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:String ref:parisCategoryId</param-name>
+			<param-value>24</param-value>
+		</init-param>
+		<init-param>
+			<param-name>inject:String ref:restaurationUniversitaireCategoryId</param-name>
+			<param-value>25</param-value>
+		</init-param>
+		
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>

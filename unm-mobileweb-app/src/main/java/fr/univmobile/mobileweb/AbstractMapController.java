@@ -1,39 +1,31 @@
 package fr.univmobile.mobileweb;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.springframework.web.client.RestTemplate;
 
-import fr.univmobile.backend.client.RegionClient;
-import fr.univmobile.backend.client.SessionClient;
-import fr.univmobile.web.commons.HttpInputs;
-import fr.univmobile.web.commons.HttpMethods;
-import fr.univmobile.web.commons.HttpParameter;
-import fr.univmobile.web.commons.HttpRequired;
 import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
-@Paths({ "geocampus" })
-public class GeocampusController extends AsbtractMobileWebJspController {
+public abstract class AbstractMapController extends AsbtractMobileWebJspController {
 	
-	private final String jsonUrl;
+	protected final String jsonUrl;
+	protected final String restaurationUniversitaireCategoryId;
 	
 	/*******************************************************
 	 * Constructor #1
 	 * @param jsonUrl
 	 *******************************************************/
-	public GeocampusController(final String jsonUrl) {
+	public AbstractMapController(final String jsonUrl, final String restaurationUniversitaireCategoryId) {
 
 		this.jsonUrl = jsonUrl;
+		this.restaurationUniversitaireCategoryId = restaurationUniversitaireCategoryId;
 	}
 
 
 	/********************************************************
-	 * This method is called automatically on /geocampus view
+	 * This method is called automatically on #provideViewName() view
 	 ********************************************************/
 	@Override
 	public View action() throws IOException {
@@ -47,25 +39,20 @@ public class GeocampusController extends AsbtractMobileWebJspController {
 		//___________________________________________________________________________________________________________________________________
 		
 		if (!hasSessionAttribute("univ")) {
-			
-			//redirect here to root url
-			
+
+			sendRedirect(getBaseURL());
+			return null;
 		}  else {
 			
-			//get pois
-			RestTemplate template = restTemplate();
-			PoiEmbedded poiContainer = template.getForObject(jsonUrl + "/pois/search/findByUniversity?universityId=" + getUniversity().getId()+"&size=200", PoiEmbedded.class);
-			if (poiContainer._embedded != null) {
-				
-				Poi[] pois = filterPois(poiContainer._embedded.getPois());
+			Poi[] pois = providePois();
+			if (pois != null) {		
+				pois = filterPois(pois);
 				setAttribute("allPois", pois);
 			}
-			
-			//get categories
-			CategoryEmbedded categoryContainer = template.getForObject(jsonUrl + "/categories/1/children", CategoryEmbedded.class);
-			if (categoryContainer._embedded != null) {
-				
-				Category[] categories = filterCategories(categoryContainer._embedded.getCategories());
+
+			Category[] categories = provideCategories();
+			if (categories != null) {			
+				categories = filterCategories(categories);
 				setAttribute("allCategories", categories);
 			}
 			
@@ -80,13 +67,14 @@ public class GeocampusController extends AsbtractMobileWebJspController {
 			
 			//map attributes
 			setAttribute("API_KEY", "AIzaSyC8uD1y1Dgx0W6JJMCQm7V1OJx_nsbRmBE");
+			setAttribute("mapHeight", "600px");
+			setAttribute("restaurationUniversitaireCategoryId", restaurationUniversitaireCategoryId);
 			
-			return new View("geocampus.jsp");
-		}
-		return null;		
+			return new View(provideViewName());
+		}	
 	}
 	
-	private Poi[] filterPois(Poi[] pois) {
+	protected Poi[] filterPois(Poi[] pois) {
 		
 		ArrayList<Poi> filteredPois = new ArrayList<Poi>();
 		for (Poi poiItem : pois) {
@@ -97,7 +85,7 @@ public class GeocampusController extends AsbtractMobileWebJspController {
 		return (Poi[]) filteredPois.toArray(new Poi[filteredPois.size()]);
 	}
 	
-private Category[] filterCategories(Category[] categories) {
+	protected Category[] filterCategories(Category[] categories) {
 		
 		ArrayList<Category> filteredCategories = new ArrayList<Category>();
 		for (Category categoryItem : categories) {
@@ -107,6 +95,18 @@ private Category[] filterCategories(Category[] categories) {
 		}
 		return (Category[]) filteredCategories.toArray(new Category[filteredCategories.size()]);
 	}
+	
+	protected abstract String provideViewName();
+	protected abstract Poi[] providePois();
+	protected abstract Category[] provideCategories();
+
+	/*
+	@RequestMapping(value="getComments",method=RequestMethod.GET)
+	public @ResponseBody String getComments() {
+		System.out.println("getComments");
+		return "whatever";
+	}
+	*/
 }
 
 
