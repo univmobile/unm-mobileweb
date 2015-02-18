@@ -14,6 +14,9 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.univmobile.mobileweb.models.Menu;
+import fr.univmobile.mobileweb.models.MenuEmbedded;
+import fr.univmobile.mobileweb.models.University;
 import fr.univmobile.web.commons.AbstractJspController;
 
 public abstract class AsbtractMobileWebJspController extends

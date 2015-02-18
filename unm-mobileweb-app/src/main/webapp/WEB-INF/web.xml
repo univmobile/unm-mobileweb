@@ -6,7 +6,11 @@
 
 	<servlet>
 		<servlet-name>JsonServlet</servlet-name>
-		<servlet-class>fr.univmobile.mobileweb.UnivMobileServlet</servlet-class>
+		<servlet-class>fr.univmobile.mobileweb.JsonServlet</servlet-class>
+		<init-param>
+			<param-name>inject:String ref:jsonURL</param-name>
+			<param-value>http://vps111534.ovh.net/unm-backend/api</param-value>
+		</init-param>
 	</servlet>
 	<servlet>
 		<servlet-name>UnivMobileServlet</servlet-name>

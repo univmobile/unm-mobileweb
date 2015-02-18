@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 import org.springframework.web.client.RestTemplate;
 
+import fr.univmobile.mobileweb.models.Category;
+import fr.univmobile.mobileweb.models.Poi;
+import fr.univmobile.mobileweb.models.University;
 import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
@@ -67,7 +70,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 			
 			//map attributes
 			setAttribute("API_KEY", "AIzaSyC8uD1y1Dgx0W6JJMCQm7V1OJx_nsbRmBE");
-			setAttribute("mapHeight", "600px");
+			setAttribute("mapHeight", "400px");
 			setAttribute("restaurationUniversitaireCategoryId", restaurationUniversitaireCategoryId);
 			
 			return new View(provideViewName());

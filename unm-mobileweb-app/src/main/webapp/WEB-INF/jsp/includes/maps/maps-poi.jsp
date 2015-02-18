@@ -10,10 +10,10 @@
             <div class="phone"><i class="fa fa-phone fa-fw"></i><span id="phonePOI"></span></div>
             <div class="email"><i class="fa fa-envelope fa-fw"></i><span id="emailPOI"></span></div>
         </div>
-        <div class="tabpanel" role="tabpanel">
-            <ul class="nav nav-tabs" role="tablist">
+        <div id="poiTabPanel" class="tabpanel" role="tabpanel">
+            <ul id="poiTabs" class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="one active"><a href="#plan" aria-controls="plan" role="tab" data-toggle="tab"><i class="fa fa-info-circle"></i></a></li>
-                <li role="presentation" class="two"><a href="#comments" aria-controls="comments" role="tab" data-toggle="tab"><i class="fa fa-comments"></i></a></li>
+                <li id="commentsTab" role="presentation" class="two"><a href="#comments" aria-controls="comments" role="tab" data-toggle="tab"><i class="fa fa-comments"></i></a></li>
                 <li id="menuTab" role="presentation" class="three"><a href="#menu" aria-controls="menu" role="tab" data-toggle="tab"><i class="fa fa-cutlery"></i></a></li>
             </ul>
             <div class="tab-content">
@@ -23,17 +23,9 @@
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="comments">
                     <ul class="comments-list">
-                        <li class="comment-item">
-                            <div class="author">Jeremy D.</div>
-                            <time>il y a 8 heures</time>
-                            <p class="comment-text">« Très bon accueil, personnel serviable et très à l’écoute. Prise en charge très rapide ! »</p>
-                        </li>
-                        <li class="comment-item">
-                            <div class="author">Jeremy D.</div>
-                            <time>il y a 8 heures</time>
-                            <p class="comment-text">« Très bon accueil, personnel serviable et très à l’écoute. Prise en charge très rapide ! »</p>
-                        </li>
+                                   
                     </ul>
+                    <!--
                     <div class="new-comment-wrap">
                         <form id="new-comment" class="new-comment">
                             <div class="form-group comment-field">
@@ -42,6 +34,7 @@
                             <button type="submit" class="btn long-button submit center-block">Valider</button>
                         </form>
                     </div>
+                    -->
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="menu">...menu</div>
             </div>

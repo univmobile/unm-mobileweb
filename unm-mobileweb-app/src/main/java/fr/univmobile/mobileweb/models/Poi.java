@@ -1,4 +1,6 @@
-package fr.univmobile.mobileweb;
+package fr.univmobile.mobileweb.models;
+
+import org.apache.commons.lang3.StringEscapeUtils;
 
 public class Poi {
 	
@@ -36,15 +38,6 @@ public class Poi {
 		return description;
 	}
 	
-	public String getDescriptionClean() {
-		if (description != null) {
-			return description.replace("\n", "\\n");
-		} else {
-			return description;
-		}
-		
-	}
-	
 	public float getLat() {
 		return lat;
 	}
@@ -67,15 +60,6 @@ public class Poi {
 	
 	public String getAddress() {
 		return address;
-	}
-	
-	public String getAddressClean() {
-		if (address != null) {
-			return address.replace("\n", "\\n");
-		} else {
-			return address;
-		}
-		
 	}
 	
 	public String getFloor() {
@@ -122,5 +106,9 @@ public class Poi {
 	
 	public int getCategoryId() {
 		return categoryId;
+	}
+	
+	public String escapeJS(String string) {
+		return StringEscapeUtils.escapeEcmaScript(string);
 	}
 }

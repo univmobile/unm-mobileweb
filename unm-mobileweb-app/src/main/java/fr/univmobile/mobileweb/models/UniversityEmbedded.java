@@ -1,4 +1,4 @@
-package fr.univmobile.mobileweb;
+package fr.univmobile.mobileweb.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

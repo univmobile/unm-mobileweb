@@ -39,8 +39,8 @@
                           </div>
                           <div class="category-buttons row">
                               <a class="active category-link one col-xs-4"><i class="icon"></i></a>
-                              <a href="goodplans-map" class="category-link two col-xs-4"><i class="icon"></i></a>
-                              <a href="paris-map" class="category-link three col-xs-4"><i class="icon"></i></a>
+                              <a href="paris-map" class="category-link two col-xs-4"><i class="icon"></i></a>
+                              <a href="goodplans-map" class="category-link three col-xs-4"><i class="icon"></i></a>
                           </div>
                       </div>
                   </div>
@@ -100,15 +100,15 @@
 		<c:forEach var="poiItem" items="${allPois}">
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng("${poiItem.getLat()}", "${poiItem.getLng()}"),
-				title: "${poiItem.getName()}",
+				title: "${poiItem.escapeJS(poiItem.getName())}",
 				//below are custom poi values, not required for maps.Marker
 				idPOI: "${poiItem.getId()}",
-				namePOI: "${poiItem.getName()}",
-				descriptionPOI: "${poiItem.getDescriptionClean()}",
-				addressPOI: "${poiItem.getAddressClean()}",
-				floorPOI: "${poiItem.getFloor()}",
-				phonesPOI: "${poiItem.getPhones()}",
-				emailPOI: "${poiItem.getEmail()}",
+				namePOI: "${poiItem.escapeJS(poiItem.getName())}",
+				descriptionPOI: "${poiItem.escapeJS(poiItem.getDescription())}",
+				addressPOI: "${poiItem.escapeJS(poiItem.getAddress())}",
+				floorPOI: "${poiItem.escapeJS(poiItem.getFloor())}",
+				phonesPOI: "${poiItem.escapeJS(poiItem.getPhones())}",
+				emailPOI: "${poiItem.escapeJS(poiItem.getEmail())}",
 				categoryIdPOI: "${poiItem.getCategoryId()}"
 		 	});
 			google.maps.event.addListener(marker, 'click', function() {
@@ -121,8 +121,6 @@
 	}
 	
 	function openPoi(markerItem) {
-		
-		//getComments(markerItem.idPOI);
 		
 		$('.poi-wrap .title').empty();
 		$('.poi-wrap .title').append(markerItem.namePOI);
@@ -139,13 +137,16 @@
 		$('#emailPOI').empty();
 		$('#emailPOI').append(markerItem.emailPOI);
 		
-		if (markerItem.categoryIdPOI == "25") {
+		if (markerItem.categoryIdPOI == "${restaurationUniversitaireCategoryId}") {
 			$('#menuTab').show();
 			$('#menu').show();
 		} else {
 			$('#menuTab').hide();
 			$('#menu').hide();
+			$('#poiTabs a:first').tab('show')  //select first tab
 		}
+		
+		$('#commentsTab').hide();
 		
 		$('.poi-wrap').toggle("slide", {direction: "down"});
         $('.poi-wrap').toggleClass('open');
@@ -157,23 +158,6 @@
 		} else {
 			displayMarkers(map, categoryId)
 		}
-	}
-	
-	function getComments(poiId) {
-		console.log("poiId: "+poiId);
-		
-		$.ajax({
-			type: "GET",
-			url: "/json/?action=getComments",
-
-			success: function (response) {
-				alert("success");
-				console.log("response: "+response);
-			},
-			error: function (xhr, status, error) {
-				alert(xhr.responseText);
-			}
-		});
 	}
     </script>
   </body>

@@ -4,59 +4,58 @@
 
 <!DOCTYPE html>
 <html lang="fr">
-	<jsp:include page="includes/maps/maps-head.jsp" />
-    <body>
-        <div class="mask"></div>
-		<jsp:include page="includes/nav.jsp" />
-        <div class="main-wrap">
-            <jsp:include page="includes/maps/maps-header.jsp" />
-            <div class="content-wrap geo category-three">
-                <jsp:include page="includes/maps/maps-search.jsp" />
-                <div class="main-container container">
-                    <div class="map" style="height:${mapHeight};" id="map-canvas"></div>
-                    <jsp:include page="includes/maps/addpoi.jsp" />
-                    <jsp:include page="includes/maps/maps-poi.jsp" />
-                    <div class="category-wrap">
-                        <div class="list-wrap">
-                            <div class="category-nav-button top row">
-                                <button class="col-xs-3 btn show-hide-search show-search"><i class="icon text-hide"></i></button>
-                                <button class="col-xs-9 btn show-hide-category hide-category">Trier par categories<i class="icon"></i></button>
-                            </div>
-                            <ul class="category-list row">
-                                <c:forEach var="categoryItem" items="${allCategories}" varStatus="loop">
+  <jsp:include page="includes/maps/maps-head.jsp" />
+  <body>
+      <div class="mask"></div>
+      <jsp:include page="includes/nav.jsp" />
+      <div class="main-wrap">
+          <jsp:include page="includes/maps/maps-header.jsp" />
+          <div class="content-wrap geo category-two">
+              <jsp:include page="includes/maps/maps-search.jsp" />
+              <div class="main-container container">
+                  <div class="map" style="height:${mapHeight};" id="map-canvas"></div>
+                  <jsp:include page="includes/maps/maps-poi.jsp" />
+                  <div class="category-wrap">
+                       <div class="list-wrap">
+                           <div class="category-nav-button top row">
+                               <button class="col-xs-9 btn show-hide-category hide-category"><i class="icon"></i>Trier par categories</button>
+                               <button class="col-xs-3 btn show-hide-search show-search"><i class="icon text-hide"></i></button>
+                           </div>
+                           <ul class="category-list row">
+                               <c:forEach var="categoryItem" items="${allCategories}" varStatus="loop">
 	                           		<li class="list-item">                                
 	                                   <button class="btn category-btn active" onClick="refreshPois('${categoryItem.getId()}',$(this).hasClass('active'))">
 	                                       <!-- <i class="icon"></i> -->
 	                                       <span>${categoryItem.getName()}</span>
 	                                   </button>
 	                                </li>	                                
-	                            </c:forEach>
-                            </ul>
-                        </div>
-                        <div class="bottom-buttons">
-                            <div class="category-nav-button bottom row">
-                                <button class="col-xs-3 btn show-hide-search show-search"><i class="icon text-hide"></i></button>
-                                <button class="col-xs-9 btn show-hide-category show-category">Trier par categories<i class="icon"></i></button>
-                            </div>
-                            <div class="category-buttons row">
-                                <a href="university-map" class="category-link one col-xs-4"><i class="icon"></i></a>
-                                <a href="goodplans-map" class="category-link two col-xs-4"><i class="icon"></i></a>
-                                <a class="active category-link three col-xs-4"><i class="icon"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+	                            </c:forEach> 
+                           </ul>
+                       </div>
+                      <div class="bottom-buttons">
+                          <div class="category-nav-button bottom row">
+                              <button class="col-xs-9 btn show-hide-category show-category"><i class="icon"></i>Trier par categories</button>
+                              <button class="col-xs-3 btn show-hide-search show-search"><i class="icon text-hide"></i></button>
+                          </div>
+                          <div class="category-buttons row">
+                              <a href="university-map" class="category-link one col-xs-4"><i class="icon"></i></a>
+                              <a class="active category-link two col-xs-4"><i class="icon"></i></a>
+                              <a href="goodplans-map" class="category-link three col-xs-4"><i class="icon"></i></a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-        <script src="./js/bootstrap.min.js"></script>
-        <script src="./js/jquery.customSelect.min.js"></script>
-        <script src="./js/script.js"></script>
-        
-        <!-- Google Maps -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/jquery.customSelect.min.js"></script>
+    <script src="./js/script.js"></script>
+    
+    <!-- Google Maps -->
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=${API_KEY}">
     </script>
@@ -101,15 +100,15 @@
 		<c:forEach var="poiItem" items="${allPois}">
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng("${poiItem.getLat()}", "${poiItem.getLng()}"),
-				title: "${poiItem.getName()}",
+				title: "${poiItem.escapeJS(poiItem.getName())}",
 				//below are custom poi values, not required for maps.Marker
 				idPOI: "${poiItem.getId()}",
-				namePOI: "${poiItem.getName()}",
-				descriptionPOI: "${poiItem.getDescriptionClean()}",
-				addressPOI: "${poiItem.getAddressClean()}",
-				floorPOI: "${poiItem.getFloor()}",
-				phonesPOI: "${poiItem.getPhones()}",
-				emailPOI: "${poiItem.getEmail()}",
+				namePOI: "${poiItem.escapeJS(poiItem.getName())}",
+				descriptionPOI: "${poiItem.escapeJS(poiItem.getDescription())}",
+				addressPOI: "${poiItem.escapeJS(poiItem.getAddress())}",
+				floorPOI: "${poiItem.escapeJS(poiItem.getFloor())}",
+				phonesPOI: "${poiItem.escapeJS(poiItem.getPhones())}",
+				emailPOI: "${poiItem.escapeJS(poiItem.getEmail())}",
 				categoryIdPOI: "${poiItem.getCategoryId()}"
 		 	});
 			google.maps.event.addListener(marker, 'click', function() {
@@ -122,9 +121,7 @@
 	}
 	
 	function openPoi(markerItem) {
-		
-		//getComments(markerItem.idPOI);
-		
+
 		$('.poi-wrap .title').empty();
 		$('.poi-wrap .title').append(markerItem.namePOI);
 		
@@ -140,13 +137,16 @@
 		$('#emailPOI').empty();
 		$('#emailPOI').append(markerItem.emailPOI);
 		
-		if (markerItem.categoryIdPOI == "25") {
+		if (markerItem.categoryIdPOI == "${restaurationUniversitaireCategoryId}") {
 			$('#menuTab').show();
 			$('#menu').show();
 		} else {
 			$('#menuTab').hide();
 			$('#menu').hide();
+			$('#poiTabs a:first').tab('show')  //select first tab
 		}
+		
+		$('#commentsTab').hide();
 		
 		$('.poi-wrap').toggle("slide", {direction: "down"});
         $('.poi-wrap').toggleClass('open');
@@ -160,5 +160,5 @@
 		}
 	}
     </script>
-    </body>
+  </body>
 </html>

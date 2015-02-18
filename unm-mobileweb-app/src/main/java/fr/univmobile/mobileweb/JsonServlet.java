@@ -2,6 +2,7 @@ package fr.univmobile.mobileweb;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.servlet.ServletConfig;
@@ -19,11 +20,16 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.univmobile.mobileweb.models.Comment;
+import fr.univmobile.mobileweb.models.CommentEmbedded;
+
 public class JsonServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 8454226267189579872L;
 	
 	private String jsonUrl;
+	private final String DEFAULT_SIZE = "200";
+	private final String DEFAULT_PAGE = "0";
 	
 	public JsonServlet() {
 		super();
@@ -37,32 +43,64 @@ public class JsonServlet extends HttpServlet {
 
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// Get the list of region
-		RestTemplate template = restTemplate();
-
-		RegionEmbedded regionContainer = template.getForObject(
-				"http://vps111534.ovh.net:8082/regions", RegionEmbedded.class);
-
-		int i = 0;
-		for (Region region : regionContainer._embedded.getRegions()) {
-			i++;
-			UniversityEmbedded universityContainer = template.getForObject(
-					jsonUrl + "/regions/" + i/* region.getId() */
-							+ "/universities", UniversityEmbedded.class);
-			region.setUniversities(universityContainer._embedded
-					.getUniversities());
+		
+		String actionParam = req.getParameter("action");
+		String poiIdParam = req.getParameter("poiId");
+		String sizeParam = req.getParameter("size");
+		String pageParam = req.getParameter("page");
+		
+		if (sizeParam == null) {
+			sizeParam = DEFAULT_SIZE;
+		}
+		if (pageParam == null) {
+			pageParam = DEFAULT_PAGE;
 		}
 		
-		resp.setContentType("application/json");
+		//__________________________________________________________________________________________________________
+		//for testing, remove later
+		poiIdParam = "15";
+		//__________________________________________________________________________________________________________
 		
-		// Use FasterXML Jackson library to generate JSON string from Javabeans
-		ObjectMapper mapper=new ObjectMapper();
 		
-		PrintWriter out = resp.getWriter();
+		if (actionParam != null && poiIdParam != null) {
+			Object container = null;
+			if (actionParam.equals("Comments")) {
+				container = getComments(poiIdParam, sizeParam, pageParam);
+			} else if (actionParam.equals("RestaurantMenu")) {
+				
+			}
+			
+			resp.setContentType("application/json;charset=UTF-8");
+			
+			// Use FasterXML Jackson library to generate JSON string from Javabeans
+			ObjectMapper mapper=new ObjectMapper();
+			
+			PrintWriter out = resp.getWriter();
+			
+			mapper.writeValue(out, container);
+			
+			out.flush();
+		}
+	}
+	
+	private Object getComments(String poiId, String size, String page) {
+		RestTemplate template = restTemplate();
+		CommentEmbedded commentsContainer = template.getForObject(jsonUrl + "/comments/search/findByPoiOrderByCreatedOnDesc?poiId=" + poiId + "&size=" + size + "&page=" + page, CommentEmbedded.class);
+		if (commentsContainer._embedded != null) {	
+			return filterComments(commentsContainer._embedded.getComments());
+		}
+		return null;
+	}
+	
+	private Comment[] filterComments(Comment[] comments) {
 		
-		mapper.writeValue(out, regionContainer);
-		
-		out.flush();
+		ArrayList<Comment> filteredComments = new ArrayList<Comment>();
+		for (Comment commentItem : comments) {
+			if (commentItem.isActive()) {
+				filteredComments.add(commentItem);
+			}
+		}
+		return (Comment[]) filteredComments.toArray(new Comment[filteredComments.size()]);
 	}
 
 	public RestTemplate restTemplate() {

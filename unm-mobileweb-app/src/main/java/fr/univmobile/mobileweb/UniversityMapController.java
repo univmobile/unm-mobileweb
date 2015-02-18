@@ -2,6 +2,10 @@ package fr.univmobile.mobileweb;
 
 import org.springframework.web.client.RestTemplate;
 
+import fr.univmobile.mobileweb.models.Category;
+import fr.univmobile.mobileweb.models.CategoryEmbedded;
+import fr.univmobile.mobileweb.models.Poi;
+import fr.univmobile.mobileweb.models.PoiEmbedded;
 import fr.univmobile.web.commons.Paths;
 
 @Paths({ "university-map" })
