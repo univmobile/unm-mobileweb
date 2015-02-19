@@ -80,7 +80,9 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 				new RegionsController(regions), //
 				new UniversityMapController(jsonURL, universiteCategoryId, restaurationUniversitaireCategoryId), //
 				new GoodPlansMapController(jsonURL, /*bonplansCategoryId*/universiteCategoryId, restaurationUniversitaireCategoryId), //
-				new ParisMapController(jsonURL, /*parisCategoryId*/universiteCategoryId, restaurationUniversitaireCategoryId) //
+				new ParisMapController(jsonURL, /*parisCategoryId*/universiteCategoryId, restaurationUniversitaireCategoryId), //
+				new ProfileController(jsonURL), //
+				new NewsController(jsonURL) //
 				
 		);
 	}

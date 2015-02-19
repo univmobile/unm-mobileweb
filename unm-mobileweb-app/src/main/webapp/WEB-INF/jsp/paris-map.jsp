@@ -59,41 +59,10 @@
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=${API_KEY}">
     </script>
+    <script src="./js/mapscripts.js"></script>
     <script type="text/javascript">
 	var markers = constructMarkers(); //global variable
 	google.maps.event.addDomListener(window, 'load', initialize);
-	
-	function initialize() {
-		var mapOptions = {
-			center: { lat: 48.8567, lng: 2.3508}, //Paris
-			zoom: 9
-        };
-        window.map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
-        displayAllMarkers(map);
-	}
-	
-	function displayAllMarkers(map) {
-		for (var i = 0; i < markers.length; i++) {
-			markers[i].setMap(map);
-		}
-	}
-	
-	function displayMarkers(map, categoryId) {
-		for (var i = 0; i < markers.length; i++) {
-			if (categoryId == markers[i].categoryIdPOI) {
-				markers[i].setMap(map);
-			}
-		}
-	}
-	
-	function removeMarkers(categoryId) {
-		for (var i = 0; i < markers.length; i++) {
-			if (categoryId == markers[i].categoryIdPOI) {
-				markers[i].setMap(null);
-			}
-		}
-	}
 	
 	function constructMarkers() {
 		markersTemp = [];
@@ -140,6 +109,7 @@
 		if (markerItem.categoryIdPOI == "${restaurationUniversitaireCategoryId}") {
 			$('#menuTab').show();
 			$('#menu').show();
+			getRestaurantMenus(markerItem.idPOI);
 		} else {
 			$('#menuTab').hide();
 			$('#menu').hide();
@@ -150,14 +120,8 @@
 		
 		$('.poi-wrap').toggle("slide", {direction: "down"});
         $('.poi-wrap').toggleClass('open');
-	}
-	
-	function refreshPois(categoryId, status) {
-		if (status == true) {
-			removeMarkers(categoryId)
-		} else {
-			displayMarkers(map, categoryId)
-		}
+        
+        addPoiIdHash(markerItem.idPOI);
 	}
     </script>
   </body>

@@ -36,7 +36,7 @@
 		    </li>
 	    </c:if>
 	    <li class="menu-item two dropdown">
-	        <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">Act’Universitaire<span class="menu-item-icon"><i class="icon"></i></span></a>
+	        <a class="dropdown-toggle" role="button" href="news">Act’Universitaire<span class="menu-item-icon"><i class="icon"></i></span></a>
 	        <!--
 	        <ul class="dropdown-menu" role="menu">
 	            <li><a href="#">Menu 1</a></li>

@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.univmobile.mobileweb.models.Comment;
 import fr.univmobile.mobileweb.models.CommentEmbedded;
+import fr.univmobile.mobileweb.models.RestaurantMenuEmbedded;
 
 public class JsonServlet extends HttpServlet {
 
@@ -58,7 +59,11 @@ public class JsonServlet extends HttpServlet {
 		
 		//__________________________________________________________________________________________________________
 		//for testing, remove later
-		poiIdParam = "15";
+		if (actionParam.equals("Comments")) {
+			poiIdParam = "15";
+		} else if (actionParam.equals("RestaurantMenu")) {
+			poiIdParam = "7313";
+		}
 		//__________________________________________________________________________________________________________
 		
 		
@@ -67,7 +72,7 @@ public class JsonServlet extends HttpServlet {
 			if (actionParam.equals("Comments")) {
 				container = getComments(poiIdParam, sizeParam, pageParam);
 			} else if (actionParam.equals("RestaurantMenu")) {
-				
+				container = getRestaurantMenus(poiIdParam, sizeParam, pageParam);
 			}
 			
 			resp.setContentType("application/json;charset=UTF-8");
@@ -101,6 +106,15 @@ public class JsonServlet extends HttpServlet {
 			}
 		}
 		return (Comment[]) filteredComments.toArray(new Comment[filteredComments.size()]);
+	}
+	
+	private Object getRestaurantMenus(String poiId, String size, String page) {
+		RestTemplate template = restTemplate();
+		RestaurantMenuEmbedded menusContainer = template.getForObject(jsonUrl + "/restoMenus/search/findRestoMenuForPoi?poiId=" + poiId + "&size=" + size + "&page=" + page, RestaurantMenuEmbedded.class);
+		if (menusContainer._embedded != null) {	
+			return menusContainer._embedded.getRestoMenus();
+		}
+		return null;
 	}
 
 	public RestTemplate restTemplate() {

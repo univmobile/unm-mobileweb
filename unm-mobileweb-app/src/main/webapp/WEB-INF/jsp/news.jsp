@@ -10,30 +10,16 @@
       <jsp:include page="includes/nav.jsp" />
       <div class="main-wrap">
           <jsp:include page="includes/maps/maps-header.jsp" />
-          <div class="content-wrap">
+          <div class="content-wrap yellow-section">
               <div class="container">
-                  <article class="main-article clearfix">
-                      <div class="head-img">
-                          <img class="img-responsive" alt="main article" src="${newsList[0].getImageUrl()}">
-                      </div>
-                      <div class="description">
-                          <time>${newsList[0].getAuthor()} - <fmt:formatDate pattern="dd/MM/YYYY" value="${newsList[0].getPublishedDate()}" /></time>
-                          <h2 class="title">${newsList[0].getTitle()}</h2>
-                          <div class="body">
-                              <p>${newsList[0].getDescription()}</p>
-                          </div>
-                      </div>
-                  </article>
-                  <c:if test="${fn:length(newsList) > 1}">
-	                  <div class="list-title">Dernières actualités</div>
-	                  <div class="list-wrap"  id="accordion" role="tablist" aria-multiselectable="true">
+                  <div class="list-title"><i class="icon"></i>Act’Universitaire</div>
+                  <c:if test="${fn:length(newsList) > 0}">
+	                   <div class="list-wrap" id="accordion" role="tablist" aria-multiselectable="true">
 	                      <ul class="article-list">
-	                      	<c:forEach var="newsItem" items="${newsList}" varStatus="loop">
-	                      		<!-- skip first article, because it is already used -->
-	                      		<c:if test="${newsItem != newsList[0]}">
+	                          <c:forEach var="newsItem" items="${newsList}" varStatus="loop">
 	                      			<li class="list-item">
 		                              <article>                                
-		                                  <div class="row">                               		  
+		                                  <div class="row">
 		                                      <a data-toggle="collapse" data-parent="#accordion" href="#collapse${loop.index}" aria-expanded="false" aria-controls="collapse${loop.index}">
 		                                          <div class="img-wrap">
 		                                              <img class="img-responsive" alt="article" src="${newsItem.getImageUrl()}">
@@ -54,16 +40,11 @@
 		                                      </div>
 		                                  </div>
 		                              </article>
-	                          		</li>
-	                      		</c:if>                      		          
+	                          		</li>                     		          
 	                      	</c:forEach>
 	                      </ul>
 	                  </div>
-				  </c:if>
-				  <!-- map iamge -->
-				  <div class="img-wrap">
-		          	<a href="university-map"><img class="img-responsive" src="${mapUrl}"></a>
-		          </div>
+	              </c:if>
               </div>
           </div>
       </div>

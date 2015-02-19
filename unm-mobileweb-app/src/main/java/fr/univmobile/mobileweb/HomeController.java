@@ -15,6 +15,7 @@ import fr.univmobile.backend.client.AppToken;
 import fr.univmobile.backend.client.ClientException;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.backend.client.SessionClient;
+import fr.univmobile.mobileweb.models.News;
 import fr.univmobile.mobileweb.models.NewsEmbedded;
 import fr.univmobile.mobileweb.models.Poi;
 import fr.univmobile.mobileweb.models.PoiEmbedded;
@@ -51,37 +52,6 @@ public class HomeController extends AsbtractMobileWebJspController {
 	@Override
 	public View action() throws IOException {
 
-		/*
-		if (hasSessionAttribute("appToken")) {
-
-			final AppToken appToken = getSessionAttribute("appToken",
-					AppToken.class);
-
-			final String appTokenId = appToken.getId();
-
-			if (getHttpInputs(Logout.class).isHttpValid()) {
-
-				if (log.isInfoEnabled()) {
-					log.info("Logging out: " + appTokenId);
-				}
-
-				try {
-
-					sessionClient.logout(apiKey, appTokenId);
-
-				} catch (final ClientException e) {
-
-					log.error(e);
-				}
-
-				removeSessionAttribute("appToken");
-
-			} else {
-
-				setAttribute("user", appToken.getUser());
-			}		}
-		*/
-
 		final SelectedUniversity selected = getHttpInputs(SelectedUniversity.class);
 
 		if (selected.isHttpValid()) {
@@ -90,12 +60,6 @@ public class HomeController extends AsbtractMobileWebJspController {
 			
 			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + univ, University.class);
 
-		/*	final University university = getUniversityById(regions, univ);
-
-			if (university != null) {
-
-				setSessionAttribute("univ", univ);
-			}*/
 			setSessionAttribute("univ", univObj);
 		}
 		
@@ -106,9 +70,12 @@ public class HomeController extends AsbtractMobileWebJspController {
 			RestTemplate template = restTemplate();
 			NewsEmbedded newsContainer = template.getForObject(jsonUrl + "/news/search/findNewsForUniversity?universityId=" + getUniversity().getId() + "&size=5", NewsEmbedded.class);
 			
-			if (newsContainer._embedded == null) {
+			News[] newsList = null;
+			if (newsContainer._embedded != null) {
 				//must be prevented somewhere else, because if news does not exist the view gonna be empty
-				throw new IOException("News does not exist");
+				newsList = newsContainer._embedded.getNews();
+			} else {
+				newsList = new News[0];
 			}
 			
 			//provide all attributes below
@@ -121,7 +88,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
 			
 			//home attributes
-			setAttribute("newsList", newsContainer._embedded.getNews());
+			setAttribute("newsList", newsList);
 			setAttribute("mapUrl", generateMapUrl(getUniversity().getId(), 21));
 			
 			return new View("home.jsp");
@@ -141,8 +108,6 @@ public class HomeController extends AsbtractMobileWebJspController {
 				region.setUniversities(universityContainer._embedded.getUniversities());
 			}
 			
-			//log.debug("Region size : " + regionContainer._embedded.getRegions().length);
-			
 			return new View("splashscreen.jsp");
 		}
 	}
@@ -155,30 +120,6 @@ public class HomeController extends AsbtractMobileWebJspController {
 		@HttpParameter(trim = true)
 		String univ();
 	}
-
-/*	@HttpMethods({ "GET", "POST" })
-	private interface Logout extends HttpInputs {
-
-		@HttpRequired
-		@HttpParameter
-		String logout();
-	}*/
-	
-	/*public class RegionEmbedded {
-
-		@JsonProperty("_embedded")
-		public RegionList _embedded;
-	}
-	
-	public class RegionList {
-
-		private Region[] regions;
-
-		public Region[] getRegions() {
-			return regions;
-		}
-		
-	}*/
 	
 	private String generateMapUrl(int universityId, int categoryId) {
 		

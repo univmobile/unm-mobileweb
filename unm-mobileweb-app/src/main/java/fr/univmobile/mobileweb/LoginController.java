@@ -16,7 +16,7 @@ import fr.univmobile.web.commons.HttpRequired;
 import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
-@Paths({ "login", "login/", "profile", "profile/" })
+@Paths({ "login", "login/"/*, "profile", "profile/" */ })
 public class LoginController extends AbstractJspController {
 
 	public LoginController(final RegionClient regions) {

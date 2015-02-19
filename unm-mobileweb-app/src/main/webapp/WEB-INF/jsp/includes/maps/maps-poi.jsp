@@ -22,9 +22,7 @@
                     <button class="btn show-hide-search show-search-long"><i class="icon"></i>Rechercher</button>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="comments">
-                    <ul class="comments-list">
-                                   
-                    </ul>
+                    <ul id="commentsList" class="comments-list"></ul>
                     <!--
                     <div class="new-comment-wrap">
                         <form id="new-comment" class="new-comment">
@@ -36,7 +34,10 @@
                     </div>
                     -->
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="menu">...menu</div>
+                <div role="tabpanel" class="tab-pane fade" id="menu">
+                	<span id="emptyString" style="padding: 10px">vide</span>
+                	<ul id="menuList" class="menu-list"></ul>
+                </div>
             </div>
         </div>
     </div>
