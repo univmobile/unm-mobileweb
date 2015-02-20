@@ -11,6 +11,9 @@ public class Menu {
 	private String grouping;
 	private int universityId;
 	
+	//whether menu id is predefined as system menu, e.g. profile, geocampus, etc.
+	private boolean predefinedMenu = false;
+	
 	public int getId() {
 		return id;
 	}
@@ -45,6 +48,14 @@ public class Menu {
 	
 	public int getUniversityId () {
 		return universityId;
+	}
+	
+	public boolean isPredefinedMenu() {
+		return predefinedMenu;
+	}
+	
+	public void setPredefinedMenu(boolean predefinedMenu) {
+		this.predefinedMenu = predefinedMenu;
 	}
 	
 }

@@ -79,6 +79,10 @@ function getRestaurantMenus(poiId) {
 				var menuDate = new Date(response[i].effectiveDate).setHours(0,0,0,0);
 				if (todaysDate == menuDate) {
 					appendRestaurantMenu(response[i]);
+					if(response[i+1] != null) {
+						appendRestaurantMenu(response[i+1]);
+					}
+					break;
 				}			
 			}
 		}
@@ -93,7 +97,7 @@ function appendRestaurantMenu(menuItem) {
 						  "</li>");
 }
 
-
+//poi hash
 $(document).ready(function(){
 	$('.show-hide-poi').click(function(){
 		window.location.replace("# ");
@@ -115,6 +119,85 @@ function addPoiIdHash(poiId) {
 	window.location.replace("#" + poiId);
 }
 
+//search
+$(document).ready(function(){
+	$('.show-hide-search').click(function(){
+		newCleanSearch();
+	});
+	
+	$('#clearButton').click(function(){
+		newCleanSearch();		
+    });
+	
+	$('#searchInput').bind('input', function() {
+		if ($(this).val().length > 0) {
+			$('#clearButton').show();
+	    } else {
+	    	$('#clearButton').hide();
+	    }
+		
+	    if ($(this).val().length > 2) {
+	    	getPoiSearchResults($(this).val());
+	    } else {
+	    	$('#searchResultsTitle').empty();
+	    	$('#searchResultsTitle').append("Merci de saisir au moins 3 caractères");
+	    	$('#seachResultsList').empty();
+	    }
+	});
+});
+
+function newCleanSearch() {
+	$('#searchInput').val("");
+	$('#clearButton').hide();
+	$('#searchResultsTitle').empty();
+	$('#searchResultsTitle').append("Merci de saisir au moins 3 caractères");
+	$('#seachResultsList').empty();
+	$('#searchInput').focus();
+}
+
+function getPoiSearchResults(searchInput) {
+	
+	$.ajax({
+		type: "GET",
+		dataType: "json",
+		url: "/unm-mobileweb/json/?action=SearchPoi&searchInput="+ searchInput + "&universityId=" + universityId +"&size=10&page=0"  ,
+
+		success: function (response) {
+			$('#seachResultsList').empty();
+			if (response != null) {
+				$('#searchResultsTitle').empty();
+		    	$('#searchResultsTitle').append("Résultats de la recherche:");
+			} else {
+				$('#searchResultsTitle').empty();
+		    	$('#searchResultsTitle').append("Pas de résultat");
+			}
+			
+			for (var i = 0; i < response.length; i++) {
+				appendSearchResult(response[i]);
+			}
+		}
+	});
+}
+
+function appendSearchResult(poiItem) {
+	$('#seachResultsList').append("<li id='" + poiItem.id + "' class='list-item search-result-item'>" +
+    									"<i class='icon'></i>" +
+    									"<div class='title'>" + poiItem.name + "</div>" +
+    							  "</li>");
+	
+	$('#'+poiItem.id).click(function(){     
+        $('.search-wrap').toggle("slide", {direction: "up"});
+        openPoi(getMarker(poiItem.id));
+    });
+}
+
+function getMarker(poiId) {
+	for (var i = 0; i < markers.length; i++) {
+		if (markers[i].idPOI == poiId) {
+			return markers[i];
+		}
+	}
+}
 
 //http://stackoverflow.com/a/12475270
 function time_ago(time){

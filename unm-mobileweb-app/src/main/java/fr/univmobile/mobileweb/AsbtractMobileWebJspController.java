@@ -143,6 +143,7 @@ public abstract class AsbtractMobileWebJspController extends
 	private void changePredefinedMenuUrl(Menu menuItem) {
 		if (getPredefinedMenusMap().containsKey(menuItem.getId())) {
 			menuItem.setUrl(getPredefinedMenusMap().get(menuItem.getId()));
+			menuItem.setPredefinedMenu(true);
 		}
 	}
 	

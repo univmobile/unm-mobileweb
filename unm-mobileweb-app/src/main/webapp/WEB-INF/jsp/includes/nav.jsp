@@ -23,11 +23,16 @@
 			        		<c:choose>
 								<c:when test="${menuItem.getUrl().equals('')}">
 									<!-- opens content of menu item -->
-									<li><a href="#">${menuItem.getName()}</a></li>
+									<li><a href="menu-content?menuId=${menuItem.getId()}">${menuItem.getName()}</a></li>
 								</c:when>
 								<c:otherwise>
 									<!--  opens url of menu item -->
-									<li><a href="${menuItem.getUrl()}">${menuItem.getName()}</a></li>
+									<c:if test="${menuItem.isPredefinedMenu()}">
+										<li><a href="${menuItem.getUrl()}">${menuItem.getName()}</a></li>
+									</c:if>
+									<c:if test="${!menuItem.isPredefinedMenu()}">
+										<li><a href="${menuItem.getUrl()}" target="_blank">${menuItem.getName()}</a></li>
+									</c:if>
 								</c:otherwise>
 							</c:choose>
 						</c:if>
@@ -54,11 +59,16 @@
 			        		<c:choose>
 								<c:when test="${menuItem.getUrl().equals('')}">
 									<!-- opens content of menu item -->
-									<li><a href="#">${menuItem.getName()}</a></li>
+									<li><a href="menu-content?menuId=${menuItem.getId()}">${menuItem.getName()}</a></li>
 								</c:when>
 								<c:otherwise>
 									<!--  opens url of menu item -->
-									<li><a href="${menuItem.getUrl()}">${menuItem.getName()}</a></li>
+									<c:if test="${menuItem.isPredefinedMenu()}">
+										<li><a href="${menuItem.getUrl()}">${menuItem.getName()}</a></li>
+									</c:if>
+									<c:if test="${!menuItem.isPredefinedMenu()}">
+										<li><a href="${menuItem.getUrl()}" target="_blank">${menuItem.getName()}</a></li>
+									</c:if>
 								</c:otherwise>
 							</c:choose>
 						</c:if>
@@ -75,11 +85,16 @@
 			        		<c:choose>
 								<c:when test="${menuItem.getUrl().equals('')}">
 									<!-- opens content of menu item -->
-									<li><a href="#">${menuItem.getName()}</a></li>
+									<li><a href="menu-content?menuId=${menuItem.getId()}">${menuItem.getName()}</a></li>
 								</c:when>
 								<c:otherwise>
 									<!--  opens url of menu item -->
-									<li><a href="${menuItem.getUrl()}">${menuItem.getName()}</a></li>
+									<c:if test="${menuItem.isPredefinedMenu()}">
+										<li><a href="${menuItem.getUrl()}">${menuItem.getName()}</a></li>
+									</c:if>
+									<c:if test="${!menuItem.isPredefinedMenu()}">
+										<li><a href="${menuItem.getUrl()}" target="_blank">${menuItem.getName()}</a></li>
+									</c:if>
 								</c:otherwise>
 							</c:choose>
 						</c:if>

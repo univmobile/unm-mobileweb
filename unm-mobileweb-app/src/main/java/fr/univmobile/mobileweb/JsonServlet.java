@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.univmobile.mobileweb.models.Comment;
 import fr.univmobile.mobileweb.models.CommentEmbedded;
+import fr.univmobile.mobileweb.models.Poi;
+import fr.univmobile.mobileweb.models.PoiEmbedded;
 import fr.univmobile.mobileweb.models.RestaurantMenuEmbedded;
 
 public class JsonServlet extends HttpServlet {
@@ -47,6 +49,8 @@ public class JsonServlet extends HttpServlet {
 		
 		String actionParam = req.getParameter("action");
 		String poiIdParam = req.getParameter("poiId");
+		String searchInputParam = req.getParameter("searchInput");
+		String universityIdParam = req.getParameter("universityId");
 		String sizeParam = req.getParameter("size");
 		String pageParam = req.getParameter("page");
 		
@@ -67,13 +71,21 @@ public class JsonServlet extends HttpServlet {
 		//__________________________________________________________________________________________________________
 		
 		
-		if (actionParam != null && poiIdParam != null) {
+		if (actionParam != null) {
 			Object container = null;
-			if (actionParam.equals("Comments")) {
-				container = getComments(poiIdParam, sizeParam, pageParam);
-			} else if (actionParam.equals("RestaurantMenu")) {
-				container = getRestaurantMenus(poiIdParam, sizeParam, pageParam);
+			if (poiIdParam != null) {
+				if (actionParam.equals("Comments")) {
+					container = getComments(poiIdParam, sizeParam, pageParam);
+				} else if (actionParam.equals("RestaurantMenu")) {
+					container = getRestaurantMenus(poiIdParam, sizeParam, pageParam);
+				}
 			}
+			if (universityIdParam != null) {
+				if (actionParam.equals("SearchPoi")) {
+					container = getSearchedPois(searchInputParam, universityIdParam, sizeParam, pageParam);
+				}
+			}
+			
 			
 			resp.setContentType("application/json;charset=UTF-8");
 			
@@ -115,6 +127,27 @@ public class JsonServlet extends HttpServlet {
 			return menusContainer._embedded.getRestoMenus();
 		}
 		return null;
+	}
+	
+	private Object getSearchedPois(String searchInput, String universityId, String size, String page) {
+		RestTemplate template = restTemplate();
+		PoiEmbedded poisContainer = template.getForObject(jsonUrl + "/pois/search/searchValue?val=" + searchInput + "&universityId="+ universityId + "&size=" + size + "&page=" + page, PoiEmbedded.class);
+		if (poisContainer._embedded != null) {
+			return filterPois(poisContainer._embedded.getPois());
+			
+		}
+		return null;
+	}
+	
+	private Poi[] filterPois(Poi[] pois) {
+		
+		ArrayList<Poi> filteredPois = new ArrayList<Poi>();
+		for (Poi poiItem : pois) {
+			if (poiItem.isActive() && poiItem.getLat() != 0 && poiItem.getLng() != 0) {
+				filteredPois.add(poiItem);
+			}
+		}
+		return (Poi[]) filteredPois.toArray(new Poi[filteredPois.size()]);
 	}
 
 	public RestTemplate restTemplate() {

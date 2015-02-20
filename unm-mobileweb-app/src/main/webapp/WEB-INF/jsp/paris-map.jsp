@@ -61,6 +61,7 @@
     </script>
     <script src="./js/mapscripts.js"></script>
     <script type="text/javascript">
+    var universityId = "${university.getId()}";
 	var markers = constructMarkers(); //global variable
 	google.maps.event.addDomListener(window, 'load', initialize);
 	
