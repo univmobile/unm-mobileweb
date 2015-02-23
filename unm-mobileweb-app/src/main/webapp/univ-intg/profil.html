@@ -72,34 +72,65 @@
           </ul>
       </nav>
       <div class="main-wrap">
-          <header class="main-navbar clearfix">
-                      <button type="button" class="navbar-menu-toggle">
-                          <span class="icon-bar"></span>
-                          <span class="icon-bar"></span>
-                          <span class="icon-bar"></span>
-                      </button>
-                      <div class="user-nav">
-                          <div class="user">
-                              <span class="welcome-msg">Bonjour</span>
-                              <div class="user-name">Patrick</div>
-                          </div>
-                          <div class="universite-name">
-                              Université Paris I <br>
-                              Panthéon<br>
-                              La Sorbonne
-                          </div>
-                          <div class="notifications">
-                              <i class="icon"></i>
-                          </div>
-                      </div>
+          <header class="main-navbar container clearfix">
+              <button type="button" class="navbar-menu-toggle">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <div class="user-nav">
+                  <div class="user">
+                      <span class="welcome-msg">Bonjour</span>
+                      <div class="user-name">Patrick</div>
+                  </div>
+                  <div class="universite-name">
+                      Université Paris I <br>
+                      Panthéon<br>
+                      La Sorbonne
+                  </div>
+                  <div class="notifications">
+                      <i class="icon"></i>
+                  </div>
+              </div>
           </header>
           <div class="content-wrap orange-section">
-              <div class="container">
+              <div class="main-container container">
+                  <div class="universite-list-wrap">
+                      <div class="universite-change-screen">
+                              <div class="screen-header">
+                                  <div class="screen-title"><i class="icon"></i>Université actuelle</div>
+                                  <span class="btn hide-universite-change show-hide-universite-change"><i class="icon"></i></span>
+                              </div>
+                              <div class="universite-change-field">
+                                  <div class="current-univesite">Université Paris 1 - Panthéon - La Sorbonne</div>
+                              </div>
+                              <section class="universite-results">
+                                  <div class="info-title">Choisir une autre université </div>
+                                  <ul class="universite--list">
+                                      <li class="list-item">
+                                          <div class="title">Bureau des éléves</div>
+                                      </li>
+                                      <li class="list-item">
+                                          <div class="title">Sorbonne</div>
+                                      </li>
+                                      <li class="list-item">
+                                          <div class="title">Salle de sport </div>
+                                      </li>
+                                      <li class="list-item">
+                                          <div class="title">Administration</div>
+                                      </li>
+                                      <li class="list-item">
+                                          <div class="title">Direction</div>
+                                      </li>
+                                  </ul>
+                              </section>
+                      </div>
+                  </div>
                   <div class="user-info">
                       <div class="name">Patrick Termian</div>
                       <div class="universite">Université Paris 1 - Panthéon - La Sorbonne</div>
                       <div class="link-wrap edit">
-                          <a href="#" class="edit-profil">Touchez pour modifier<i class="icon"></i></a>
+                          <a href="#" class="edit-profil show-hide-universite-change">Touchez pour modifier<i class="icon"></i></a>
                       </div>
                   </div>
                   <div class="list-title">Mes Médiathèques</div>
@@ -195,6 +226,7 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/jquery.customSelect.min.js"></script>
     <script src="./js/script.js"></script>

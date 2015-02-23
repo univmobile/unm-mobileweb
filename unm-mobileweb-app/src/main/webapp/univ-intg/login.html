@@ -71,7 +71,7 @@
               </li>
           </ul>
       </nav>
-      <div class="main-wrap">
+      <div class="main-wrap login">
           <header class="main-navbar container clearfix">
                       <button type="button" class="navbar-menu-toggle">
                           <span class="icon-bar"></span>
@@ -79,46 +79,36 @@
                           <span class="icon-bar"></span>
                       </button>
                       <div class="user-nav">
-                          <div class="user">
-                              <span class="welcome-msg">Bonjour</span>
-                              <div class="user-name">Patrick</div>
-                          </div>
+                          <div class="contact-link">Connectez-vous</div>
                           <div class="universite-name">
                               Université Paris I <br>
                               Panthéon<br>
                               La Sorbonne
                           </div>
                           <div class="notifications">
-                              <a href="#"><i class="icon"><span class="notifications-number">3</span></i></a>
+                              <i class="icon"></i>
                           </div>
                       </div>
           </header>
           <div class="content-wrap">
               <div class="container">
-                  <h3>Notifications (3)</h3>
-                  <ul class="notifications-list">
-                      <li class="list-item">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                              Nam vel lacus ultricies, consequat ante quis, vestibulum ex.
-                              Nam nisl lacus, dapibus sit amet varius at,
-                              tincidunt vitae nisi.</p>
-                          <time>À l’instant</time>
-                      </li>
-                      <li class="list-item"><p>Integer erat ex, consectetur ut urna vitae, consectetur preu
-                              m arcu. Ut neque enim, blandit et mi a, interdum
-                              ullamcorper urna.</p>
-                          <time>Il y a 20 minutes</time>
-                      </li>
-                      <li class="list-item"><p>Pellentesque ornare mollis erat, ut porta eros sollicitudin at.
-                              Ut sed neque volutpat, euismod nibh ac, dapibus augue.
-                              Aenean varius diam lacus, vitae ornare mi rhoncus nec.
-                              Nunc vitae finibus ligula. Nunc semper neque non
-                              aliquet iaculis.</p>
-                          <time>Il y a 8 heures</time>
-                      </li>
-
-                  </ul>
-
+                  <div class="logo-wrap">
+                      <img class="img-responsive center-block" src="./img/univmobile-logo-dark.png" alt="Univmobile logo">
+                  </div>
+                  <div class="universite-login-wrap">
+                      <div class="form-title">Connexion</div>
+                      <form id="login-form">
+                          <div class="form-group">
+                              <label for="exampleInputEmail1">Adresse Email</label>
+                              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="">
+                          </div>
+                          <div class="form-group">
+                              <label for="exampleInputPassword1">Mot de passe</label>
+                              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="">
+                          </div>
+                          <button class="btn confirm center-block" type="submit">Valider</button>
+                      </form>
+                  </div>
               </div>
           </div>
       </div>
