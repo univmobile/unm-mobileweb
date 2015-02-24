@@ -29,6 +29,10 @@
             $('.poi-wrap').toggle("slide", {direction: "down"});
             $('.poi-wrap').toggleClass('open');
         });
+        $('.show-hide-universite-change').click(function () {
+            $('.universite-list-wrap').toggle("slide", {direction: "down"});
+            $('.universite-list-wrap').toggleClass('open');
+        });
 
         $(window).resize(function () {
             $('select').trigger('render');

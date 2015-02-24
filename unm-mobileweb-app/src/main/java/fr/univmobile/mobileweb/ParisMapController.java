@@ -28,7 +28,7 @@ public class ParisMapController extends AbstractMapController {
 	protected Poi[] providePois() {
 
 		RestTemplate template = restTemplate();
-		PoiEmbedded poiContainer = template.getForObject(jsonUrl + "/pois/search/findByUniversityAndCategoryRoot?universityId=" + getUniversity().getId()+"&categoryId=" + parisCategoryId + "&size=200", PoiEmbedded.class);
+		PoiEmbedded poiContainer = template.getForObject(jsonUrl + "/pois/search/findByCategoryRoot?categoryId=" + parisCategoryId + "&size=200", PoiEmbedded.class);
 		if (poiContainer._embedded != null) {	
 			return poiContainer._embedded.getPois();
 		} else {

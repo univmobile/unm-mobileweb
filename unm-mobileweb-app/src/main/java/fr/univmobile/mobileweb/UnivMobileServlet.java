@@ -79,12 +79,15 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 				new AboutController(jsonURL, home), //
 				new RegionsController(regions), //
 				new UniversityMapController(jsonURL, universiteCategoryId, restaurationUniversitaireCategoryId), //
-				new GoodPlansMapController(jsonURL, /*bonplansCategoryId*/universiteCategoryId, restaurationUniversitaireCategoryId), //
-				new ParisMapController(jsonURL, /*parisCategoryId*/universiteCategoryId, restaurationUniversitaireCategoryId), //
-				new ProfileController(jsonURL), //
+				new GoodPlansMapController(jsonURL, bonplansCategoryId, restaurationUniversitaireCategoryId), //
+				new ParisMapController(jsonURL, parisCategoryId, restaurationUniversitaireCategoryId), //
+				new ProfileController(jsonURL, universiteCategoryId, bonplansCategoryId, parisCategoryId), //
 				new NewsController(jsonURL), //
-				new MenuContentController(jsonURL) //
-				
+				new MenuContentController(jsonURL), //
+				new MediaController(jsonURL), //
+				new LibrariesController(jsonURL), //
+				new BookmarksController(jsonURL, universiteCategoryId, bonplansCategoryId, parisCategoryId), //
+				new NotificationsController(jsonURL) //
 		);
 	}
 

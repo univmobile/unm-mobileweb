@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page pageEncoding="utf-8"%>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -119,8 +120,10 @@
 		
 		$('#commentsTab').hide();
 		
-		$('.poi-wrap').toggle("slide", {direction: "down"});
-        $('.poi-wrap').toggleClass('open');
+		if (!$('.poi-wrap').hasClass('open')) {
+			$('.poi-wrap').toggle("slide", {direction: "down"});
+	        $('.poi-wrap').toggleClass('open');
+		}
         
         addPoiIdHash(markerItem.idPOI);
 	}

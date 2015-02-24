@@ -11,9 +11,21 @@
       <jsp:include page="includes/nav.jsp" />
       <div class="main-wrap">
           <jsp:include page="includes/maps/maps-header.jsp" />
-          <div class="content-wrap">
-              <div class="container" style="background-color:#FFF; padding:10px; color: #000">
-              	${menuContent}
+          <div class="content-wrap orange-section">
+              <div class="container">
+                  <div class="head-img">
+                      <img src="./img/media-img.jpg" alt="main article" class="img-responsive">
+                  </div>
+                  <div class="list-title"><i class="icon"></i>Mes Médiathèques</div>
+                   <div class="list-wrap">
+                      <ul class="media-list">
+                          <c:forEach var="linkItem" items="${linksList}">
+                      			<li class="list-item">                                
+                              		<a href="${linkItem.getUrl()}" target="_blank"><h2 class="title">${linkItem.getLabel()}</h2></a>
+                          		</li>
+                      	  </c:forEach> 
+                      </ul>
+                  </div>
               </div>
           </div>
       </div>

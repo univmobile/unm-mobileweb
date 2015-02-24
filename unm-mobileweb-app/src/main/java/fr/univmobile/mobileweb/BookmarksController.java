@@ -2,29 +2,18 @@ package fr.univmobile.mobileweb;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.springframework.web.client.RestTemplate;
 
 import fr.univmobile.mobileweb.models.Bookmark;
 import fr.univmobile.mobileweb.models.BookmarkEmbedded;
 import fr.univmobile.mobileweb.models.Category;
-import fr.univmobile.mobileweb.models.Link;
-import fr.univmobile.mobileweb.models.LinkEmbedded;
 import fr.univmobile.mobileweb.models.Poi;
 import fr.univmobile.mobileweb.models.University;
-import fr.univmobile.mobileweb.models.UniversityEmbedded;
-import fr.univmobile.mobileweb.models.UniversityLibrary;
-import fr.univmobile.mobileweb.models.UniversityLibraryEmbedded;
-import fr.univmobile.web.commons.HttpInputs;
-import fr.univmobile.web.commons.HttpMethods;
-import fr.univmobile.web.commons.HttpParameter;
-import fr.univmobile.web.commons.HttpRequired;
 import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
-@Paths({ "profile" })
-public class ProfileController extends AsbtractMobileWebJspController {
+@Paths({ "bookmarks" })
+public class BookmarksController extends AsbtractMobileWebJspController {
 	
 	protected final String jsonUrl;
 	protected final String universiteCategoryId;
@@ -36,7 +25,7 @@ public class ProfileController extends AsbtractMobileWebJspController {
 	 * Constructor #1
 	 * @param jsonUrl
 	 *******************************************************/
-	public ProfileController(final String jsonUrl, final String universiteCategoryId, final String bonplansCategoryId, final String parisCategoryId) {
+	public BookmarksController(final String jsonUrl, final String universiteCategoryId, final String bonplansCategoryId, final String parisCategoryId) {
 
 		this.jsonUrl = jsonUrl;
 		this.universiteCategoryId = universiteCategoryId;
@@ -53,17 +42,10 @@ public class ProfileController extends AsbtractMobileWebJspController {
 		
 		userId = 0;
 		
-		final SelectedUniversity selected = getHttpInputs(SelectedUniversity.class);
-		if (selected.isHttpValid()) {
-			final String universityId = selected.universityId();			
-			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + universityId, University.class);
-			setSessionAttribute("univ", univObj);
-		}
-		
 		//___________________________________________________________________________________________________________________________________
 		//temporary for testing, delete later
 		if (!hasSessionAttribute("univ")) {
-			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + 1, University.class);
+			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + 4, University.class);
 			setSessionAttribute("univ", univObj);
 			
 		}
@@ -75,35 +57,8 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			return null;
 		}  else {
 			
-			// Get the list of links
-			RestTemplate template = restTemplate();
-			LinkEmbedded linksContainer = template.getForObject(jsonUrl + "/links/search/findByUniversity?universityId=" + getUniversity().getId() + "&size=5", LinkEmbedded.class);
-			
-			Link[] linksList = null;
-			if (linksContainer._embedded != null) {
-				//must be prevented somewhere else, because if links do not exist the view gonna be empty
-				linksList = linksContainer._embedded.getLinks();
-			} else {
-				linksList = new Link[0];
-			}
-			
-			// Get the list of libraries
-			UniversityLibraryEmbedded librariesContainer = template.getForObject(jsonUrl + "/universityLibraries/search/findByUniversity?universityId=" + getUniversity().getId() + "&size=5", UniversityLibraryEmbedded.class);
-			UniversityLibrary[] librariesList = null;
-			if (librariesContainer._embedded != null) {
-				//must be prevented somewhere else, because if libraries do not exist the view gonna be empty
-				librariesList = librariesContainer._embedded.getUniversityLibraries();
-			} else {
-				librariesList = new UniversityLibrary[0];
-			}
-			
-			//set pois of libraries
-			for (UniversityLibrary library : librariesList) {
-				Poi poi = template.getForObject(jsonUrl + "/universityLibraries/" + library.getId() + "/poi", Poi.class);
-				library.setPoi(poi);
-			}
-			
 			// Get the list of bookmarks
+			RestTemplate template = restTemplate();
 			BookmarkEmbedded bookmarksContainer = template.getForObject(jsonUrl + "/users/1/bookmarks", BookmarkEmbedded.class);
 			Bookmark[] bookmarksList = null;
 			if (bookmarksContainer._embedded != null) {
@@ -145,21 +100,6 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			}
 			bookmarksList = bookmarksArrayList.toArray(new Bookmark[bookmarksArrayList.size()]);
 			
-			//trim array
-			if (bookmarksList.length > 3) {
-				bookmarksList = Arrays.copyOf(bookmarksList, 3);
-			}
-			
-			//get list of all universities
-			UniversityEmbedded universityContainer = template.getForObject(jsonUrl + "/universities/search/findAllByOrderByTitleAsc", UniversityEmbedded.class);
-			University[] universitiesList = null;
-			if (universityContainer._embedded != null) {
-				//must be prevented somewhere else, because if universites do not exist the view gonna be empty
-				universitiesList = universityContainer._embedded.getUniversities();
-			} else {
-				universitiesList = new University[0];
-			}
-			
 			//provide all attributes below
 			
 			//menu attributes
@@ -170,20 +110,9 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
 			
 			//profile attributes
-			setAttribute("linksList", linksList);
-			setAttribute("librariesList", librariesList);
 			setAttribute("bookmarksList", bookmarksList);
-			setAttribute("universitiesList", universitiesList);
 			
-			return new View("profile.jsp");
+			return new View("bookmarks.jsp");
 		}		
-	}
-	
-	@HttpMethods("GET")
-	private interface SelectedUniversity extends HttpInputs {
-
-		@HttpRequired
-		@HttpParameter(trim = true)
-		String universityId();
 	}
 }

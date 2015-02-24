@@ -23,6 +23,7 @@ public class Poi {
 	private String email;
 	private String url;
 	//should be more here, add if needed
+	private boolean iconRuedesfacs;
 	private int universityId;
 	private int categoryId;
 	
@@ -99,6 +100,10 @@ public class Poi {
 	}
 	
 	//add other getters here
+	
+	public boolean isIconRuedesfacs() {
+		return iconRuedesfacs;
+	}
 	
 	public int getUniversityId() {
 		return universityId;

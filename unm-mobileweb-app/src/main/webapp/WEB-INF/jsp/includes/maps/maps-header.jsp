@@ -13,7 +13,9 @@
 	        ${university.getTitle()}
 	    </div>
 	    <div class="notifications">
-	        <i class="icon"></i>
+	    	<a href="notifications">
+	        	<i class="icon"></i>
+	        </a>
 	    </div>
 	</div>
 </header>
