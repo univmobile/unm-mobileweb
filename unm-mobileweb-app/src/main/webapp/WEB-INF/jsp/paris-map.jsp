@@ -25,8 +25,11 @@
                            <ul class="category-list row">
                                <c:forEach var="categoryItem" items="${allCategories}" varStatus="loop">
 	                           		<li class="list-item">                                
-	                                   <button class="btn category-btn active" onClick="refreshPois('${categoryItem.getId()}',$(this).hasClass('active'))">
-	                                       <!-- <i class="icon"></i> -->
+	                                   <button id="category-btn-${categoryItem.getId()}" class="btn category-btn active" onClick="refreshPois('${categoryItem.getId()}',$(this).hasClass('active'))">
+	                                       <c:if test="${categoryItem.getInactiveIconUrl() != null}">
+											<img class="icon" id="active-category-btn-${categoryItem.getId()}" src="${categoriesIconsUrl}${categoryItem.getActiveIconUrl()}" alt="" style="background-image: none;">
+											<img class="icon" id="inactive-category-btn-${categoryItem.getId()}" src="${categoriesIconsUrl}${categoryItem.getInactiveIconUrl()}" alt="" style="background-image: none;">
+										</c:if>
 	                                       <span>${categoryItem.getName()}</span>
 	                                   </button>
 	                                </li>	                                

@@ -74,6 +74,12 @@ public class NotificationsController extends AsbtractMobileWebJspController {
 				notificationsList = new Notification[0];
 			}
 			
+			//set new notification read date for the user
+			if (notificationsList.length > 0) {
+				template.getForObject(jsonUrl + "/notifications/lastRead?userId=" + user.getId() + "&notificationId=" + notificationsList[0].getId() , NotificationEmbedded.class);
+			}
+			
+			
 			//provide all attributes below
 			
 			//menu attributes
@@ -83,7 +89,7 @@ public class NotificationsController extends AsbtractMobileWebJspController {
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
 			
-			//news attributes
+			//notifications attributes
 			setAttribute("notificationsList", notificationsList);
 			
 			return new View("notifications.jsp");

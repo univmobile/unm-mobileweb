@@ -3,18 +3,16 @@ package fr.univmobile.mobileweb;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.springframework.web.client.RestTemplate;
-
 import fr.univmobile.mobileweb.models.Category;
 import fr.univmobile.mobileweb.models.Poi;
 import fr.univmobile.mobileweb.models.University;
-import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
 public abstract class AbstractMapController extends AsbtractMobileWebJspController {
 	
 	protected final String jsonUrl;
 	protected final String restaurationUniversitaireCategoryId;
+	protected final String categoriesIconsUrl;
 	
 	/*******************************************************
 	 * Constructor #1
@@ -24,6 +22,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 
 		this.jsonUrl = jsonUrl;
 		this.restaurationUniversitaireCategoryId = restaurationUniversitaireCategoryId;
+		categoriesIconsUrl = "http://vps111534.ovh.net/unm-backend/categoriesicons/";
 	}
 
 
@@ -41,7 +40,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 		}
 		//___________________________________________________________________________________________________________________________________
 		
-		if (!hasSessionAttribute("univ")) {
+		if (!hasSessionAttribute("univ")) {		
 
 			sendRedirect(getBaseURL());
 			return null;
@@ -72,6 +71,10 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 			setAttribute("API_KEY", "AIzaSyC8uD1y1Dgx0W6JJMCQm7V1OJx_nsbRmBE");
 			setAttribute("mapHeight", "400px");
 			setAttribute("restaurationUniversitaireCategoryId", restaurationUniversitaireCategoryId);
+			setAttribute("categoriesIconsUrl", categoriesIconsUrl);
+			if (getLibrariesCategoryId() != null) {
+				setAttribute("librariesCategoryId", getLibrariesCategoryId());
+			}
 			
 			return new View(provideViewName());
 		}	
@@ -103,13 +106,10 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 	protected abstract Poi[] providePois();
 	protected abstract Category[] provideCategories();
 
-	/*
-	@RequestMapping(value="getComments",method=RequestMethod.GET)
-	public @ResponseBody String getComments() {
-		System.out.println("getComments");
-		return "whatever";
+	//should be overridden, if id exist
+	protected String getLibrariesCategoryId() {
+		return null;
 	}
-	*/
 }
 
 

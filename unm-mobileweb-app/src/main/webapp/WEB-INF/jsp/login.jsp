@@ -1,74 +1,46 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page pageEncoding="UTF-8"%> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page pageEncoding="utf-8"%>
+
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Language" content="en">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnivMobile — Connexion</title>
-<link type="text/css" rel="stylesheet" href="${baseURL}/css/mobile.css">
-</head>
-<body id="body-login">
-<div class="body">
+<html lang="fr">
+  <jsp:include page="includes/head.jsp" />
+  <body>
+      <div class="mask"></div>
+      <jsp:include page="includes/nav.jsp" />
+      <div class="main-wrap login">
+          <jsp:include page="includes/maps/maps-header.jsp" />
+          <div class="content-wrap">
+              <div class="container">
+                  <div class="logo-wrap">
+                      <img class="img-responsive center-block" src="./img/univmobile-logo-dark.png" alt="Univmobile logo">
+                  </div>
+                  <div class="universite-login-wrap">
+                      <div class="form-title">Connexion</div>
+                      <c:if test="${errorMessage != null}">
+                      	<div>Error: ${errorMessage}</div>
+                      </c:if>
+                      <form id="login-form" method="post">
+                          <div class="form-group">
+                              <label for="exampleInputEmail1">Adresse Email</label>
+                              <input name="usernameField" type="text" class="form-control" id="exampleInputEmail1" placeholder="">
+                          </div>
+                          <div class="form-group">
+                              <label for="exampleInputPassword1">Mot de passe</label>
+                              <input name="passwordField" type="password" class="form-control" id="exampleInputPassword1" placeholder="">
+                          </div>
+                          <button class="btn confirm center-block" type="submit">Valider</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
 
-<div class="h1">
-<h1 id="h1">Connexion</h1>
-</div>
-
-<c:choose>
-<c:when test="${shibbolethEnabled}">
-<div id="div-shibboleth" class="login">
-<a id="link-shibboleth"
-	href="${baseURL}/login/shibboleth/?univ=${selectedUniversityId}">
-<span class="login">Sécurité Shibboleth…</span>
-<span class="info">
-	Sécurité renforcée :
-	<br>
-	<strong>
-	${selectedUniversityLabel}
-	</strong>
-</span>
-</a>
-</div>
-</c:when>
-<c:when test="${not empty selectedUniversityLabel}">
-<div id="div-shibboleth" class="login error">
-<span class="login">Sécurité Shibboleth…</span>
-<span class="info">
-	Non disponible :
-	<br>
-	<strong>
-	${selectedUniversityLabel}
-	</strong>
-</span>
-</div>
-</c:when>
-<c:otherwise>
-<div id="div-shibboleth" class="login error">
-<span class="login">Sécurité Shibboleth…</span>
-<span class="info">
-	Sécurité renforcée :
-	vous devez sélectionner une université.
-</span>
-</div>
-</c:otherwise>
-</c:choose>
-
-<div id="div-classic" class="login">
-<a id="link-classic"
-	href="${baseURL}/login/classic/">
-<span class="login">Identifiant générique…</span>
-<span class="info">Sécurité standard.</span>
-</a>
-</div>
-
-<div id="div-cancel">
-<a id="link-cancel" href="${baseURL}/">
-	Annuler
-</a>
-</div>
-
-</div> <!-- end of div.body -->
-</body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/jquery.customSelect.min.js"></script>
+    <script src="./js/script.js"></script>
+  </body>
 </html>

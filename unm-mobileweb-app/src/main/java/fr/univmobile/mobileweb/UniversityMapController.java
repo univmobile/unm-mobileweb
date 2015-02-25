@@ -12,11 +12,17 @@ import fr.univmobile.web.commons.Paths;
 public class UniversityMapController extends AbstractMapController {
 	
 	private final String universiteCategoryId;
+	private final String librariesCategoryId;
 		
-	public UniversityMapController(String jsonUrl, String universiteCategoryId, String restaurationUniversitaireCategoryId) {
+	public UniversityMapController(String jsonUrl, String universiteCategoryId, String restaurationUniversitaireCategoryId, String librariesCategoryId) {
 		super(jsonUrl, restaurationUniversitaireCategoryId);
 		this.universiteCategoryId = universiteCategoryId;
-
+		this.librariesCategoryId = librariesCategoryId;
+	}
+	
+	@Override
+	protected String getLibrariesCategoryId() {
+		return librariesCategoryId;
 	}
 
 	@Override

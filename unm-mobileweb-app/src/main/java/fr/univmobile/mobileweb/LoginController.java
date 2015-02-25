@@ -1,14 +1,14 @@
 package fr.univmobile.mobileweb;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static fr.univmobile.backend.client.RegionsUtils.getUniversityById;
-
 import java.io.IOException;
 
-import fr.univmobile.backend.client.AppToken;
-import fr.univmobile.backend.client.RegionClient;
-import fr.univmobile.backend.client.University;
-import fr.univmobile.web.commons.AbstractJspController;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.client.RestTemplate;
+
+import fr.univmobile.mobileweb.models.LoginJSON;
+import fr.univmobile.mobileweb.models.NewsEmbedded;
+import fr.univmobile.mobileweb.models.University;
+import fr.univmobile.mobileweb.models.User;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
 import fr.univmobile.web.commons.HttpParameter;
@@ -16,64 +16,89 @@ import fr.univmobile.web.commons.HttpRequired;
 import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
-@Paths({ "login", "login/"/*, "profile", "profile/" */ })
-public class LoginController extends AbstractJspController {
+@Paths({ "login" })
+public class LoginController extends AsbtractMobileWebJspController {
+	
+	protected final String jsonUrl;
+	
+	/*******************************************************
+	 * Constructor #1
+	 * @param jsonUrl
+	 *******************************************************/
+	public LoginController(final String jsonUrl) {
 
-	public LoginController(final RegionClient regions) {
-
-		this.regions = checkNotNull(regions, "regions");
+		this.jsonUrl = jsonUrl;
 	}
 
-	private final RegionClient regions;
 
+	/********************************************************
+	 * This method is called automatically on /login view
+	 ********************************************************/
 	@Override
 	public View action() throws IOException {
-
-		// If a user is already connected, display his or her details page
-
-		if (hasSessionAttribute("appToken")) {
-
-			final AppToken appToken = getSessionAttribute("appToken",
-					AppToken.class);
-
-			setAttribute("user", appToken.getUser());
-
-			return new View("profile.jsp");
+		
+		RestTemplate template = restTemplate();
+		
+		//___________________________________________________________________________________________________________________________________
+		//temporary for testing, delete later
+		if (!hasSessionAttribute("univ")) {
+			University univObj = template.getForObject(jsonUrl + "/universities/ " + 13, University.class);
+			setSessionAttribute("univ", univObj);
 		}
+		//___________________________________________________________________________________________________________________________________		
+		
+		
+		
+		if (!hasSessionAttribute("univ")) {
 
-		// Otherwise, display the login page
+			sendRedirect(getBaseURL());
+			return null;
+		}  else {
+			
+			final Login login = getHttpInputs(Login.class);
 
-		final SelectedUniversity selected = getHttpInputs(SelectedUniversity.class);
-
-		final University university = selected.isHttpValid() ? getUniversityById(
-				regions, selected.univ()) : null;
-
-		if (university != null) {
-
-			setAttribute("selectedUniversityId", university.getId());
-			setAttribute("selectedUniversityLabel", university.getTitle());
-
-			final String shibbolethIdentityProvider = university
-					.getShibbolethIdentityProvider();
-
-			if (shibbolethIdentityProvider != null) {
-
-				setAttribute("shibbolethEnabled", true);
+			if (login.isHttpValid()) {
+				LoginJSON loginContainer = restTemplateJson().getForObject("http://vps111534.ovh.net/unm-backend/json/login?username=" + login.usernameField() + "&password=" + login.passwordField(), LoginJSON.class);
+				if(loginContainer.getId() == null) {
+					setAttribute("errorMessage", "incorrect data");
+				} else {
+					User currentUser = template.getForObject(jsonUrl + "/users/ " + loginContainer.getId(), User.class);
+					if (currentUser != null) {
+						setSessionAttribute("currentUser", currentUser);
+					}
+					setSessionAttribute("authenticationToken", loginContainer.getAuthenticationToken());
+				}
 			}
-		}
+			
+			if (hasSessionAttribute("currentUser")) {
+				//redirect to home or previous page
+				sendRedirect(getBaseURL());
+				return null;
+			}
 
-		return new View("login.jsp");
+			//provide all attributes below
+			
+			//menu attributes
+			setAttribute("universityLogo", getUniversityLogo());
+			setAttribute("university", getUniversity());
+			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
+			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
+			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
+			
+			return new View("login.jsp");
+		}		
 	}
+	
+	@HttpMethods("POST")
+	private interface Login extends HttpInputs {
 
-	@HttpMethods("GET")
-	private interface SelectedUniversity extends HttpInputs {
-
-		// @HttpRequired
-		// @HttpParameter(trim = true)
-		// String region();
 
 		@HttpRequired
 		@HttpParameter(trim = true)
-		String univ();
+		String usernameField();
+		
+		@HttpRequired
+		@HttpParameter(trim = true)
+		String passwordField();
 	}
 }

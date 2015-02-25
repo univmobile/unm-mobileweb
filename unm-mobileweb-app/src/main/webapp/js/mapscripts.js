@@ -6,6 +6,7 @@ function initialize() {
     window.map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
     displayAllMarkers(map);
+    checkHash();
 }
 
 function displayAllMarkers(map) {
@@ -14,7 +15,13 @@ function displayAllMarkers(map) {
 	}
 }
 
-function displayMarkers(map, categoryId) {
+function removeAllMarkers() {
+	for (var i = 0; i < markers.length; i++) {
+		markers[i].setMap(null);
+	}
+}
+
+function displayMarkers(map, categoryId) {	
 	for (var i = 0; i < markers.length; i++) {
 		if (categoryId == markers[i].categoryIdPOI) {
 			markers[i].setMap(map);
@@ -31,8 +38,9 @@ function removeMarkers(categoryId) {
 }
 
 function refreshPois(categoryId, status) {
+	
 	if (status == true) {
-		removeMarkers(categoryId)
+		removeMarkers(categoryId)		
 	} else {
 		displayMarkers(map, categoryId)
 	}
@@ -98,26 +106,60 @@ function appendRestaurantMenu(menuItem) {
 }
 
 //poi hash
-$(document).ready(function(){
+function checkHash(){
 	$('.show-hide-poi').click(function(){
 		window.location.replace("# ");
      });
 	
 	if (window.location.hash) {
+
 		var hash = window.location.hash.substring(1);
 		
-		for (var i = 0; i < markers.length; i++) {
-			if (markers[i].idPOI == hash) {
-				openPoi(markers[i]);
-				break;
+		
+		if (hash == "libraries" && !(typeof librariesCategoryId === 'undefined')) {
+			removeAllMarkers();
+			$('.category-btn').each(function() {
+				if ($(this).attr('id') != "category-btn-"+librariesCategoryId) {
+					$(this).toggleClass('active');
+					
+					$('#active-'+$(this).attr('id')).hide();
+					$('#inactive-'+$(this).attr('id')).show();
+				}				
+			});
+			//display only library pois
+			refreshPois(librariesCategoryId, false);
+		} else {
+			for (var i = 0; i < markers.length; i++) {
+				if (markers[i].idPOI == hash) {
+					openPoi(markers[i]);
+					break;
+				}
 			}
-		}
+		}	
 	}
-});
+}
 
 function addPoiIdHash(poiId) {
 	window.location.replace("#" + poiId);
 }
+
+//category icons
+$(document).ready(function(){
+	$('.category-btn').each(function() {
+		$('#active-'+$(this).attr('id')).show();
+		$('#inactive-'+$(this).attr('id')).hide();
+	});
+	
+	$('.category-btn').click(function(){	
+		if($(this).hasClass('active')) {
+			$('#active-'+$(this).attr('id')).show();
+			$('#inactive-'+$(this).attr('id')).hide();
+		} else {
+			$('#active-'+$(this).attr('id')).hide();
+			$('#inactive-'+$(this).attr('id')).show();
+		}
+	});
+});
 
 //search
 $(document).ready(function(){

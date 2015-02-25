@@ -36,6 +36,18 @@ public abstract class AsbtractMobileWebJspController extends
 	    return new RestTemplate(Collections.<HttpMessageConverter<?>> singletonList(converter));
 	}
 	
+	public RestTemplate restTemplateJson() {
+	    final ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	    mapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false);
+
+	    final MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+	    converter.setSupportedMediaTypes(MediaType.parseMediaTypes("application/json"));
+	    converter.setObjectMapper(mapper);
+	    
+	    return new RestTemplate(Collections.<HttpMessageConverter<?>> singletonList(converter));
+	}
+	
 	
 	/*------------------------------------------------------------------
 	 * Globally used methods

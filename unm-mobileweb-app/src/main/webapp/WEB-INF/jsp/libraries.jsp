@@ -32,7 +32,7 @@
                       		</c:forEach> 
                       </ul>
                        <div class="button-wrap">
-                           <button class="btn add-more"><i class="icon"></i>Ajouter d’autres bibliothèques</button>
+                           <a class="btn add-more" href="university-map#libraries"><i class="icon"></i>Ajouter d’autres bibliothèques</a>
                        </div>
                   </div>
               </div>

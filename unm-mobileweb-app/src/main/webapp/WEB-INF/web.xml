@@ -112,6 +112,10 @@
 			<param-name>inject:String ref:restaurationUniversitaireCategoryId</param-name>
 			<param-value>25</param-value>
 		</init-param>
+		<init-param>
+			<param-name>inject:String ref:librariesCategoryId</param-name>
+			<param-value>7</param-value>
+		</init-param>
 		
 		<load-on-startup>1</load-on-startup>
 	</servlet>
