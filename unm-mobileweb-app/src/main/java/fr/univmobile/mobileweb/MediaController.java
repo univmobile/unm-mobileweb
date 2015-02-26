@@ -32,8 +32,6 @@ public class MediaController extends AsbtractMobileWebJspController {
 	@Override
 	public View action() throws IOException {
 		
-		userId = 0;
-		
 		//___________________________________________________________________________________________________________________________________
 		//temporary for testing, delete later
 		if (!hasSessionAttribute("univ")) {
@@ -41,11 +39,10 @@ public class MediaController extends AsbtractMobileWebJspController {
 			setSessionAttribute("univ", univObj);
 			
 		}
-		userId = 1;
 		//___________________________________________________________________________________________________________________________________
 		
-		if (!hasSessionAttribute("univ") || userId == 0) {
-			sendRedirect(getBaseURL());
+		if (!hasSessionAttribute("univ")) {
+			sendRedirect(getBaseURL()+"/");
 			return null;
 		}  else {
 			

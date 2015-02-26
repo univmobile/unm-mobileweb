@@ -51,7 +51,7 @@ public class LoginController extends AsbtractMobileWebJspController {
 		
 		if (!hasSessionAttribute("univ")) {
 
-			sendRedirect(getBaseURL());
+			sendRedirect(getBaseURL()+"/");
 			return null;
 		}  else {
 			
@@ -72,7 +72,7 @@ public class LoginController extends AsbtractMobileWebJspController {
 			
 			if (hasSessionAttribute("currentUser")) {
 				//redirect to home or previous page
-				sendRedirect(getBaseURL());
+				sendRedirect(getBaseURL()+"/");
 				return null;
 			}
 

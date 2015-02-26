@@ -146,6 +146,8 @@
 			}
 
 			addPoiIdHash(markerItem.idPOI);
+			
+			$('#poiIdInputFieldForBookmark').val(markerItem.idPOI);
 		}
 	</script>
 </body>

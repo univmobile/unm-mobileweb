@@ -41,7 +41,7 @@ public class NewsController extends AsbtractMobileWebJspController {
 		
 		if (!hasSessionAttribute("univ")) {
 
-			sendRedirect(getBaseURL());
+			sendRedirect(getBaseURL()+"/");
 			return null;
 		}  else {
 			

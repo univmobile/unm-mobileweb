@@ -34,7 +34,6 @@ public class NotificationsController extends AsbtractMobileWebJspController {
 	@Override
 	public View action() throws IOException {
 		
-		userId = 0;
 		RestTemplate template = restTemplate();
 		
 		//___________________________________________________________________________________________________________________________________
@@ -43,19 +42,24 @@ public class NotificationsController extends AsbtractMobileWebJspController {
 			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + 13, University.class);
 			setSessionAttribute("univ", univObj);
 		}
-		userId = 1;
 		//___________________________________________________________________________________________________________________________________
 		
-		User user = null;
-		if (userId != 0) {
-			user = template.getForObject(jsonUrl + "/users/ " + userId, User.class);
-		}
 		
-		if (!hasSessionAttribute("univ") || user == null) {
+		if (!hasSessionAttribute("univ")) {
 
-			sendRedirect(getBaseURL());
+			sendRedirect(getBaseURL()+"/");
 			return null;
 		}  else {
+			
+			User user = null;
+			if (!hasSessionAttribute("currentUser")) {
+				//redirect to home or previous page
+				sendRedirect(getBaseURL() + "/login");
+				return null;
+			} else {
+				user = getSessionAttribute("currentUser", User.class);
+				userId = user.getId();
+			}
 			
 			// Get the list of notifications
 			NotificationEmbedded notificationsContainer;
@@ -76,7 +80,7 @@ public class NotificationsController extends AsbtractMobileWebJspController {
 			
 			//set new notification read date for the user
 			if (notificationsList.length > 0) {
-				template.getForObject(jsonUrl + "/notifications/lastRead?userId=" + user.getId() + "&notificationId=" + notificationsList[0].getId() , NotificationEmbedded.class);
+				template.getForObject(jsonUrl + "/notifications/lastRead?userId=" + userId + "&notificationId=" + notificationsList[0].getId() , NotificationEmbedded.class);
 			}
 			
 			

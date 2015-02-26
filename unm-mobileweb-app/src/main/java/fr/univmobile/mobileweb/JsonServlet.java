@@ -64,7 +64,7 @@ public class JsonServlet extends HttpServlet {
 		//__________________________________________________________________________________________________________
 		//for testing, remove later
 		if (actionParam.equals("Comments")) {
-			poiIdParam = "15";
+			//poiIdParam = "15";
 		} else if (actionParam.equals("RestaurantMenu")) {
 			poiIdParam = "7313";
 		}

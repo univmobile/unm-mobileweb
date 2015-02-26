@@ -16,6 +16,7 @@ import fr.univmobile.mobileweb.models.University;
 import fr.univmobile.mobileweb.models.UniversityEmbedded;
 import fr.univmobile.mobileweb.models.UniversityLibrary;
 import fr.univmobile.mobileweb.models.UniversityLibraryEmbedded;
+import fr.univmobile.mobileweb.models.User;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
 import fr.univmobile.web.commons.HttpParameter;
@@ -51,8 +52,6 @@ public class ProfileController extends AsbtractMobileWebJspController {
 	@Override
 	public View action() throws IOException {
 		
-		userId = 0;
-		
 		final SelectedUniversity selected = getHttpInputs(SelectedUniversity.class);
 		if (selected.isHttpValid()) {
 			final String universityId = selected.universityId();			
@@ -67,13 +66,20 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			setSessionAttribute("univ", univObj);
 			
 		}
-		userId = 1;
 		//___________________________________________________________________________________________________________________________________
 		
-		if (!hasSessionAttribute("univ") || userId == 0) {
-			sendRedirect(getBaseURL());
+		if (!hasSessionAttribute("univ")) {
+			sendRedirect(getBaseURL()+"/");
 			return null;
 		}  else {
+			
+			if (!hasSessionAttribute("currentUser")) {
+				//redirect to home or previous page
+				sendRedirect(getBaseURL() + "/login");
+				return null;
+			} else {
+				userId = getSessionAttribute("currentUser", User.class).getId();
+			}
 			
 			// Get the list of links
 			RestTemplate template = restTemplate();
@@ -104,7 +110,7 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			}
 			
 			// Get the list of bookmarks
-			BookmarkEmbedded bookmarksContainer = template.getForObject(jsonUrl + "/users/1/bookmarks", BookmarkEmbedded.class);
+			BookmarkEmbedded bookmarksContainer = template.getForObject(jsonUrl + "/users/" + userId + "/bookmarks", BookmarkEmbedded.class);
 			Bookmark[] bookmarksList = null;
 			if (bookmarksContainer._embedded != null) {
 				//must be prevented somewhere else, because if bookmarks do not exist the view gonna be empty

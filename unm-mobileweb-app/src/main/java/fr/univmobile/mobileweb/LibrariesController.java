@@ -15,8 +15,6 @@ import fr.univmobile.web.commons.View;
 public class LibrariesController extends AsbtractMobileWebJspController {
 	
 	protected final String jsonUrl;
-
-	private int userId;
 	
 	/*******************************************************
 	 * Constructor #1
@@ -34,8 +32,6 @@ public class LibrariesController extends AsbtractMobileWebJspController {
 	@Override
 	public View action() throws IOException {
 		
-		userId = 0;
-		
 		//___________________________________________________________________________________________________________________________________
 		//temporary for testing, delete later
 		if (!hasSessionAttribute("univ")) {
@@ -43,11 +39,10 @@ public class LibrariesController extends AsbtractMobileWebJspController {
 			setSessionAttribute("univ", univObj);
 			
 		}
-		userId = 1;
 		//___________________________________________________________________________________________________________________________________
 		
-		if (!hasSessionAttribute("univ") || userId == 0) {
-			sendRedirect(getBaseURL());
+		if (!hasSessionAttribute("univ")) {
+			sendRedirect(getBaseURL()+"/");
 			return null;
 		}  else {
 			

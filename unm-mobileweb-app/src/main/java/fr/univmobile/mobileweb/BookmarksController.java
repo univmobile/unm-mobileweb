@@ -2,6 +2,7 @@ package fr.univmobile.mobileweb;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import org.springframework.web.client.RestTemplate;
 
 import fr.univmobile.mobileweb.models.Bookmark;
@@ -9,6 +10,7 @@ import fr.univmobile.mobileweb.models.BookmarkEmbedded;
 import fr.univmobile.mobileweb.models.Category;
 import fr.univmobile.mobileweb.models.Poi;
 import fr.univmobile.mobileweb.models.University;
+import fr.univmobile.mobileweb.models.User;
 import fr.univmobile.web.commons.Paths;
 import fr.univmobile.web.commons.View;
 
@@ -49,17 +51,24 @@ public class BookmarksController extends AsbtractMobileWebJspController {
 			setSessionAttribute("univ", univObj);
 			
 		}
-		userId = 1;
 		//___________________________________________________________________________________________________________________________________
 		
-		if (!hasSessionAttribute("univ") || userId == 0) {
-			sendRedirect(getBaseURL());
+		if (!hasSessionAttribute("univ")) {
+			sendRedirect(getBaseURL()+"/");
 			return null;
 		}  else {
 			
+			if (!hasSessionAttribute("currentUser")) {
+				//redirect to home or previous page
+				sendRedirect(getBaseURL() + "/login");
+				return null;
+			} else {
+				userId = getSessionAttribute("currentUser", User.class).getId();
+			}
+			
 			// Get the list of bookmarks
 			RestTemplate template = restTemplate();
-			BookmarkEmbedded bookmarksContainer = template.getForObject(jsonUrl + "/users/1/bookmarks", BookmarkEmbedded.class);
+			BookmarkEmbedded bookmarksContainer = template.getForObject(jsonUrl + "/users/" + userId + "/bookmarks", BookmarkEmbedded.class);
 			Bookmark[] bookmarksList = null;
 			if (bookmarksContainer._embedded != null) {
 				//must be prevented somewhere else, because if bookmarks do not exist the view gonna be empty

@@ -15,7 +15,9 @@
                 <jsp:include page="includes/maps/maps-search.jsp" />
                 <div class="main-container container">
                     <div class="map" style="height:${mapHeight};" id="map-canvas"></div>
-                    <jsp:include page="includes/maps/addpoi.jsp" />
+                    <c:if test="${currentUser != null}">
+                    	<jsp:include page="includes/maps/addpoi.jsp" />
+                    </c:if>
                     <jsp:include page="includes/maps/maps-poi.jsp" />
                     <div class="category-wrap">
                         <div class="list-wrap">
@@ -131,6 +133,8 @@
         getComments(markerItem.idPOI);
         
         addPoiIdHash(markerItem.idPOI);
+        $('#poiIdInputField').val(markerItem.idPOI);
+        $('#poiIdInputFieldForBookmark').val(markerItem.idPOI);
 	}
     </script>
     </body>

@@ -14,7 +14,7 @@
 		    	<c:when test="${currentUser != null}">
 		    		<div class="user">
 		        		<span class="welcome-msg">Bonjour</span>
-		        		<div class="user-name">${currentUser.getUsername()}</div>
+		        		<div class="user-name">${currentUser.getDisplayName()}</div>
 		        	</div>
 		        </c:when>
 	        <c:otherwise>

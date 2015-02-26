@@ -45,7 +45,7 @@ public class MenuContentController extends AsbtractMobileWebJspController {
 		
 		if (!hasSessionAttribute("univ")) {
 
-			sendRedirect(getBaseURL());
+			sendRedirect(getBaseURL()+"/");
 			return null;
 		}  else {
 					
