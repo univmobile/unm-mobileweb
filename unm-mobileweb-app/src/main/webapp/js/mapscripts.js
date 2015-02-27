@@ -199,10 +199,17 @@ function newCleanSearch() {
 
 function getPoiSearchResults(searchInput) {
 	
+	var requestUrl = "";
+	if (searchPoisWithoutUniversity) {
+		requestUrl = "/unm-mobileweb/json/?action=SearchPoi&searchInput="+ searchInput + "&categoryRootId=" + categoryRootId +"&size=10&page=0";
+	} else {
+		requestUrl = "/unm-mobileweb/json/?action=SearchPoi&searchInput="+ searchInput + "&universityId=" + universityId + "&categoryRootId=" + categoryRootId +"&size=10&page=0";
+	}
+	
 	$.ajax({
 		type: "GET",
 		dataType: "json",
-		url: "/unm-mobileweb/json/?action=SearchPoi&searchInput="+ searchInput + "&universityId=" + universityId +"&size=10&page=0"  ,
+		url: requestUrl,
 
 		success: function (response) {
 			$('#seachResultsList').empty();

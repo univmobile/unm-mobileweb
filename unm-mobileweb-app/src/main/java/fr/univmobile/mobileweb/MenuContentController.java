@@ -79,6 +79,7 @@ public class MenuContentController extends AsbtractMobileWebJspController {
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
+			setAttribute("currentAbsolutePath", getAbsolutePath());
 			
 			//menuContent attributes
 			setAttribute("menuContent", menuContent);

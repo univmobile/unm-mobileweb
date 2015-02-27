@@ -20,6 +20,7 @@ import fr.univmobile.web.commons.View;
 public class LoginController extends AsbtractMobileWebJspController {
 	
 	protected final String jsonUrl;
+	private String previousPageAbsolutePath;
 	
 	/*******************************************************
 	 * Constructor #1
@@ -53,11 +54,21 @@ public class LoginController extends AsbtractMobileWebJspController {
 
 			sendRedirect(getBaseURL()+"/");
 			return null;
-		}  else {
+		}  else {	
 			
+			previousPageAbsolutePath = null;
 			final Login login = getHttpInputs(Login.class);
-
 			if (login.isHttpValid()) {
+				
+				//check get parameter
+				if (checkedRequest().getQueryString() != null) {
+					try {
+						previousPageAbsolutePath = checkedRequest().getQueryString().substring(checkedRequest().getQueryString().lastIndexOf("path=")+5);
+						} catch (StringIndexOutOfBoundsException e) {
+							previousPageAbsolutePath = null;
+						}
+				}			
+				
 				LoginJSON loginContainer = restTemplateJson().getForObject("http://vps111534.ovh.net/unm-backend/json/login?username=" + login.usernameField() + "&password=" + login.passwordField(), LoginJSON.class);
 				if(loginContainer.getId() == null) {
 					setAttribute("errorMessage", "incorrect data");
@@ -72,7 +83,11 @@ public class LoginController extends AsbtractMobileWebJspController {
 			
 			if (hasSessionAttribute("currentUser")) {
 				//redirect to home or previous page
-				sendRedirect(getBaseURL()+"/");
+				if (previousPageAbsolutePath != null) {
+					sendRedirect(previousPageAbsolutePath);
+				} else {
+					sendRedirect(getBaseURL()+"/");
+				}
 				return null;
 			}
 
@@ -84,6 +99,7 @@ public class LoginController extends AsbtractMobileWebJspController {
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
+			setAttribute("currentAbsolutePath", getAbsolutePath());
 			
 			return new View("login.jsp");
 		}		

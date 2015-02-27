@@ -47,5 +47,10 @@ public class ParisMapController extends AbstractMapController {
 			return null;
 		}
 	}
+	
+	@Override
+	protected String getCategoryRootId() {
+		return parisCategoryId;
+	}
 
 }

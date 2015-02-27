@@ -27,6 +27,9 @@ public class Poi {
 	private int universityId;
 	private int categoryId;
 	
+	//additional fields
+	private Category category;
+	
 	public int getId() {
 		return id;
 	}
@@ -116,4 +119,14 @@ public class Poi {
 	public String escapeJS(String string) {
 		return StringEscapeUtils.escapeEcmaScript(string);
 	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
+	
 }

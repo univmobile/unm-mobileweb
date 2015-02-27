@@ -75,7 +75,7 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			
 			if (!hasSessionAttribute("currentUser")) {
 				//redirect to home or previous page
-				sendRedirect(getBaseURL() + "/login");
+				sendRedirect(getBaseURL() + "/login?path="+getAbsolutePath());
 				return null;
 			} else {
 				userId = getSessionAttribute("currentUser", User.class).getId();
@@ -103,12 +103,6 @@ public class ProfileController extends AsbtractMobileWebJspController {
 				librariesList = new UniversityLibrary[0];
 			}
 			
-			//set pois of libraries
-			for (UniversityLibrary library : librariesList) {
-				Poi poi = template.getForObject(jsonUrl + "/universityLibraries/" + library.getId() + "/poi", Poi.class);
-				library.setPoi(poi);
-			}
-			
 			// Get the list of bookmarks
 			BookmarkEmbedded bookmarksContainer = template.getForObject(jsonUrl + "/users/" + userId + "/bookmarks", BookmarkEmbedded.class);
 			Bookmark[] bookmarksList = null;
@@ -119,33 +113,23 @@ public class ProfileController extends AsbtractMobileWebJspController {
 				bookmarksList = new Bookmark[0];
 			}
 			
-			//set pois of bookmarks
+			//set map url
 			for (Bookmark bookmark : bookmarksList) {
-				Poi poi = template.getForObject(jsonUrl + "/bookmarks/" + bookmark.getId() + "/poi", Poi.class);
-				bookmark.setPoi(poi);
-				
-				//set poi root category
-				Category poiRootCategory = template.getForObject(jsonUrl + "/categories/" + poi.getCategoryId() + "/parent", Category.class);
-				if (poiRootCategory != null) {
-					bookmark.setPoiRootCategory(poiRootCategory);
-				}
-				
-				//set map url
-				if (Integer.toString(poiRootCategory.getId()).equals(universiteCategoryId)) {
-					bookmark.setMapUrl("university-map#" + poi.getId());
-				} else if (Integer.toString(poiRootCategory.getId()).equals(parisCategoryId)) {
-					bookmark.setMapUrl("paris-map#" + poi.getId());
-				} else if (Integer.toString(poiRootCategory.getId()).equals(bonplansCategoryId)) {
-					bookmark.setMapUrl("goodplans-map#" + poi.getId());
+				if (Integer.toString(bookmark.getRootCategoryId()).equals(universiteCategoryId)) {
+					bookmark.setMapUrl("university-map#" + bookmark.getPoiId());
+				} else if (Integer.toString(bookmark.getRootCategoryId()).equals(parisCategoryId)) {
+					bookmark.setMapUrl("paris-map#" + bookmark.getPoiId());
+				} else if (Integer.toString(bookmark.getRootCategoryId()).equals(bonplansCategoryId)) {
+					bookmark.setMapUrl("goodplans-map#" + bookmark.getPoiId());
 				}
 			}
 			
 			//remove bookmarks which are not of current university
 			ArrayList<Bookmark> bookmarksArrayList = new ArrayList<Bookmark>();
 			for (Bookmark bookmark : bookmarksList) {
-				if (!Integer.toString(bookmark.getPoiRootCategory().getId()).equals(universiteCategoryId)) {
+				if (!Integer.toString(bookmark.getRootCategoryId()).equals(universiteCategoryId)) {
 					bookmarksArrayList.add(bookmark);
-				} else if (bookmark.getPoi().getUniversityId() == getUniversity().getId()) {
+				} else if (bookmark.getPoiUniversityId() == getUniversity().getId()) {
 					bookmarksArrayList.add(bookmark);
 				}
 			}
@@ -174,6 +158,7 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
+			setAttribute("currentAbsolutePath", getAbsolutePath());
 			
 			//profile attributes
 			setAttribute("linksList", linksList);

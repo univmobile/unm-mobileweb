@@ -62,10 +62,10 @@
                       <ul class="biblio-list">
                       		<c:forEach var="libraryItem" items="${librariesList}">
                       			<li class="list-item">                                
-                              		<a href="university-map#${libraryItem.getPoi().getId()}">
+                              		<a href="university-map#${libraryItem.getPoiId()}">
                                   		<div class="title">
-                                  			<span><c:if test="${libraryItem.getPoi().isIconRuedesfacs()}"><img alt="letters" src="./img/letters.jpg"></c:if></span>
-                                  			${libraryItem.getPoi().getName()}
+                                  			<span><c:if test="${libraryItem.isIconRuedesfacs()}"><img alt="letters" src="./img/letters.jpg"></c:if></span>
+                                  			${libraryItem.getPoiName()}
                                   		</div>
                                   		<i class="icon"></i>
                               		</a>
@@ -85,7 +85,7 @@
                       		<c:forEach var="bookmarkItem" items="${bookmarksList}">
 		                          <li class="list-item">                                
 		                              <a href="${bookmarkItem.getMapUrl()}">
-		                                  <div class="title">${bookmarkItem.getPoi().getName()}</div>
+		                                  <div class="title">${bookmarkItem.getPoiName()}</div>
 		                              </a>
 		                          </li>
                      		</c:forEach>

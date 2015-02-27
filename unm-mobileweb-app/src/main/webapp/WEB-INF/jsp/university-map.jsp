@@ -78,6 +78,8 @@
 	<script src="./js/mapscripts.js"></script>
 	<script type="text/javascript">
 		var universityId = "${university.getId()}";
+		var categoryRootId = "${categoryRootId}";
+		var searchPoisWithoutUniversity = false;
 		var librariesCategoryId = "${librariesCategoryId}";
 		var markers = constructMarkers(); //global variable
 		google.maps.event.addDomListener(window, 'load', initialize);
@@ -85,11 +87,20 @@
 		function constructMarkers() {
 			markersTemp = [];
 			<c:forEach var="poiItem" items="${allPois}">
+			var iconUrl = "";
+			var activeIconUrl = "";
+			if ("${poiItem.getCategory().getActiveIconUrl()}" != "") {
+				activeIconUrl = "${categoriesIconsUrl}${poiItem.getCategory().getActiveIconUrl()}";
+			}
+			if ("${poiItem.getCategory().getMarkerIconUrl()}" != "") {
+				iconUrl = "${categoriesIconsUrl}${poiItem.getCategory().getMarkerIconUrl()}";
+			}
 			var marker = new google.maps.Marker(
 					{
 						position : new google.maps.LatLng(
 								"${poiItem.getLat()}", "${poiItem.getLng()}"),
 						title : "${poiItem.escapeJS(poiItem.getName())}",
+						icon : iconUrl,
 						//below are custom poi values, not required for maps.Marker
 						idPOI : "${poiItem.getId()}",
 						namePOI : "${poiItem.escapeJS(poiItem.getName())}",
@@ -98,7 +109,8 @@
 						floorPOI : "${poiItem.escapeJS(poiItem.getFloor())}",
 						phonesPOI : "${poiItem.escapeJS(poiItem.getPhones())}",
 						emailPOI : "${poiItem.escapeJS(poiItem.getEmail())}",
-						categoryIdPOI : "${poiItem.getCategoryId()}"
+						categoryIdPOI : "${poiItem.getCategoryId()}",
+						categoryImagePOI: activeIconUrl
 					});
 			google.maps.event.addListener(marker, 'click', function() {
 				openPoi(this);
@@ -143,6 +155,12 @@
 					direction : "down"
 				});
 				$('.poi-wrap').toggleClass('open');
+			}
+			
+			if (markerItem.categoryImagePOI != "") {
+				$('#poiBlockIcon').attr("src", markerItem.categoryImagePOI);
+			} else {
+				$('#poiBlockIcon').attr("src", "");
 			}
 
 			addPoiIdHash(markerItem.idPOI);

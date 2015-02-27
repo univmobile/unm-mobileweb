@@ -47,5 +47,10 @@ public class GoodPlansMapController extends AbstractMapController {
 			return null;
 		}
 	}
+	
+	@Override
+	protected String getCategoryRootId() {
+		return bonPlansCategoryId;
+	}
 
 }

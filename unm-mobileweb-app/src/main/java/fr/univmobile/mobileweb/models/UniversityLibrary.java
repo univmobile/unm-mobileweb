@@ -3,29 +3,26 @@ package fr.univmobile.mobileweb.models;
 public class UniversityLibrary {
 
 	private int id;
-	private int universityId;
 	private int poiId;
-	
-	//additional field
-	private Poi poi;
+	private String poiName;
+	private int universityId;
+	private boolean iconRuedesfacs;
 	
 	public int getId() {
 		return id;
 	}
-	
-	public int getUniversityId() {
-		return universityId;
-	}
-	
 	public int getPoiId() {
 		return poiId;
 	}
-	
-	public void setPoi(Poi poi) {
-		this.poi = poi;
+	public String getPoiName() {
+		return poiName;
+	}
+	public int getUniversityId() {
+		return universityId;
+	}
+	public boolean isIconRuedesfacs() {
+		return iconRuedesfacs;
 	}
 	
-	public Poi getPoi() {
-		return poi;
-	}
+	
 }

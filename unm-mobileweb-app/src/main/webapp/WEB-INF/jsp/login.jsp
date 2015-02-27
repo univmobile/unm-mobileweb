@@ -19,16 +19,16 @@
                   <div class="universite-login-wrap">
                       <div class="form-title">Connexion</div>
                       <c:if test="${errorMessage != null}">
-                      	<div>Error: ${errorMessage}</div>
+                      	<div class="alert alert-danger" role="alert"><b>Error:</b> ${errorMessage}</div>
                       </c:if>
                       <form id="login-form" method="post">
                           <div class="form-group">
                               <label for="exampleInputEmail1">Adresse Email</label>
-                              <input name="usernameField" type="text" class="form-control" id="exampleInputEmail1" placeholder="">
+                              <input name="usernameField" type="text" class="form-control" id="exampleInputEmail1" placeholder="" required>
                           </div>
                           <div class="form-group">
                               <label for="exampleInputPassword1">Mot de passe</label>
-                              <input name="passwordField" type="password" class="form-control" id="exampleInputPassword1" placeholder="">
+                              <input name="passwordField" type="password" class="form-control" id="exampleInputPassword1" placeholder="" required>
                           </div>
                           <button class="btn confirm center-block" type="submit">Valider</button>
                       </form>

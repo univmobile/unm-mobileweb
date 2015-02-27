@@ -36,7 +36,6 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 	protected final String jsonUrl;
 	protected final String restaurationUniversitaireCategoryId;
 	protected final String categoriesIconsUrl;
-	private boolean redirectAfterBookmarking = false;
 	
 	/*******************************************************
 	 * Constructor #1
@@ -126,7 +125,17 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 				setAttribute("allCategories", categories);
 			}
 			
-			
+			//assign category object to poi
+			if (pois != null && categories != null) {
+				for (Poi poi : pois) {
+					for(Category category : categories) {
+						if (poi.getCategoryId() == category.getId()) {
+							poi.setCategory(category);
+							break;
+						}
+					}
+				}
+			}		
 			
 			//provide all attributes below
 			
@@ -136,6 +145,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
+			setAttribute("currentAbsolutePath", getAbsolutePath());
 			
 			//map attributes
 			setAttribute("API_KEY", "AIzaSyC8uD1y1Dgx0W6JJMCQm7V1OJx_nsbRmBE");
@@ -144,6 +154,9 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 			setAttribute("categoriesIconsUrl", categoriesIconsUrl);
 			if (getLibrariesCategoryId() != null) {
 				setAttribute("librariesCategoryId", getLibrariesCategoryId());
+			}
+			if (getCategoryRootId() != null) {
+				setAttribute("categoryRootId", getCategoryRootId());
 			}
 			
 			return new View(provideViewName());
@@ -180,6 +193,11 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 	protected String getLibrariesCategoryId() {
 		return null;
 	}
+	
+	//should be overridden, if id exist
+		protected String getCategoryRootId() {
+			return null;
+		}
 	
 	@HttpMethods("POST")
 	private interface Comment extends HttpInputs {
@@ -245,8 +263,15 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 			byte[] inputByteArray = mapper.writeValueAsBytes(commentJson);
 	 
 			post.setEntity(new ByteArrayEntity(inputByteArray));
-	 
-			client.execute(post);
+	 	
+			HttpResponse response = client.execute(post);
+			
+			if (response.getStatusLine().getStatusCode() == 201) {
+				setAttribute("statusSuccess", "Comment created successfully.");
+			} else {
+				setAttribute("statusFail", response.getStatusLine());
+			}
+
 		}
 	}
 	

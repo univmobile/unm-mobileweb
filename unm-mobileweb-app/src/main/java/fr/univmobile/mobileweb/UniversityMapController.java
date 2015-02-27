@@ -24,6 +24,11 @@ public class UniversityMapController extends AbstractMapController {
 	protected String getLibrariesCategoryId() {
 		return librariesCategoryId;
 	}
+	
+	@Override
+	protected String getCategoryRootId() {
+		return universiteCategoryId;
+	}
 
 	@Override
 	protected String provideViewName() {

@@ -65,6 +65,7 @@ public class NewsController extends AsbtractMobileWebJspController {
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
+			setAttribute("currentAbsolutePath", getAbsolutePath());
 			
 			//news attributes
 			setAttribute("newsList", newsList);

@@ -6,7 +6,10 @@
 <div class="poi-wrap" style="display:none;">
     <div class="poi-screen">
         <div class="poi-header">
-            <span class="category-icon category-7"><i class="icon text-hide"></i></span>
+            <span class="category-icon category-7">
+				<img class="icon text-hide" id="poiBlockIcon" src="" alt="" style="background-image: none;">
+            	<!-- <i class="icon text-hide"></i> -->
+            </span>
             <div class="title"></div>
             <button class="btn show-hide-poi hide-poi"><i class="icon text-hide"></i></button>
         </div>
@@ -35,6 +38,12 @@
                     <button class="btn show-hide-search show-search-long"><i class="icon"></i>Rechercher</button>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="comments">
+                	<c:if test="${statusSuccess != null}">
+                		<div class="alert alert-success alert-message" role="alert">${statusSuccess}</div>
+                	</c:if>
+                	<c:if test="${statusFail != null}">
+                		<div class="alert alert-danger alert-message" role="alert">${statusFail}</div>
+                	</c:if>
                     <ul id="commentsList" class="comments-list"></ul>
                     <c:if test="${currentUser != null}">
 	                    <div class="new-comment-wrap">

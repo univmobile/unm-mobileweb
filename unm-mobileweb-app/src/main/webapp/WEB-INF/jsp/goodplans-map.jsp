@@ -69,15 +69,27 @@
     <script src="./js/mapscripts.js"></script>
     <script type="text/javascript">
     var universityId = "${university.getId()}";
+    var categoryRootId = "${categoryRootId}";
+	var searchPoisWithoutUniversity = true;
+	var fistTimePoiOpen = true;
 	var markers = constructMarkers(); //global variable
 	google.maps.event.addDomListener(window, 'load', initialize);
 	
 	function constructMarkers() {
 		markersTemp = [];
 		<c:forEach var="poiItem" items="${allPois}">
+			var iconUrl = "";
+			var activeIconUrl = "";
+			if ("${poiItem.getCategory().getActiveIconUrl()}" != "") {
+				activeIconUrl = "${categoriesIconsUrl}${poiItem.getCategory().getActiveIconUrl()}";
+			}
+			if ("${poiItem.getCategory().getMarkerIconUrl()}" != "") {
+				iconUrl = "${categoriesIconsUrl}${poiItem.getCategory().getMarkerIconUrl()}";
+			}
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng("${poiItem.getLat()}", "${poiItem.getLng()}"),
 				title: "${poiItem.escapeJS(poiItem.getName())}",
+				icon : iconUrl,
 				//below are custom poi values, not required for maps.Marker
 				idPOI: "${poiItem.getId()}",
 				namePOI: "${poiItem.escapeJS(poiItem.getName())}",
@@ -86,7 +98,8 @@
 				floorPOI: "${poiItem.escapeJS(poiItem.getFloor())}",
 				phonesPOI: "${poiItem.escapeJS(poiItem.getPhones())}",
 				emailPOI: "${poiItem.escapeJS(poiItem.getEmail())}",
-				categoryIdPOI: "${poiItem.getCategoryId()}"
+				categoryIdPOI: "${poiItem.getCategoryId()}",
+				categoryImagePOI: activeIconUrl
 		 	});
 			google.maps.event.addListener(marker, 'click', function() {
 				openPoi(this);				
@@ -129,8 +142,30 @@
 	        $('.poi-wrap').toggleClass('open');
 		}
 		
+		if (markerItem.categoryImagePOI != "") {
+			$('#poiBlockIcon').attr("src", markerItem.categoryImagePOI);
+		} else {
+			$('#poiBlockIcon').attr("src", "");
+		}
         
         getComments(markerItem.idPOI);
+        
+        if(fistTimePoiOpen) {
+        	var successStatus = "${statusSuccess}";
+            var failStatus = "${statusFail}";        
+            if (successStatus != "" || failStatus != "") {
+            	$('#poiTabs li:eq(1) a').tab('show');  //select second tab
+            }
+            fistTimePoiOpen = false;
+        } else {
+        	$('.alert-message').each(function() {
+        		$(this).hide();
+        	});
+        	$('#poiTabs a:first').tab('show')  //select first tab
+        }
+        
+        
+        
         
         addPoiIdHash(markerItem.idPOI);
         $('#poiIdInputField').val(markerItem.idPOI);

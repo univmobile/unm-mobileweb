@@ -54,7 +54,7 @@ public class NotificationsController extends AsbtractMobileWebJspController {
 			User user = null;
 			if (!hasSessionAttribute("currentUser")) {
 				//redirect to home or previous page
-				sendRedirect(getBaseURL() + "/login");
+				sendRedirect(getBaseURL() + "/login?path="+getAbsolutePath());
 				return null;
 			} else {
 				user = getSessionAttribute("currentUser", User.class);
@@ -92,6 +92,7 @@ public class NotificationsController extends AsbtractMobileWebJspController {
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
+			setAttribute("currentAbsolutePath", getAbsolutePath());
 			
 			//notifications attributes
 			setAttribute("notificationsList", notificationsList);

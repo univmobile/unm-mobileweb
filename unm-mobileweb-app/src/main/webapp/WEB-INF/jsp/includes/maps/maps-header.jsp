@@ -18,7 +18,7 @@
 		        	</div>
 		        </c:when>
 	        <c:otherwise>
-	        	<a href="login" style="color: white;"><div class="contact-link">Connectez-vous</div></a>
+	        	<a href="login?path=${currentAbsolutePath}" style="color: white;"><div class="contact-link">Connectez-vous</div></a>
 	        </c:otherwise>
 	        </c:choose>   
 	    <div class="universite-name">

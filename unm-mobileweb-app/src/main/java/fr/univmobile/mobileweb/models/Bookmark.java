@@ -3,32 +3,39 @@ package fr.univmobile.mobileweb.models;
 public class Bookmark {
 
 	private int id;
+	private int poiId;
+	private int poiUniversityId;
+	private String poiName;
+	private int poiCategoryId;
+	private int rootCategoryId;
 	
 	//additional field
-	private Poi poi;
-	private Category poiRootCategory;
 	private String mapUrl;
 	
 	public int getId() {
 		return id;
 	}
-	
-	public Poi getPoi() {
-		return poi;
+
+	public int getPoiId() {
+		return poiId;
 	}
-	
-	public void setPoi(Poi poi) {
-		this.poi = poi;
+
+	public int getPoiUniversityId() {
+		return poiUniversityId;
 	}
-	
-	public Category getPoiRootCategory() {
-		return poiRootCategory;
+
+	public String getPoiName() {
+		return poiName;
 	}
-	
-	public void setPoiRootCategory(Category poiRootCategory) {
-		this.poiRootCategory = poiRootCategory;
+
+	public int getPoiCategoryId() {
+		return poiCategoryId;
 	}
-	
+
+	public int getRootCategoryId() {
+		return rootCategoryId;
+	}
+
 	public String getMapUrl() {
 		return mapUrl;
 	}

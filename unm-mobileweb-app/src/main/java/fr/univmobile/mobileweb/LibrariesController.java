@@ -57,12 +57,6 @@ public class LibrariesController extends AsbtractMobileWebJspController {
 				librariesList = new UniversityLibrary[0];
 			}
 			
-			//set pois of libraries
-			for (UniversityLibrary library : librariesList) {
-				Poi poi = template.getForObject(jsonUrl + "/universityLibraries/" + library.getId() + "/poi", Poi.class);
-				library.setPoi(poi);
-			}
-			
 			//provide all attributes below
 			
 			//menu attributes
@@ -71,6 +65,7 @@ public class LibrariesController extends AsbtractMobileWebJspController {
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
+			setAttribute("currentAbsolutePath", getAbsolutePath());
 			
 			//libraries attributes
 			setAttribute("librariesList", librariesList);

@@ -51,6 +51,7 @@ public class JsonServlet extends HttpServlet {
 		String poiIdParam = req.getParameter("poiId");
 		String searchInputParam = req.getParameter("searchInput");
 		String universityIdParam = req.getParameter("universityId");
+		String categoryRootIdParam = req.getParameter("categoryRootId");
 		String sizeParam = req.getParameter("size");
 		String pageParam = req.getParameter("page");
 		
@@ -80,9 +81,11 @@ public class JsonServlet extends HttpServlet {
 					container = getRestaurantMenus(poiIdParam, sizeParam, pageParam);
 				}
 			}
-			if (universityIdParam != null) {
-				if (actionParam.equals("SearchPoi")) {
-					container = getSearchedPois(searchInputParam, universityIdParam, sizeParam, pageParam);
+			if (categoryRootIdParam != null) {
+				if (actionParam.equals("SearchPoi") && universityIdParam != null ) {
+					container = getSearchedPois(searchInputParam, universityIdParam, categoryRootIdParam, sizeParam, pageParam);
+				} else if (actionParam.equals("SearchPoi")) {
+					container = getSearchedPoisWithoutUniversity(searchInputParam, categoryRootIdParam, sizeParam, pageParam);
 				}
 			}
 			
@@ -129,9 +132,19 @@ public class JsonServlet extends HttpServlet {
 		return null;
 	}
 	
-	private Object getSearchedPois(String searchInput, String universityId, String size, String page) {
+	private Object getSearchedPois(String searchInput, String universityId, String categoryRootId, String size, String page) {
 		RestTemplate template = restTemplate();
-		PoiEmbedded poisContainer = template.getForObject(jsonUrl + "/pois/search/searchValue?val=" + searchInput + "&universityId="+ universityId + "&size=" + size + "&page=" + page, PoiEmbedded.class);
+		PoiEmbedded poisContainer = template.getForObject(jsonUrl + "/pois/search/searchValueInUniversityAndCategoryRoot?val=" + searchInput + "&universityId="+ universityId + "&categoryId=" + categoryRootId + "&size=" + size + "&page=" + page, PoiEmbedded.class);
+		if (poisContainer._embedded != null) {
+			return filterPois(poisContainer._embedded.getPois());
+			
+		}
+		return null;
+	}
+	
+	private Object getSearchedPoisWithoutUniversity(String searchInput, String categoryRootId, String size, String page) {
+		RestTemplate template = restTemplate();
+		PoiEmbedded poisContainer = template.getForObject(jsonUrl + "/pois/search/searchValueInCategoryRoot?val=" + searchInput + "&categoryId=" + categoryRootId + "&size=" + size + "&page=" + page, PoiEmbedded.class);
 		if (poisContainer._embedded != null) {
 			return filterPois(poisContainer._embedded.getPois());
 			
