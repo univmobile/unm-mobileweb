@@ -22,30 +22,40 @@ import fr.univmobile.web.commons.AbstractJspController;
 
 public abstract class AsbtractMobileWebJspController extends
 		AbstractJspController {
+	
+	private RestTemplate restTemplate = null;
+	
+	private RestTemplate restTemplateJson = null;
 
 	public RestTemplate restTemplate() {
-	    final ObjectMapper mapper = new ObjectMapper();
-	    mapper.registerModule(new Jackson2HalModule());
-	    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	    mapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false);
-
-	    final MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-	    converter.setSupportedMediaTypes(MediaType.parseMediaTypes("application/hal+json"));
-	    converter.setObjectMapper(mapper);
-	    
-	    return new RestTemplate(Collections.<HttpMessageConverter<?>> singletonList(converter));
+		if (restTemplate == null) {
+		    final ObjectMapper mapper = new ObjectMapper();
+		    mapper.registerModule(new Jackson2HalModule());
+		    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		    mapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false);
+	
+		    final MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+		    converter.setSupportedMediaTypes(MediaType.parseMediaTypes("application/hal+json"));
+		    converter.setObjectMapper(mapper);
+		    
+		    restTemplate = new RestTemplate(Collections.<HttpMessageConverter<?>> singletonList(converter));
+		}
+		return restTemplate;
 	}
 	
 	public RestTemplate restTemplateJson() {
-	    final ObjectMapper mapper = new ObjectMapper();
-	    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	    mapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false);
-
-	    final MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-	    converter.setSupportedMediaTypes(MediaType.parseMediaTypes("application/json"));
-	    converter.setObjectMapper(mapper);
-	    
-	    return new RestTemplate(Collections.<HttpMessageConverter<?>> singletonList(converter));
+		if (restTemplateJson == null) {
+		    final ObjectMapper mapper = new ObjectMapper();
+		    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		    mapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false);
+	
+		    final MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+		    converter.setSupportedMediaTypes(MediaType.parseMediaTypes("application/json"));
+		    converter.setObjectMapper(mapper);
+		    
+		    restTemplateJson = new RestTemplate(Collections.<HttpMessageConverter<?>> singletonList(converter));
+		}
+		return restTemplateJson;
 	}
 	
 	
@@ -53,27 +63,22 @@ public abstract class AsbtractMobileWebJspController extends
 	 * Globally used methods
 	 -------------------------------------------------------------------*/
 	
-	private University currentUniversity;
-	private Menu[] menus;
 	private HashMap<Integer, String> predefinedMenusMap;
+	
+	public void setUniversity(University newUniversity) {
+		University currentUniversity = getSessionAttribute("univ", University.class);
+		if (currentUniversity != null && currentUniversity != newUniversity) {
+			//when university is changed, menuContainer must be recreated
+			removeSessionAttribute("menus");
+		}
+		setSessionAttribute("univ", newUniversity);
+	}
 	
 	/**
 	 * Gets currently selected university
 	 */
 	public University getUniversity() {
-		
-		University newUniversity = getSessionAttribute("univ", University.class);
-		
-		if (currentUniversity == null) {
-			currentUniversity = newUniversity;
-		} else {
-			//when university is changed, menuContainer must be recreated
-			if (currentUniversity != newUniversity) {
-				menus = null;
-				currentUniversity = newUniversity;
-			}
-		}
-		return newUniversity;
+		return getSessionAttribute("univ", University.class);
 	}
 	
 	/**
@@ -89,13 +94,13 @@ public abstract class AsbtractMobileWebJspController extends
 		
 		//recreate menuContainer, if needed
 		University tempUniversity = getUniversity();
+		Menu[] menus = getSessionAttribute("menus", Menu[].class);
 		
 		if (menus == null) {
-			RestTemplate template = restTemplate();
 			
 			//menus with university id
 			Menu[] menusWithUniversity = null;
-			MenuEmbedded menuContainerWithUniversity = template.getForObject(jsonUrl + "/menues/search/findByUniversityOrderByCreatedOnDesc?universityId="+tempUniversity.getId(), MenuEmbedded.class);			
+			MenuEmbedded menuContainerWithUniversity = restTemplate().getForObject(jsonUrl + "/menues/search/findByUniversityOrderByCreatedOnDesc?universityId="+tempUniversity.getId(), MenuEmbedded.class);			
 			if (menuContainerWithUniversity._embedded != null) {
 				menusWithUniversity = menuContainerWithUniversity._embedded.getMenu();
 			} else {
@@ -104,7 +109,7 @@ public abstract class AsbtractMobileWebJspController extends
 			
 			//menus without university id
 			Menu[] menusWithoutUniversity = null;
-			MenuEmbedded menuContainerWithoutUniversity = template.getForObject(jsonUrl + "/menues/search/findByUniversityOrderByCreatedOnDesc?universityId=null", MenuEmbedded.class);
+			MenuEmbedded menuContainerWithoutUniversity = restTemplate().getForObject(jsonUrl + "/menues/search/findByUniversityOrderByCreatedOnDesc?universityId=null", MenuEmbedded.class);
 			if (menuContainerWithoutUniversity._embedded != null) {
 				menusWithoutUniversity = menuContainerWithoutUniversity._embedded.getMenu();
 			} else {
@@ -113,6 +118,7 @@ public abstract class AsbtractMobileWebJspController extends
 			
 			//join two arrays
 			menus = ArrayUtils.addAll(menusWithUniversity, menusWithoutUniversity);
+			setSessionAttribute("menus", menus);
 		}
 
 		//if at least one menu item exists
