@@ -31,7 +31,6 @@ public class ProfileController extends AsbtractMobileWebJspController {
 	protected final String universiteCategoryId;
 	protected final String bonplansCategoryId;
 	protected final String parisCategoryId;
-	private int userId;
 	
 	/*******************************************************
 	 * Constructor #1
@@ -72,11 +71,11 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			sendRedirect(getBaseURL()+"/");
 			return null;
 		}  else {
-			
+			Integer userId = null;
 			if (!hasSessionAttribute("currentUser")) {
 				//redirect to home or previous page
-				sendRedirect(getBaseURL() + "/login?path="+getAbsolutePath());
-				return null;
+				//sendRedirect(getBaseURL() + "/login?path="+getAbsolutePath());
+				// return null;
 			} else {
 				userId = getSessionAttribute("currentUser", User.class).getId();
 			}
@@ -103,9 +102,10 @@ public class ProfileController extends AsbtractMobileWebJspController {
 				librariesList = new UniversityLibrary[0];
 			}
 			
+			Bookmark[] bookmarksList = null;
+			if (userId != null) {
 			// Get the list of bookmarks
 			BookmarkEmbedded bookmarksContainer = template.getForObject(jsonUrl + "/users/" + userId + "/bookmarks", BookmarkEmbedded.class);
-			Bookmark[] bookmarksList = null;
 			if (bookmarksContainer._embedded != null) {
 				//must be prevented somewhere else, because if bookmarks do not exist the view gonna be empty
 				bookmarksList = bookmarksContainer._embedded.getBookmarks();
@@ -138,6 +138,9 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			//trim array
 			if (bookmarksList.length > 3) {
 				bookmarksList = Arrays.copyOf(bookmarksList, 3);
+			}
+			} else {
+				bookmarksList = new Bookmark[0];
 			}
 			
 			//get list of all universities

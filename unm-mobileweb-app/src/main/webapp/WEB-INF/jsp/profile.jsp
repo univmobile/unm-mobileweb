@@ -35,7 +35,9 @@
                       </div>
                   </div>
                   <div class="user-info">
-                      <div class="name">Patrick Termian</div>
+                  	  <c:if test="${not empty currentUser}">
+                      	<div class="name">${currentUser.displayName}</div>
+                      </c:if>
                       <div class="universite">${university.title}</div>
                       <div class="link-wrap edit">
                           <a href="#" class="edit-profil show-hide-universite-change">Touchez pour modifier<i class="icon"></i></a>

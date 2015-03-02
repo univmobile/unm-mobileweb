@@ -17,9 +17,16 @@
 		        		<div class="user-name">${currentUser.displayName}</div>
 		        	</div>
 		        </c:when>
-	        <c:otherwise>
-	        	<a href="login?path=${currentAbsolutePath}" style="color: white;"><div class="contact-link">Connectez-vous</div></a>
-	        </c:otherwise>
+	        	<c:otherwise>
+	        		<c:choose>
+		    			<c:when test="${empty university.mobileShibbolethUrl}">
+	        				<a href="login?path=${currentAbsolutePath}" style="color: white;"><div class="contact-link">Connectez-vous</div></a>
+	        			</c:when>
+	        			<c:otherwise>
+	        				<a href="login/shibboleth" style="color: white;"><div class="contact-link">Connectez-vous</div></a>
+	        			</c:otherwise>
+	        		</c:choose>
+	        	</c:otherwise>
 	        </c:choose>   
 	    <div class="universite-name">
 	        ${university.title}
