@@ -1,21 +1,14 @@
 package fr.univmobile.mobileweb;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -266,8 +259,8 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 	 	
 			HttpResponse response = client.execute(post);
 			
-			if (response.getStatusLine().getStatusCode() == 201) {
-				setAttribute("statusSuccess", "Comment created successfully.");
+			if (response.getStatusLine().getStatusCode() == 201 || response.getStatusLine().getStatusCode() == 200) {
+				setAttribute("statusSuccess", "Votre commentaire a été créé avec succès.");
 			} else {
 				setAttribute("statusFail", response.getStatusLine());
 			}

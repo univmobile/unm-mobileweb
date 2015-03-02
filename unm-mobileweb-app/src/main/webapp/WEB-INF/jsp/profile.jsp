@@ -20,14 +20,14 @@
                                   <span class="btn hide-universite-change show-hide-universite-change"><i class="icon"></i></span>
                               </div>
                               <div class="universite-change-field">
-                                  <div class="current-univesite">${university.getTitle()}</div>
+                                  <div class="current-univesite">${university.title}</div>
                               </div>
                               <section class="universite-results">
                                   <div class="info-title">Choisir une autre université </div>
                                   <ul class="universite--list">
                                   		<c:forEach var="universityItem" items="${universitiesList}">
 		                                      <li class="list-item">
-		                                          <a href="profile?universityId=${universityItem.getId()}" style="color: white;"><div class="title">${universityItem.getTitle()}</div></a>
+		                                          <a href="profile?universityId=${universityItem.id}" style="color: white;"><div class="title">${universityItem.title}</div></a>
 		                                      </li>
                                   		</c:forEach>
                                   </ul>
@@ -36,7 +36,7 @@
                   </div>
                   <div class="user-info">
                       <div class="name">Patrick Termian</div>
-                      <div class="universite">${university.getTitle()}</div>
+                      <div class="universite">${university.title}</div>
                       <div class="link-wrap edit">
                           <a href="#" class="edit-profil show-hide-universite-change">Touchez pour modifier<i class="icon"></i></a>
                       </div>
@@ -46,7 +46,7 @@
                       <ul class="media-list">
                       		<c:forEach var="linkItem" items="${linksList}">
                       			<li class="list-item">                                
-                              		<a href="${linkItem.getUrl()}" target="_blank"><h2 class="title">${linkItem.getLabel()}</h2></a>
+                              		<a href="${linkItem.url}" target="_blank"><h2 class="title">${linkItem.label}</h2></a>
                           		</li>
                       		</c:forEach> 
                       </ul>
@@ -62,10 +62,10 @@
                       <ul class="biblio-list">
                       		<c:forEach var="libraryItem" items="${librariesList}">
                       			<li class="list-item">                                
-                              		<a href="university-map#${libraryItem.getPoiId()}">
+                              		<a href="university-map#${libraryItem.poiId}">
                                   		<div class="title">
-                                  			<span><c:if test="${libraryItem.isIconRuedesfacs()}"><img alt="letters" src="./img/letters.jpg"></c:if></span>
-                                  			${libraryItem.getPoiName()}
+                                  			<span><c:if test="${libraryItem.iconRuedesfacs}"><img alt="letters" src="./img/letters.jpg"></c:if></span>
+                                  			${libraryItem.poiName}
                                   		</div>
                                   		<i class="icon"></i>
                               		</a>
@@ -84,8 +84,8 @@
                       <ul class="bookmark-list">
                       		<c:forEach var="bookmarkItem" items="${bookmarksList}">
 		                          <li class="list-item">                                
-		                              <a href="${bookmarkItem.getMapUrl()}">
-		                                  <div class="title">${bookmarkItem.getPoiName()}</div>
+		                              <a href="${bookmarkItem.mapUrl}">
+		                                  <div class="title">${bookmarkItem.poiName}</div>
 		                              </a>
 		                          </li>
                      		</c:forEach>

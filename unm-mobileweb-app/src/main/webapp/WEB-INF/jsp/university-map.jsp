@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="escape" uri="/WEB-INF/tld/commons-lang.tld"%>
 <%@ page pageEncoding="utf-8"%>
 
 <!DOCTYPE html>
@@ -29,12 +30,12 @@
 						<ul class="category-list row">
 							<c:forEach var="categoryItem" items="${allCategories}" varStatus="loop">
 								<li class="list-item">
-									<button id="category-btn-${categoryItem.getId()}" class="btn category-btn active" onClick="refreshPois('${categoryItem.getId()}',$(this).hasClass('active'));">
-										<c:if test="${categoryItem.getInactiveIconUrl() != null}">
-											<img class="icon" id="active-category-btn-${categoryItem.getId()}" src="${categoriesIconsUrl}${categoryItem.getActiveIconUrl()}" alt="" style="background-image: none;">
-											<img class="icon" id="inactive-category-btn-${categoryItem.getId()}" src="${categoriesIconsUrl}${categoryItem.getInactiveIconUrl()}" alt="" style="background-image: none;">
+									<button id="category-btn-${categoryItem.id}" class="btn category-btn active" onClick="refreshPois('${categoryItem.id}',$(this).hasClass('active'));">
+										<c:if test="${not empty categoryItem.inactiveIconUrl}">
+											<img class="icon" id="active-category-btn-${categoryItem.id}" src="${categoriesIconsUrl}${categoryItem.activeIconUrl}" alt="" style="background-image: none;">
+											<img class="icon" id="inactive-category-btn-${categoryItem.id}" src="${categoriesIconsUrl}${categoryItem.inactiveIconUrl}" alt="" style="background-image: none;">
 										</c:if>
-										<span>${categoryItem.getName()}</span>
+										<span>${categoryItem.name}</span>
 									</button>
 								</li>
 							</c:forEach>
@@ -77,7 +78,7 @@
 	</script>
 	<script src="./js/mapscripts.js"></script>
 	<script type="text/javascript">
-		var universityId = "${university.getId()}";
+		var universityId = "${university.id}";
 		var categoryRootId = "${categoryRootId}";
 		var searchPoisWithoutUniversity = false;
 		var librariesCategoryId = "${librariesCategoryId}";
@@ -87,30 +88,21 @@
 		function constructMarkers() {
 			markersTemp = [];
 			<c:forEach var="poiItem" items="${allPois}">
-			var iconUrl = "";
-			var activeIconUrl = "";
-			if ("${poiItem.getCategory().getActiveIconUrl()}" != "") {
-				activeIconUrl = "${categoriesIconsUrl}${poiItem.getCategory().getActiveIconUrl()}";
-			}
-			if ("${poiItem.getCategory().getMarkerIconUrl()}" != "") {
-				iconUrl = "${categoriesIconsUrl}${poiItem.getCategory().getMarkerIconUrl()}";
-			}
 			var marker = new google.maps.Marker(
 					{
-						position : new google.maps.LatLng(
-								"${poiItem.getLat()}", "${poiItem.getLng()}"),
-						title : "${poiItem.escapeJS(poiItem.getName())}",
-						icon : iconUrl,
+						position: new google.maps.LatLng("${poiItem.lat}", "${poiItem.lng}"),
+						title: "${escape:javaScript(poiItem.name)}",
+						<c:if test="${not empty poiItem.category.markerIconUrl}">icon : "${categoriesIconsUrl}${poiItem.category.markerIconUrl}",</c:if>
 						//below are custom poi values, not required for maps.Marker
-						idPOI : "${poiItem.getId()}",
-						namePOI : "${poiItem.escapeJS(poiItem.getName())}",
-						descriptionPOI : "${poiItem.escapeJS(poiItem.getDescription())}",
-						addressPOI : "${poiItem.escapeJS(poiItem.getAddress())}",
-						floorPOI : "${poiItem.escapeJS(poiItem.getFloor())}",
-						phonesPOI : "${poiItem.escapeJS(poiItem.getPhones())}",
-						emailPOI : "${poiItem.escapeJS(poiItem.getEmail())}",
-						categoryIdPOI : "${poiItem.getCategoryId()}",
-						categoryImagePOI: activeIconUrl
+						idPOI: "${poiItem.id}",
+						namePOI: "${escape:javaScript(poiItem.name)}",
+						descriptionPOI: "${escape:javaScript(poiItem.description)}",
+						addressPOI: "${escape:javaScript(poiItem.address)}",
+						floorPOI: "${escape:javaScript(poiItem.floor)}",
+						phonesPOI: "${escape:javaScript(poiItem.phones)}",
+						emailPOI: "${escape:javaScript(poiItem.email)}",
+						categoryIdPOI: "${poiItem.categoryId}",
+						<c:if test="${not empty poiItem.category.activeIconUrl}">categoryImagePOI: "${categoriesIconsUrl}${poiItem.category.activeIconUrl}"</c:if>
 					});
 			google.maps.event.addListener(marker, 'click', function() {
 				openPoi(this);

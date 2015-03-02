@@ -20,14 +20,14 @@
                   <div class="universite-form-wrap">
                       <form id="select-universite" method="post">
                           <div class="form-group">
-                          	<label>Choisir son universit�  :</label>
+                          	<label>Choisir son université  :</label>
                                                       
                          	<select class="form-control" name="univ">
                             	<c:forEach var="region" items="${regionsList}">
-     						    	<optgroup label="${region.getName()}">
+     						    	<optgroup label="${region.name}">
      						    	
-     						    		<c:forEach var="university" items = "${region.getUniversities()}">
-     						    			<option value="${university.getId()}">${university.getTitle()}</option>
+     						    		<c:forEach var="university" items = "${region.universities}">
+     						    			<option value="${university.id}">${university.title}</option>
      						    		</c:forEach>
      						    	
    									</optgroup>

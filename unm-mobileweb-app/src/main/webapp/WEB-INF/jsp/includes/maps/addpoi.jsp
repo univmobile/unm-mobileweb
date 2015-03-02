@@ -22,7 +22,7 @@
                         <div class="form-group category">
                             <select class="form-control" name="poiCategoryId">
                             	<c:forEach var="categoryItem" items="${allCategories}" varStatus="loop">                          		
-                                	<option value="${categoryItem.getId()}">${categoryItem.getName()}</option>
+                                	<option value="${categoryItem.id}">${categoryItem.name}</option>
                                 </c:forEach>
                             </select>
                         </div>

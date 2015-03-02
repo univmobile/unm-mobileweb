@@ -66,10 +66,12 @@ public abstract class AsbtractMobileWebJspController extends
 	private HashMap<Integer, String> predefinedMenusMap;
 	
 	public void setUniversity(University newUniversity) {
-		University currentUniversity = getSessionAttribute("univ", University.class);
+		University currentUniversity = getUniversity();
 		if (currentUniversity != null && currentUniversity != newUniversity) {
 			//when university is changed, menuContainer must be recreated
-			removeSessionAttribute("menus");
+			if (hasSessionAttribute("menus")) {
+				removeSessionAttribute("menus");
+			}
 		}
 		setSessionAttribute("univ", newUniversity);
 	}
@@ -78,7 +80,11 @@ public abstract class AsbtractMobileWebJspController extends
 	 * Gets currently selected university
 	 */
 	public University getUniversity() {
-		return getSessionAttribute("univ", University.class);
+		if (hasSessionAttribute("univ")) {
+			return getSessionAttribute("univ", University.class);
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -94,7 +100,11 @@ public abstract class AsbtractMobileWebJspController extends
 		
 		//recreate menuContainer, if needed
 		University tempUniversity = getUniversity();
-		Menu[] menus = getSessionAttribute("menus", Menu[].class);
+		Menu[] menus = null;
+		
+		if (hasSessionAttribute("menus")) {
+			getSessionAttribute("menus", Menu[].class);
+		}
 		
 		if (menus == null) {
 			

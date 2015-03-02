@@ -88,7 +88,7 @@ public class LoginShibbolethController extends AsbtractMobileWebJspController {
 					setSessionAttribute("currentUser", currentUser);
 				}
 
-				setSessionAttribute("appToken", appToken);
+				setSessionAttribute("authenticationToken", appToken.getId());
 
 				setSessionAttribute("currentUser", currentUser);
 

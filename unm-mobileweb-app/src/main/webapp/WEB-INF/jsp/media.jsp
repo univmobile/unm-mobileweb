@@ -21,7 +21,7 @@
                       <ul class="media-list">
                           <c:forEach var="linkItem" items="${linksList}">
                       			<li class="list-item">                                
-                              		<a href="${linkItem.getUrl()}" target="_blank"><h2 class="title">${linkItem.getLabel()}</h2></a>
+                              		<a href="${linkItem.url}" target="_blank"><h2 class="title">${linkItem.label}</h2></a>
                           		</li>
                       	  </c:forEach> 
                       </ul>

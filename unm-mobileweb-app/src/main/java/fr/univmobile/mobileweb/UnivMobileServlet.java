@@ -76,9 +76,8 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 
 		super.init( //
 				new HomeController(jsonURL, apiKey, sessions,regions), //
-				new LoginController(jsonURL), //
-				new LoginClassicController(apiKey, sessions), //
-				new LoginShibbolethController(apiKey, sessions, regions), //
+				new LoginController(apiKey, sessions,jsonURL), //
+				new LoginShibbolethController(apiKey, sessions,jsonURL), //
 				new AboutController(jsonURL, home), //
 				new RegionsController(regions), //
 				new UniversityMapController(jsonURL, universiteCategoryId, restaurationUniversitaireCategoryId, librariesCategoryId), //

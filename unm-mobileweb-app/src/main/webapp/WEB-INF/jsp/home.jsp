@@ -15,13 +15,13 @@
               <div class="container">
                   <article class="main-article clearfix">
                       <div class="head-img">
-                          <img class="img-responsive" alt="main article" src="${newsList[0].getImageUrl()}">
+                          <img class="img-responsive" alt="main article" src="${newsList[0].imageUrl}">
                       </div>
                       <div class="description">
-                          <time>${newsList[0].getAuthor()} - <fmt:formatDate pattern="dd/MM/YYYY" value="${newsList[0].getPublishedDate()}" /></time>
-                          <h2 class="title">${newsList[0].getTitle()}</h2>
+                          <time>${newsList[0].author} - <fmt:formatDate pattern="dd/MM/YYYY" value="${newsList[0].publishedDate}" /></time>
+                          <h2 class="title">${newsList[0].title}</h2>
                           <div class="body">
-                              <p>${newsList[0].getDescription()}</p>
+                              <p>${newsList[0].description}</p>
                           </div>
                       </div>
                   </article>
@@ -37,20 +37,20 @@
 		                                  <div class="row">                               		  
 		                                      <a data-toggle="collapse" data-parent="#accordion" href="#collapse${loop.index}" aria-expanded="false" aria-controls="collapse${loop.index}">
 		                                          <div class="img-wrap">
-		                                              <img class="img-responsive" alt="article" src="${newsItem.getImageUrl()}">
+		                                              <img class="img-responsive" alt="article" src="${newsItem.imageUrl}">
 		                                          </div>
 		                                          <div class="description">
-		                                              <time>${newsItem.getAuthor()} - <fmt:formatDate pattern="dd/MM/YYYY" value="${newsItem.getPublishedDate()}" /></time>
-		                                              <h2>${newsItem.getTitle()}</h2>
+		                                              <time>${newsItem.author} - <fmt:formatDate pattern="dd/MM/YYYY" value="${newsItem.publishedDate}" /></time>
+		                                              <h2>${newsItem.title}</h2>
 		                                              <i class="icon"></i>
 		                                          </div>
 		                                      </a>
 		                                  </div>
 		                                  <div id="collapse${loop.index}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading${loop.index}">
 		                                      <div class="body">
-		                                      	<p>${newsItem.getDescription()}</p>
-		                                      	<c:if test="${newsItem.getLink() != null && !newsItem.getLink().equals('')}">
-		                                      		<a href="${newsItem.getLink()}" class="btn button">Aller plus loin </a>
+		                                      	<p>${newsItem.description}</p>
+		                                      	<c:if test="${not empty newsItem.link}">
+		                                      		<a href="${newsItem.link}" class="btn button">Aller plus loin </a>
 		                                      	</c:if>
 		                                      </div>
 		                                  </div>

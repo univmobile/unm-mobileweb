@@ -4,19 +4,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LoginJSON {
 
-	private String id;
-	private String username;
+	private String uid;
+
 	private String authenticationToken;
 	
+	@JsonProperty("user.uid")
 	public String getId() {
-		return id;
+		return uid;
 	}
 	
-	public String getUsername() {
-		return username;
-	}
-	
-	@JsonProperty("Authentication-Token")
+	@JsonProperty("id")
 	public String getAuthenticationToken() {
 		return authenticationToken;
 	}

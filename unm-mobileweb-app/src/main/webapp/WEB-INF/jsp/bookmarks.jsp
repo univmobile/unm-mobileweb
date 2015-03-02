@@ -18,8 +18,8 @@
                       <ul class="bookmark-list">
                       		<c:forEach var="bookmarkItem" items="${bookmarksList}">
 		                          <li class="list-item">                                
-		                              <a href="${bookmarkItem.getMapUrl()}">
-		                                  <div class="title">${bookmarkItem.getPoiName()}</div>
+		                              <a href="${bookmarkItem.mapUrl}">
+		                                  <div class="title">${bookmarkItem.poiName}</div>
 		                              </a>
 		                          </li>
                      		</c:forEach>

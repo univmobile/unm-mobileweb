@@ -21,10 +21,10 @@
                       <ul class="biblio-list">
                       		<c:forEach var="libraryItem" items="${librariesList}">
                       			<li class="list-item">                                
-                              		<a href="university-map#${libraryItem.getPoiId()}">
+                              		<a href="university-map#${libraryItem.poiId}">
                                   		<div class="title">
-                                  			<span><c:if test="${libraryItem.isIconRuedesfacs()}"><img alt="letters" src="./img/letters.jpg"></c:if></span>
-                                  			${libraryItem.getPoiName()}
+                                  			<span><c:if test="${libraryItem.iconRuedesfacs}"><img alt="letters" src="./img/letters.jpg"></c:if></span>
+                                  			${libraryItem.poiName}
                                   		</div>
                                   		<i class="icon"></i>
                               		</a>

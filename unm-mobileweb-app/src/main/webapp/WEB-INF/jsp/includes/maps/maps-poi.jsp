@@ -14,7 +14,7 @@
             <button class="btn show-hide-poi hide-poi"><i class="icon text-hide"></i></button>
         </div>
         <div class="poi-info">
-        	<c:if test="${currentUser != null}">
+        	<c:if test="${empty currentUser}">
 	        	<form id="add-bookmark" class="add-bookmark" method="post">
 		        	<div style="position: absolute;  left:-1px;">
 		        		<input id="poiIdInputFieldForBookmark" type="hidden" name="poiIdBookmark">

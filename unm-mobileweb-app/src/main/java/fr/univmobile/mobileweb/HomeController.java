@@ -99,7 +99,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 			// Get the list of region
 			RestTemplate template = restTemplate();
 			
-			RegionEmbedded regionContainer = template.getForObject("http://vps111534.ovh.net:8082/regions", RegionEmbedded.class);
+			RegionEmbedded regionContainer = template.getForObject(jsonUrl + "/regions", RegionEmbedded.class);
 			setAttribute("regionsList", regionContainer._embedded.getRegions());
 			
 			int i = 0;

@@ -70,8 +70,8 @@
                   <ul class="notifications-list">
                   		<c:forEach var="notificationItem" items="${notificationsList}">
 		                      <li class="list-item">
-		                          <p>${notificationItem.getContent()}</p>
-		                          <time><script>document.write(formatTime("${notificationItem.getNotificationTime().getTime()})"))</script></time>
+		                          <p>${notificationItem.content}</p>
+		                          <time><script>document.write(formatTime("${notificationItem.notificationTime.time})"))</script></time>
 		                      </li>
 						</c:forEach>
                   </ul>
