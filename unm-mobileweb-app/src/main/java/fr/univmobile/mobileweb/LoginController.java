@@ -1,12 +1,16 @@
 package fr.univmobile.mobileweb;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.IOException;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.client.RestTemplate;
 
-import fr.univmobile.mobileweb.models.LoginJSON;
-import fr.univmobile.mobileweb.models.NewsEmbedded;
+import fr.univmobile.backend.client.AppToken;
+import fr.univmobile.backend.client.ClientException;
+import fr.univmobile.backend.client.SessionClient;
 import fr.univmobile.mobileweb.models.University;
 import fr.univmobile.mobileweb.models.User;
 import fr.univmobile.web.commons.HttpInputs;
@@ -19,24 +23,31 @@ import fr.univmobile.web.commons.View;
 @Paths({ "login" })
 public class LoginController extends AsbtractMobileWebJspController {
 	
+	private static final Log log = LogFactory.getLog(LoginController.class);
+	
 	protected final String jsonUrl;
-	private String previousPageAbsolutePath;
 	
 	/*******************************************************
 	 * Constructor #1
 	 * @param jsonUrl
 	 *******************************************************/
-	public LoginController(final String jsonUrl) {
+	public LoginController(final String apiKey,
+			final SessionClient sessionClient, String jsonUrl) {
 
+		this.apiKey = checkNotNull(apiKey, "apiKey");
+		this.sessionClient = checkNotNull(sessionClient, "sessionClient");
 		this.jsonUrl = jsonUrl;
 	}
+
+	private final String apiKey;
+	private final SessionClient sessionClient;
 
 
 	/********************************************************
 	 * This method is called automatically on /login view
 	 ********************************************************/
 	@Override
-	public View action() throws IOException {
+	public View action() throws IOException, ClientException {
 		
 		RestTemplate template = restTemplate();
 		
@@ -56,7 +67,7 @@ public class LoginController extends AsbtractMobileWebJspController {
 			return null;
 		}  else {	
 			
-			previousPageAbsolutePath = null;
+			String previousPageAbsolutePath = null;
 			final Login login = getHttpInputs(Login.class);
 			if (login.isHttpValid()) {
 				
@@ -69,16 +80,24 @@ public class LoginController extends AsbtractMobileWebJspController {
 						}
 				}			
 				
-				LoginJSON loginContainer = restTemplateJson().getForObject("http://vps111534.ovh.net/unm-backend/json/login?username=" + login.usernameField() + "&password=" + login.passwordField(), LoginJSON.class);
-				if(loginContainer.getId() == null) {
-					setAttribute("errorMessage", "incorrect data");
-				} else {
-					User currentUser = template.getForObject(jsonUrl + "/users/ " + loginContainer.getId(), User.class);
-					if (currentUser != null) {
-						setSessionAttribute("currentUser", currentUser);
+				//LoginJSON loginContainer = restTemplateJson().getForObject("http://vps111534.ovh.net/unm-backend/json/login?username=" + login.usernameField() + "&password=" + login.passwordField(), LoginJSON.class);
+				AppToken token = sessionClient.login(apiKey, login.usernameField(), login.passwordField());
+				
+				if (token != null) {
+					log.info("Standard login for user of id : " + token.getUser().getUid() + "(" + token.getId() + ")");
+					if(token.getUser().getUid() == null) {
+						setAttribute("errorMessage", "incorrect data");
+					} else {
+						User currentUser = template.getForObject(jsonUrl + "/users/ " + token.getUser().getUid(), User.class);
+						if (currentUser != null) {
+							setSessionAttribute("currentUser", currentUser);
+						}
+						setSessionAttribute("authenticationToken", token.getId());
 					}
-					setSessionAttribute("authenticationToken", loginContainer.getAuthenticationToken());
+				} else {
+					setAttribute("errorMessage", "L'authentification a échoué, merci de vérifier votre user / mot de passe.");
 				}
+				
 			}
 			
 			if (hasSessionAttribute("currentUser")) {
