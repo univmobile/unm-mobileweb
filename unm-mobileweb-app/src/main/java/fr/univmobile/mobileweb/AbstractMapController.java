@@ -38,7 +38,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 
 		this.jsonUrl = jsonUrl;
 		this.restaurationUniversitaireCategoryId = restaurationUniversitaireCategoryId;
-		categoriesIconsUrl = "http://vps111534.ovh.net/unm-backend/categoriesicons/";
+		categoriesIconsUrl = "https://univmobile-dev.univ-paris1.fr/testSP/api/files/categoriesicons/";
 	}
 
 
@@ -47,14 +47,6 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 	 ********************************************************/
 	@Override
 	public View action() throws IOException {
-		
-		//___________________________________________________________________________________________________________________________________
-		//temporary for testing, delete later
-		if (!hasSessionAttribute("univ")) {
-			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + 13, University.class);
-			setSessionAttribute("univ", univObj);
-		}
-		//___________________________________________________________________________________________________________________________________
 		
 		final Comment comment = getHttpInputs(Comment.class);
 		if (comment.isHttpValid()) {
@@ -141,7 +133,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 			setAttribute("currentAbsolutePath", getAbsolutePath());
 			
 			//map attributes
-			setAttribute("API_KEY", "AIzaSyC8uD1y1Dgx0W6JJMCQm7V1OJx_nsbRmBE");
+			setAttribute("API_KEY", "AIzaSyBLdHFXnqofrZMnGb5W5NDnQKK7amivZS4");
 			setAttribute("mapHeight", "400px");
 			setAttribute("restaurationUniversitaireCategoryId", restaurationUniversitaireCategoryId);
 			setAttribute("categoriesIconsUrl", categoriesIconsUrl);
@@ -151,6 +143,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 			if (getCategoryRootId() != null) {
 				setAttribute("categoryRootId", getCategoryRootId());
 			}
+			setAttribute("isIDF", getUniversity().getRegionId() == 1);
 			
 			return new View(provideViewName());
 		}	

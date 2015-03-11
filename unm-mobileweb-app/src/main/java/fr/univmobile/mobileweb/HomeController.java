@@ -4,6 +4,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static fr.univmobile.backend.client.RegionsUtils.getUniversityById;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +19,8 @@ import fr.univmobile.backend.client.AppToken;
 import fr.univmobile.backend.client.ClientException;
 import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.backend.client.SessionClient;
+import fr.univmobile.mobileweb.models.Category;
+import fr.univmobile.mobileweb.models.CategoryEmbedded;
 import fr.univmobile.mobileweb.models.News;
 import fr.univmobile.mobileweb.models.NewsEmbedded;
 import fr.univmobile.mobileweb.models.Poi;
@@ -33,19 +39,23 @@ import fr.univmobile.web.commons.View;
 @Paths({ "" })
 public class HomeController extends AsbtractMobileWebJspController {
 
-	public HomeController(final String jsonUrl, final String apiKey,
+	public HomeController(final String jsonUrl, String universiteCategoryId, final String apiKey,
 			final SessionClient sessionClient, final RegionClient regions) {
 
 		this.jsonUrl = jsonUrl;
+		this.universiteCategoryId = universiteCategoryId;
 		this.apiKey = checkNotNull(apiKey, "apiKey");
 		this.sessionClient = checkNotNull(sessionClient, "sessionClient");
 		this.regions = checkNotNull(regions, "regions");
+		this.categoriesIconsUrl = "https://univmobile-dev.univ-paris1.fr/testSP/api/files/categoriesicons/";
 	}
 
 	private final String jsonUrl;
 	private final String apiKey;
 	private final SessionClient sessionClient;
 	private final RegionClient regions;
+	private final String universiteCategoryId;
+	protected final String categoriesIconsUrl;
 	
 	private static final Log log = LogFactory.getLog(HomeController.class);
 
@@ -90,7 +100,8 @@ public class HomeController extends AsbtractMobileWebJspController {
 			
 			//home attributes
 			setAttribute("newsList", newsList);
-			setAttribute("mapUrl", generateMapUrl(getUniversity().getId(), 21));
+			setAttribute("mapUrl", generateMapUrl(getUniversity()));
+			setAttribute("isIDF", getUniversity().getRegionId() == 1);
 			
 			return new View("home.jsp");
 		} else {
@@ -122,26 +133,54 @@ public class HomeController extends AsbtractMobileWebJspController {
 		String univ();
 	}
 	
-	private String generateMapUrl(int universityId, int categoryId) {
+	protected Map<Integer, Category> provideCategories() {
+		
+		RestTemplate template = restTemplate();
+		CategoryEmbedded categoryContainer = template.getForObject(jsonUrl + "/categories/"+ universiteCategoryId +"/children", CategoryEmbedded.class);
+		if (categoryContainer._embedded != null) {
+			Map<Integer, Category> categoriesMap = new HashMap<Integer, Category>();
+			for (Category category : categoryContainer._embedded.getCategories()) {
+				categoriesMap.put(category.getId(), category);
+			}
+			return categoriesMap;
+		} else {
+			return null;
+		}
+	}
+	
+	private String generateMapUrl(University university) {
+		Map<Integer, Category> categoriesMap = provideCategories();
 		
 		String base = "https://maps.googleapis.com/maps/api/staticmap?";
-		String center = "center=Paris";
-		String zoom = "&zoom=10";
+		String center = "center="+university.getCentralLat()+","+university.getCentralLng();
+		String zoom = "&zoom=16";
 		String size = "&size=640x400";
 		String markers = "&markers=";
 		
 		// Get the list of pois
 		RestTemplate template = restTemplate();
-		PoiEmbedded poiContainer = template.getForObject(jsonUrl + "/pois/search/findByUniversityAndCategory?universityId=" + universityId + "&categoryId=" + categoryId, PoiEmbedded.class);
+		PoiEmbedded poiContainer = template.getForObject(jsonUrl + "/pois/search/findByUniversityAndCategoryRoot?universityId=" + university.getId() + "&categoryId=" + universiteCategoryId+"&size=99", PoiEmbedded.class);
 		
 		if (poiContainer._embedded != null) {
 			for (Poi poi : poiContainer._embedded.getPois()) {
 				if (poi.isActive() && poi.getLat() != 0 && poi.getLng() != 0) {
-					markers += "|" + poi.getLat() + "," + poi.getLng();
+					// Get the category object of the poi
+					Category category = categoriesMap.get(poi.getCategoryId());
+					String icon = null;
+					String markerPoint = "";
+					//try {
+					//	if (category.getMarkerIconUrl() != null) {
+					//		markerPoint += "icon:"+URLEncoder.encode(this.categoriesIconsUrl+category.getActiveIconUrl(), "UTF-8")+"|";
+					//	}
+						markerPoint += poi.getLat() + "," + poi.getLng();
+						markers += "|" + markerPoint;
+					//} catch (UnsupportedEncodingException ex) {
+					//	log.error(ex);
+					//}
 				}
 			}
 		}
 		
-		return base/*+center+zoom*/+size+markers;
+		return base+center+zoom+size+markers;
 	}
 }

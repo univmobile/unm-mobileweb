@@ -303,15 +303,15 @@ time {
 
 .universite-form-wrap {
   width: 100%;
-  padding: 20px 10px;
+  padding: 10px 10px;
   background-image: url(../img/select-bg.jpg); }
   .universite-form-wrap #select-universite {
-    width: 90%;
+    width: 95%;
     margin: 0 auto;
     color: #fff; }
     .universite-form-wrap #select-universite .form-group {
       display: inline-block;
-      width: 80%;
+      width: 70%;
       vertical-align: bottom; }
     .universite-form-wrap #select-universite .button-wrap {
       display: inline-block;
@@ -320,9 +320,10 @@ time {
       margin-bottom: 20px;
       width: 18%; }
     .universite-form-wrap #select-universite .confirm {
-      padding: 10px 15px;
-      border: 0;
-      float: right; }
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 7px;
+      border: 0;}
   .universite-form-wrap label {
     font-family: 'Exo', sans-serif;
     font-weight: 400; }
@@ -494,7 +495,7 @@ time {
         margin-top: 4px; }
   .main-navbar .user-nav {
     display: inline-block;
-    vertical-align: middle; }
+    width: 79%; top:0; }
     .main-navbar .user-nav .contact-link {
       font-size: 1em;
       display: inline-block;
@@ -503,6 +504,7 @@ time {
       font-family: 'Exo', sans-serif;
       font-weight: 500; }
     .main-navbar .user-nav .user {
+      max-width: 105px;
       text-align: right;
       display: inline-block;
       vertical-align: middle;
@@ -514,19 +516,24 @@ time {
       .main-navbar .user-nav .user .user-name {
         font-family: 'Exo', sans-serif;
         font-weight: 300;
-        font-size: 1.5em;
+        font-size: 1.4em;
+        overflow: hidden;
+        text-overflow: ellipsis;
         line-height: 1; }
     .main-navbar .user-nav .universite-name {
       color: #998b92;
       display: inline-block;
       vertical-align: middle;
+      max-width: 35%;
       font-size: 0.7em;
       padding-left: 10px;
       line-height: 1.1; }
     .main-navbar .user-nav .notifications {
       margin-left: 15px;
       display: inline-block;
-      vertical-align: middle; }
+      vertical-align: middle;
+      float: right;
+      top:50%; position:relative; }
       .main-navbar .user-nav .notifications .icon {
         background-position: 0 -30px;
         position: relative; }
@@ -1331,3 +1338,5 @@ form.add-poi .confirm {
       cursor: pointer; }
       .universite-list-wrap .universite--list .list-item:last-child {
         border-bottom: medium none; }
+
+.user-nav div.notifications a { top:-50%; position:relative;}

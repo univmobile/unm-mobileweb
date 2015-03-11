@@ -146,7 +146,10 @@ public abstract class AsbtractMobileWebJspController extends
 		for (Menu menuItem : menu) {
 			if (menuItem.getGrouping().equals(grouping)) {
 				changePredefinedMenuUrl(menuItem);
-				filteredMenu.add(menuItem);
+				// Paris API and the "Bons plans are only displayed for"
+				if ( (menuItem.getId() == 21 || menuItem.getId() == 22) && getUniversity().getRegionId() == 1 ||  menuItem.getId() != 21 && menuItem.getId() != 22) {
+					filteredMenu.add(menuItem);
+				}
 			}
 		}
 		//sorting

@@ -27,6 +27,15 @@ public class Poi {
 	private int universityId;
 	private int categoryId;
 	
+	// For universities
+	private String publicWelcome;
+	private String disciplines;
+	private String closingHours;
+	private boolean hasWifi;
+	private boolean hasEthernet;
+	private boolean iconeRueDesFacs;
+	
+	
 	//additional fields
 	private Category category;
 	
@@ -126,6 +135,30 @@ public class Poi {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public String getPublicWelcome() {
+		return publicWelcome;
+	}
+
+	public String getDisciplines() {
+		return disciplines;
+	}
+
+	public String getClosingHours() {
+		return closingHours;
+	}
+
+	public boolean isHasWifi() {
+		return hasWifi;
+	}
+
+	public boolean isHasEthernet() {
+		return hasEthernet;
+	}
+
+	public boolean isIconeRueDesFacs() {
+		return iconeRueDesFacs;
 	}
 	
 	

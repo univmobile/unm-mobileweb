@@ -13,6 +13,7 @@
           <jsp:include page="includes/maps/maps-header.jsp" />
           <div class="content-wrap">
               <div class="container">
+              		<c:if test="${fn:length(newsList) > 0}">
                   <article class="main-article clearfix">
                       <div class="head-img">
                           <img class="img-responsive" alt="main article" src="${newsList[0].imageUrl}">
@@ -25,6 +26,7 @@
                           </div>
                       </div>
                   </article>
+                  </c:if>
                   <c:if test="${fn:length(newsList) > 1}">
 	                  <div class="list-title">Dernières actualités</div>
 	                  <div class="list-wrap"  id="accordion" role="tablist" aria-multiselectable="true">
@@ -62,9 +64,25 @@
 	                  </div>
 				  </c:if>
 				  <!-- map iamge -->
-				  <div class="img-wrap">
+				  <div class="link-wrap more">
+                      <a class="link" href="news">Voir toutes les Actualités</a>
+                  </div>
+                  <div class="list-title">Géo’Campus</div>
+                  <div class="img-wrap">
 		          	<a href="university-map"><img class="img-responsive" src="${mapUrl}"></a>
 		          </div>
+		          <div class="bottom-buttons">
+                      <div class="category-buttons row">
+                          <c:if test="${not isIDF}">
+                          <a href="university-map" class="active category-link one col-xs-12"><i class="icon"></i></a>
+                          </c:if>
+                          <c:if test="${isIDF}">
+                          	<a href="university-map" class="active category-link one col-xs-4"><i class="icon"></i></a>
+                          	<a href="paris-map" class="category-link two col-xs-4"><i class="icon"></i></a>
+                          	<a href="goodplans-map" class="category-link three col-xs-4"><i class="icon"></i></a>
+                          </c:if>
+                      </div>
+                  </div>
               </div>
           </div>
       </div>

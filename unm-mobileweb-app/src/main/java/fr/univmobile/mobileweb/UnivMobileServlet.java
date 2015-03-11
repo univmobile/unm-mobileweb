@@ -51,6 +51,9 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 		final String librariesCategoryId = dependencyInjection.getInject(String.class).ref(
 				"librariesCategoryId");
 	
+		final String IDFRegionID = dependencyInjection.getInject(String.class).ref(
+				"IDFRegionId");
+	
 		final HomeClient home = dependencyInjection.getInject(HomeClient.class)
 				.into(UnivMobileServlet.class);
 
@@ -75,7 +78,7 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 		final String apiKey = "toto";
 
 		super.init( //
-				new HomeController(jsonURL, apiKey, sessions,regions), //
+				new HomeController(jsonURL, universiteCategoryId, apiKey, sessions,regions), //
 				new LoginController(apiKey, sessions,jsonURL), //
 				new LoginShibbolethController(apiKey, sessions,jsonURL), //
 				new AboutController(jsonURL, home), //

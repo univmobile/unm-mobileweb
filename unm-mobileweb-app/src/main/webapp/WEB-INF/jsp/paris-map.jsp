@@ -15,7 +15,7 @@
           <div class="content-wrap geo category-two">
               <jsp:include page="includes/maps/maps-search.jsp" />
               <div class="main-container container">
-                  <div class="map" style="height:${mapHeight};" id="map-canvas"></div>
+                  <div class="map" id="map-canvas"></div>
                   <jsp:include page="includes/maps/maps-poi.jsp" />
                   <div class="category-wrap">
                        <div class="list-wrap">
@@ -23,29 +23,33 @@
                                <button class="col-xs-9 btn show-hide-category hide-category"><i class="icon"></i>Trier par categories</button>
                                <button class="col-xs-3 btn show-hide-search show-search"><i class="icon text-hide"></i></button>
                            </div>
-                           <ul class="category-list row">
+                           <ul class="category-list row" id="poiCategoriesFilter">
                                <c:forEach var="categoryItem" items="${allCategories}" varStatus="loop">
 	                           		<li class="list-item">                                
 	                                   <button id="category-btn-${categoryItem.id}" class="btn category-btn active" onClick="refreshPois('${categoryItem.id}',$(this).hasClass('active'))">
-	                                       <c:if test="${not empty categoryItem.inactiveIconUrl}">
-											<img class="icon" id="active-category-btn-${categoryItem.id}" src="${categoriesIconsUrl}${categoryItem.activeIconUrl}" alt="" style="background-image: none;">
-											<img class="icon" id="inactive-category-btn-${categoryItem.id}" src="${categoriesIconsUrl}${categoryItem.inactiveIconUrl}" alt="" style="background-image: none;">
-										</c:if>
+	                                       <c:if test="${not empty categoryItem.activeIconUrl}">
+												<img class="icon" id="inactive-category-btn-${categoryItem.id}" src="${categoriesIconsUrl}${categoryItem.activeIconUrl}" alt="" style="background-image: none;">
+										   </c:if>
 	                                       <span>${categoryItem.name}</span>
 	                                   </button>
 	                                </li>	                                
 	                            </c:forEach> 
                            </ul>
                        </div>
-                      <div class="bottom-buttons">
+                      <div class="bottom-buttons" id="univBottomButtons">
                           <div class="category-nav-button bottom row">
                               <button class="col-xs-9 btn show-hide-category show-category"><i class="icon"></i>Trier par categories</button>
                               <button class="col-xs-3 btn show-hide-search show-search"><i class="icon text-hide"></i></button>
                           </div>
                           <div class="category-buttons row">
-                              <a href="university-map" class="category-link one col-xs-4"><i class="icon"></i></a>
-                              <a class="active category-link two col-xs-4"><i class="icon"></i></a>
-                              <a href="goodplans-map" class="category-link three col-xs-4"><i class="icon"></i></a>
+                              <c:if test="${not isIDF}">
+								<a href="university-map" class="active category-link one col-xs-12"><i class="icon"></i></a>
+                          	  </c:if>
+                              <c:if test="${isIDF}">
+                                <a href="university-map" class="category-link one col-xs-4"><i class="icon"></i></a>
+                              	<a class="active category-link two col-xs-4"><i class="icon"></i></a>
+                              	<a href="goodplans-map" class="category-link three col-xs-4"><i class="icon"></i></a>
+                              </c:if>
                           </div>
                       </div>
                   </div>
@@ -72,6 +76,20 @@
 	var markers = constructMarkers(); //global variable
 	google.maps.event.addDomListener(window, 'load', initialize);
 	
+	function initialize() {
+		var mapHeight = $(window).height() - ($('#univHeader').height() + $('#univBottomButtons').height() + 24);
+		$('#map-canvas').height(mapHeight);
+		$('#poiCategoriesFilter').css('max-height', mapHeight + 'px');
+		var mapOptions = {
+			center: { lat: ${university.centralLat}, lng: ${university.centralLng} }, //Paris
+			zoom: 13
+	    };
+	    window.map = new google.maps.Map(document.getElementById('map-canvas'),
+	        mapOptions);
+	    displayAllMarkers(map);
+	    checkHash();
+	}
+	
 	function constructMarkers() {
 		markersTemp = [];
 		var marker;
@@ -80,7 +98,9 @@
 			position: new google.maps.LatLng("${poiItem.lat}", "${poiItem.lng}"),
 			title: "${escape:javaScript(poiItem.name)}",
 			<c:if test="${not empty poiItem.category.markerIconUrl}">
-				icon : "${categoriesIconsUrl}${poiItem.category.markerIconUrl}",
+				icon : {
+				    url: "${categoriesIconsUrl}${poiItem.category.markerIconUrl}",
+				    scaledSize: new google.maps.Size(38, 38) },
 			</c:if>
 			//below are custom poi values, not required for maps.Marker
 			idPOI: "${poiItem.id}",

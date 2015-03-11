@@ -23,7 +23,7 @@
                       </c:if>
                       <form id="login-form" method="post">
                           <div class="form-group">
-                              <label for="exampleInputEmail1">Adresse Email</label>
+                              <label for="exampleInputEmail1">Nom d'utilisateur</label>
                               <input name="usernameField" type="text" class="form-control" id="exampleInputEmail1" placeholder="" required>
                           </div>
                           <div class="form-group">

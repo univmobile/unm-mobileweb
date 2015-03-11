@@ -41,7 +41,7 @@
 		    </li>
 	    </c:if>
 	    <li class="menu-item two dropdown">
-	        <a class="dropdown-toggle" role="button" href="news">Act’Universitaire<span class="menu-item-icon"><i class="icon"></i></span></a>
+	        <a class="dropdown-toggle" role="button" href="news">Act'Universitaire<span class="menu-item-icon"><i class="icon"></i></span></a>
 	        <!--
 	        <ul class="dropdown-menu" role="menu">
 	            <li><a href="#">Menu 1</a></li>
@@ -52,7 +52,7 @@
 	    </li>
 	    <c:if test="${fn:length(menuTT) != 0}">
 		    <li class="menu-item three dropdown">
-		        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Tou’Trouver<span class="menu-item-icon"><i class="icon"></i></span></a>
+		        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Tou'Trouver<span class="menu-item-icon"><i class="icon"></i></span></a>
 		        <ul class="dropdown-menu" role="menu">
 		            <c:forEach var="menuItem" items="${menuTT}">
 		            	<c:if test="${menuItem.active}">

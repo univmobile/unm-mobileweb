@@ -1,14 +1,3 @@
-function initialize() {
-	var mapOptions = {
-		center: { lat: 48.8567, lng: 2.3508}, //Paris
-		zoom: 9
-    };
-    window.map = new google.maps.Map(document.getElementById('map-canvas'),
-        mapOptions);
-    displayAllMarkers(map);
-    checkHash();
-}
-
 function displayAllMarkers(map) {
 	for (var i = 0; i < markers.length; i++) {
 		markers[i].setMap(map);
@@ -145,7 +134,7 @@ function addPoiIdHash(poiId) {
 
 //category icons
 $(document).ready(function(){
-	$('.category-btn').each(function() {
+	/*$('.category-btn').each(function() {
 		$('#active-'+$(this).attr('id')).show();
 		$('#inactive-'+$(this).attr('id')).hide();
 	});
@@ -158,7 +147,7 @@ $(document).ready(function(){
 			$('#active-'+$(this).attr('id')).hide();
 			$('#inactive-'+$(this).attr('id')).show();
 		}
-	});
+	});*/
 });
 
 //search

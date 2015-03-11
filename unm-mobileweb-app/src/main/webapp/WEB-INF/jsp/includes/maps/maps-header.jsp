@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page pageEncoding="utf-8"%>
 
-<header class="main-navbar container clearfix">
+<header class="main-navbar container clearfix" id="univHeader">
 	<button type="button" class="navbar-menu-toggle">
 	    <span class="icon-bar"></span>
 	    <span class="icon-bar"></span>
