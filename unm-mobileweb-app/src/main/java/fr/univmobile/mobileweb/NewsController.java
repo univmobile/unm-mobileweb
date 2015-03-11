@@ -39,7 +39,7 @@ public class NewsController extends AsbtractMobileWebJspController {
 			
 			// Get the list of news
 			RestTemplate template = restTemplate();
-			NewsEmbedded newsContainer = template.getForObject(jsonUrl + "/news/search/findNewsForUniversity?universityId=" + getUniversity().getId() + "&size=200", NewsEmbedded.class);
+			NewsEmbedded newsContainer = template.getForObject(jsonUrl + "/news/search/findNewsForUniversity?universityId=" + getUniversity().getId() + "&size=40", NewsEmbedded.class);
 			
 			News[] newsList = null;
 			if (newsContainer._embedded != null) {
