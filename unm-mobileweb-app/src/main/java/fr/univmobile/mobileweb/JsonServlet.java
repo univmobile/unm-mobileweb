@@ -62,16 +62,6 @@ public class JsonServlet extends HttpServlet {
 			pageParam = DEFAULT_PAGE;
 		}
 		
-		//__________________________________________________________________________________________________________
-		//for testing, remove later
-		if (actionParam.equals("Comments")) {
-			//poiIdParam = "15";
-		} else if (actionParam.equals("RestaurantMenu")) {
-			poiIdParam = "7313";
-		}
-		//__________________________________________________________________________________________________________
-		
-		
 		if (actionParam != null) {
 			Object container = null;
 			if (poiIdParam != null) {

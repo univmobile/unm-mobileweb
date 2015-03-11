@@ -31,14 +31,6 @@ public class NewsController extends AsbtractMobileWebJspController {
 	@Override
 	public View action() throws IOException {
 		
-		//___________________________________________________________________________________________________________________________________
-		//temporary for testing, delete later
-		if (!hasSessionAttribute("univ")) {
-			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + 13, University.class);
-			setSessionAttribute("univ", univObj);
-		}
-		//___________________________________________________________________________________________________________________________________
-		
 		if (!hasSessionAttribute("univ")) {
 
 			sendRedirect(getBaseURL()+"/");

@@ -44,15 +44,6 @@ public class BookmarksController extends AsbtractMobileWebJspController {
 		
 		userId = 0;
 		
-		//___________________________________________________________________________________________________________________________________
-		//temporary for testing, delete later
-		if (!hasSessionAttribute("univ")) {
-			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + 4, University.class);
-			setSessionAttribute("univ", univObj);
-			
-		}
-		//___________________________________________________________________________________________________________________________________
-		
 		if (!hasSessionAttribute("univ")) {
 			sendRedirect(getBaseURL()+"/");
 			return null;

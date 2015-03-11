@@ -58,15 +58,6 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			setSessionAttribute("univ", univObj);
 		}
 		
-		//___________________________________________________________________________________________________________________________________
-		//temporary for testing, delete later
-		if (!hasSessionAttribute("univ")) {
-			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + 1, University.class);
-			setSessionAttribute("univ", univObj);
-			
-		}
-		//___________________________________________________________________________________________________________________________________
-		
 		if (!hasSessionAttribute("univ")) {
 			sendRedirect(getBaseURL()+"/");
 			return null;

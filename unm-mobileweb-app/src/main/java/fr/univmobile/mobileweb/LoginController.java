@@ -50,17 +50,7 @@ public class LoginController extends AsbtractMobileWebJspController {
 	public View action() throws IOException, ClientException {
 		
 		RestTemplate template = restTemplate();
-		
-		//___________________________________________________________________________________________________________________________________
-		//temporary for testing, delete later
-		if (!hasSessionAttribute("univ")) {
-			University univObj = template.getForObject(jsonUrl + "/universities/ " + 13, University.class);
-			setSessionAttribute("univ", univObj);
-		}
-		//___________________________________________________________________________________________________________________________________		
-		
-		
-		
+				
 		if (!hasSessionAttribute("univ")) {
 
 			sendRedirect(getBaseURL()+"/");
