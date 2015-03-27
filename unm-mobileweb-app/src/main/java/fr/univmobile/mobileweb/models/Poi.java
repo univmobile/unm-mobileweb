@@ -121,8 +121,16 @@ public class Poi {
 		return universityId;
 	}
 	
+	/**
+	 * Mapping of libraries categories
+	 * @return
+	 */
 	public int getCategoryId() {
-		return categoryId;
+		if (categoryId == 4) {
+			return 7;
+		} else {
+			return categoryId;
+		}
 	}
 	
 	public String escapeJS(String string) {

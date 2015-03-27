@@ -14,6 +14,7 @@ public class News {
 	private String imageUrl;
 	private String restoId;
 	private String category;
+	private String feedName;
 	
 	public int getId() {
 		return id;
@@ -54,4 +55,9 @@ public class News {
 	public String getCategory() {
 		return category;
 	}
+
+	public String getFeedName() {
+		return feedName;
+	}
+	
 }

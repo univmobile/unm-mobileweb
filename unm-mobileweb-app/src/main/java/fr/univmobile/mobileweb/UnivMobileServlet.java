@@ -92,7 +92,8 @@ public class UnivMobileServlet extends AbstractUnivMobileServlet {
 				new MediaController(jsonURL), //
 				new LibrariesController(jsonURL), //
 				new BookmarksController(jsonURL, universiteCategoryId, bonplansCategoryId, parisCategoryId), //
-				new NotificationsController(jsonURL) //
+				new NotificationsController(jsonURL), //
+				new ImageMapController(jsonURL)
 		);
 	}
 

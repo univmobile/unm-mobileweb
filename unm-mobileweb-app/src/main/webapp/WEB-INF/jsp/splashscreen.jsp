@@ -27,7 +27,9 @@
      						    	<optgroup label="${region.name}">
      						    	
      						    		<c:forEach var="university" items = "${region.universities}">
-     						    			<option value="${university.id}">${university.title}</option>
+     						    			<c:if test="${!university.crous}">
+     						    				<option value="${university.id}">${university.title}</option>
+     						    			</c:if>
      						    		</c:forEach>
      						    	
    									</optgroup>

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 import fr.univmobile.mobileweb.models.Bookmark;
@@ -16,6 +19,7 @@ import fr.univmobile.mobileweb.models.University;
 import fr.univmobile.mobileweb.models.UniversityEmbedded;
 import fr.univmobile.mobileweb.models.UniversityLibrary;
 import fr.univmobile.mobileweb.models.UniversityLibraryEmbedded;
+import fr.univmobile.mobileweb.models.UsageStats;
 import fr.univmobile.mobileweb.models.User;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
@@ -56,6 +60,12 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			final String universityId = selected.universityId();			
 			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + universityId, University.class);
 			setSessionAttribute("univ", univObj);
+			// We track the selected university
+			UsageStats usage = new UsageStats();
+			usage.setSource("W");
+			usage.setUniversity(jsonUrl + "/universities/" + universityId);
+			restTemplate().postForObject(jsonUrl + "/usageStats", usage, Object.class);
+
 		}
 		
 		if (!hasSessionAttribute("univ")) {
@@ -96,7 +106,12 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			Bookmark[] bookmarksList = null;
 			if (userId != null) {
 			// Get the list of bookmarks
-			BookmarkEmbedded bookmarksContainer = template.getForObject(jsonUrl + "/users/" + userId + "/bookmarks", BookmarkEmbedded.class);
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Authentication-Token", getSessionAttribute("authenticationToken", String.class));
+			HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+				
+			BookmarkEmbedded bookmarksContainer = restTemplate().exchange(jsonUrl + "/users/" + userId + "/bookmarks", HttpMethod.GET, entity, BookmarkEmbedded.class).getBody();
+
 			if (bookmarksContainer._embedded != null) {
 				//must be prevented somewhere else, because if bookmarks do not exist the view gonna be empty
 				bookmarksList = bookmarksContainer._embedded.getBookmarks();

@@ -128,7 +128,7 @@ p {
       font-size: 0.9em;
       font-family: 'Exo', sans-serif;
       font-weight: 300; }
-    .article-list .body .button {
+    article .description .button, .article-list .body .button {
       background-color: #ffb103;
       color: #fff;
       text-transform: none;
@@ -137,7 +137,7 @@ p {
       font-family: 'Exo', sans-serif;
       font-weight: 700;
       margin: 10px 0 10px; }
-
+article .description .button { floar : right; }
 .media-list {
   list-style: none;
   margin: 0;
@@ -335,7 +335,13 @@ time {
   vertical-align: middle;
   width: 30px;
   height: 30px; }
-
+.show-search-long .icon.arrow {
+	background-position:-30px -182px;
+}
+.category-icon .icon {
+	content: normal;
+	
+}
 .hasCustomSelect {
   z-index: 10; }
 
@@ -758,7 +764,7 @@ time {
         -webkit-border-radius: 25px;
         -moz-border-radius: 25px;
         -ms-border-radius: 25px;
-        border-radius: 25px; }
+        border-radius: 25px;}
     .category-list .category-btn.button-2 .icon {
       background-position: -47px 0; }
     .category-list .category-btn.button-3 .icon {
@@ -787,7 +793,8 @@ time {
       height: 47px;
       margin: 0 auto;
       background-image: url(../img/category-icons.png);
-      background-repeat: no-repeat; }
+      background-repeat: no-repeat;
+       content: initial; }
     .category-list .category-btn:focus span {
       color: #fff; }
     .category-list .category-btn span {

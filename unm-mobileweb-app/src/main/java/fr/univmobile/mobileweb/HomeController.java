@@ -29,6 +29,7 @@ import fr.univmobile.mobileweb.models.Region;
 import fr.univmobile.mobileweb.models.RegionEmbedded;
 import fr.univmobile.mobileweb.models.University;
 import fr.univmobile.mobileweb.models.UniversityEmbedded;
+import fr.univmobile.mobileweb.models.UsageStats;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
 import fr.univmobile.web.commons.HttpParameter;
@@ -47,7 +48,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 		this.apiKey = checkNotNull(apiKey, "apiKey");
 		this.sessionClient = checkNotNull(sessionClient, "sessionClient");
 		this.regions = checkNotNull(regions, "regions");
-		this.categoriesIconsUrl = "https://univmobile-dev.univ-paris1.fr/testSP/api/files/categoriesicons/";
+		this.categoriesIconsUrl = "http://univmobile-dev.univ-paris1.fr/testSP/files/categoriesicons/";
 	}
 
 	private final String jsonUrl;
@@ -68,9 +69,15 @@ public class HomeController extends AsbtractMobileWebJspController {
 
 			final String univ = selected.univ();
 			
-			University univObj = restTemplate().getForObject(jsonUrl + "/universities/ " + univ, University.class);
+			University univObj = restTemplate().getForObject(jsonUrl + "/universities/" + univ, University.class);
 
 			setSessionAttribute("univ", univObj);
+			
+			// We track the selected university
+			UsageStats usage = new UsageStats();
+			usage.setSource("W");
+			usage.setUniversity(jsonUrl + "/universities/" + univ);
+			restTemplate().postForObject(jsonUrl + "/usageStats", usage, Object.class);
 		}
 		
 		//a.k.a. if(getUniversity() == null)

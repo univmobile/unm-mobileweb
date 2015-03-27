@@ -6,6 +6,9 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 import fr.univmobile.backend.client.AppToken;
@@ -78,7 +81,13 @@ public class LoginController extends AsbtractMobileWebJspController {
 					if(token.getUser().getUid() == null) {
 						setAttribute("errorMessage", "incorrect data");
 					} else {
-						User currentUser = template.getForObject(jsonUrl + "/users/ " + token.getUser().getUid(), User.class);
+						log.info(jsonUrl + "/users/" + token.getUser().getUid());
+						HttpHeaders headers = new HttpHeaders();
+						headers.add("Authentication-Token", token.getId());
+						HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+						
+						User currentUser = restTemplate().exchange(jsonUrl + "/users/" + token.getUser().getUid(), HttpMethod.GET, entity, User.class).getBody();
+
 						if (currentUser != null) {
 							setSessionAttribute("currentUser", currentUser);
 						}

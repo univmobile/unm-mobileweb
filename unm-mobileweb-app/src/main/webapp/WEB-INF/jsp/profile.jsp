@@ -26,9 +26,11 @@
                                   <div class="info-title">Choisir une autre université </div>
                                   <ul class="universite--list">
                                   		<c:forEach var="universityItem" items="${universitiesList}">
-		                                      <li class="list-item">
-		                                          <a href="profile?universityId=${universityItem.id}" style="color: white;"><div class="title">${universityItem.title}</div></a>
-		                                      </li>
+                                  			  <c:if test="${!universityItem.crous}">
+			                                      <li class="list-item">
+			                                          <a href="profile?universityId=${universityItem.id}" style="color: white;"><div class="title">${universityItem.title}</div></a>
+			                                      </li>
+			                                  </c:if>
                                   		</c:forEach>
                                   </ul>
                               </section>

@@ -3,8 +3,12 @@ package fr.univmobile.mobileweb;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
+import fr.univmobile.mobileweb.models.BookmarkEmbedded;
 import fr.univmobile.mobileweb.models.Notification;
 import fr.univmobile.mobileweb.models.NotificationEmbedded;
 import fr.univmobile.mobileweb.models.University;
@@ -71,7 +75,12 @@ public class NotificationsController extends AsbtractMobileWebJspController {
 			
 			//set new notification read date for the user
 			if (notificationsList.length > 0) {
-				template.getForObject(jsonUrl + "/notifications/lastRead?userId=" + userId + "&notificationId=" + notificationsList[0].getId() , NotificationEmbedded.class);
+				HttpHeaders headers = new HttpHeaders();
+				headers.add("Authentication-Token", getSessionAttribute("authenticationToken", String.class));
+				HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+					
+				restTemplate().exchange(jsonUrl + "/notifications/lastRead?userId=" + userId + "&notificationId=" + notificationsList[0].getId(), HttpMethod.GET, entity, NotificationEmbedded.class).getBody();
+
 			}
 			
 			

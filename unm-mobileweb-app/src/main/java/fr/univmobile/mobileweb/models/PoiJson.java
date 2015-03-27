@@ -10,6 +10,8 @@ public class PoiJson {
 	private String description;
 	private String phones;
 	private String email;
+	private Double lat;
+	private Double lng;
 	
 	public PoiJson(boolean active, String name, String category,
 			String university) {
@@ -82,8 +84,21 @@ public class PoiJson {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
+
+	public Double getLat() {
+		return lat;
+	}
+
+	public void setLat(Double lat) {
+		this.lat = lat;
+	}
+
+	public Double getLng() {
+		return lng;
+	}
+
+	public void setLng(Double lng) {
+		this.lng = lng;
+	}
 	
 }

@@ -26,7 +26,7 @@
 		                                              <img class="img-responsive" alt="article" src="${newsItem.imageUrl}">
 		                                          </div>
 		                                          <div class="description">
-		                                              <time>${newsItem.author} - <fmt:formatDate pattern="dd/MM/YYYY" value="${newsItem.publishedDate}" /></time>
+		                                              <time>${newsItem.feedName} - <fmt:formatDate pattern="dd/MM/YYYY" value="${newsItem.publishedDate}" /></time>
 		                                              <h2>${newsItem.title}</h2>
 		                                              <i class="icon"></i>
 		                                          </div>
@@ -36,7 +36,7 @@
 		                                      <div class="body">
 		                                      	<p>${newsItem.description}</p>
 		                                      	<c:if test="${not empty newsItem.link}">
-		                                      		<a href="${newsItem.link}" class="btn button">Aller plus loin </a>
+		                                      		<a href="${newsItem.link}" class="btn button" target="_blank">Aller plus loin </a>
 		                                      	</c:if>
 		                                      </div>
 		                                  </div>

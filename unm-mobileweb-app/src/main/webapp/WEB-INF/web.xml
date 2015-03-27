@@ -9,19 +9,23 @@
 		<servlet-class>fr.univmobile.mobileweb.JsonServlet</servlet-class>
 		<init-param>
 			<param-name>inject:String ref:jsonURL</param-name>
-			<param-value>http://vps111534.ovh.net/unm-backend/api</param-value>
+			<param-value>https://univmobile-dev.univ-paris1.fr/testSP/api</param-value>
 		</init-param>
 	</servlet>
 	<servlet>
 		<servlet-name>UnivMobileServlet</servlet-name>
 		<servlet-class>fr.univmobile.mobileweb.UnivMobileServlet</servlet-class>
-		<init-param>
+  		<init-param>
+			<param-name>baseURL</param-name>
+			<param-value>http://univmobile-dev.univ-paris1.fr/unm-mobileweb/</param-value>
+		</init-param>
+<!--		<init-param>
 			<param-name>baseURL</param-name>
 			<param-value>http://localhost:8080/unm-mobileweb/</param-value>
-		</init-param>
-		<init-param>
+		</init-param>-->
+ 		<init-param>
 			<param-name>inject:String ref:jsonURL</param-name>
-			<param-value>http://vps111534.ovh.net/unm-backend/api</param-value>
+			<param-value>https://univmobile-dev.univ-paris1.fr/testSP/api</param-value>
 		</init-param>
 		<init-param>
 			<param-name>inject:String ref:regionsJsonURL</param-name>
@@ -33,7 +37,7 @@
 		</init-param>
 		<init-param>
 			<param-name>inject:String ref:sessionJsonURL</param-name>
-			<param-value>${ref:jsonURL}/session</param-value>
+			<param-value>https://univmobile-dev.univ-paris1.fr/testSP/json/session</param-value>
 		</init-param>
 		<init-param>
 			<param-name>inject-packages</param-name>
@@ -47,7 +51,7 @@
 				fr.univmobile.backend.client.http
 			</param-value>
 		</init-param>
-		<init-param>
+ 		<init-param>
 			<param-name>inject:RegionClient into:UnivMobileServlet</param-name>
 			<param-value>RegionClientFromJSON</param-value>
 		</init-param>
@@ -106,7 +110,7 @@
 		</init-param>
 		<init-param>
 			<param-name>inject:String ref:parisCategoryId</param-name>
-			<param-value>24</param-value>
+			<param-value>5</param-value>
 		</init-param>
 		<init-param>
 			<param-name>inject:String ref:restaurationUniversitaireCategoryId</param-name>
@@ -116,7 +120,11 @@
 			<param-name>inject:String ref:librariesCategoryId</param-name>
 			<param-value>7</param-value>
 		</init-param>
-		
+		<init-param>
+			<param-name>inject:String ref:IDFRegionId</param-name>
+			<param-value>1</param-value>
+		</init-param>
+				
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>

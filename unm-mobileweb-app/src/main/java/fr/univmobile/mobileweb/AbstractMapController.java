@@ -3,14 +3,23 @@ package fr.univmobile.mobileweb;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
 
 import fr.univmobile.mobileweb.models.Category;
 import fr.univmobile.mobileweb.models.CommentJson;
@@ -29,7 +38,11 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 	protected final String jsonUrl;
 	protected final String restaurationUniversitaireCategoryId;
 	protected final String categoriesIconsUrl;
+	private final Geocoder geocoder;
 	
+	private static final Log log = LogFactory
+			.getLog(AbstractMapController.class);
+
 	/*******************************************************
 	 * Constructor #1
 	 * @param jsonUrl
@@ -38,7 +51,8 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 
 		this.jsonUrl = jsonUrl;
 		this.restaurationUniversitaireCategoryId = restaurationUniversitaireCategoryId;
-		categoriesIconsUrl = "https://univmobile-dev.univ-paris1.fr/testSP/api/files/categoriesicons/";
+		categoriesIconsUrl = "http://univmobile-dev.univ-paris1.fr/testSP/files/categoriesicons/";
+		geocoder = new Geocoder();
 	}
 
 
@@ -57,13 +71,13 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 				e.printStackTrace();
 			}
 		}
-		
+
 		final BookmarkPoi bookmarkPoi = getHttpInputs(BookmarkPoi.class);
 		if (bookmarkPoi.isHttpValid()) {
 			if (hasSessionAttribute("currentUser")) {
 				try {
 					sendPostAddBookmark(bookmarkPoi.poiIdBookmark(), getSessionAttribute("currentUser", User.class).getId());
-					sendRedirect(getBaseURL()+"/bookmarks");
+					sendRedirect(getBaseURL()+"/profile");
 					return null;
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -76,10 +90,24 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 		if (addPoi.isHttpValid()) {
 			
 			int currentUserId = getSessionAttribute("currentUser", User.class).getId();
-			University userUniversity = restTemplate().getForObject(jsonUrl + "/users/ " + currentUserId + "/university", University.class);
 			
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Authentication-Token", getSessionAttribute("authenticationToken", String.class));
+			HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+				
+			University userUniversity = restTemplate().exchange(jsonUrl + "/users/" + currentUserId + "/university", HttpMethod.GET, entity, University.class).getBody();
+
 			PoiJson poiJson = new PoiJson(true, addPoi.poiName(), jsonUrl+"/categories/"+addPoi.poiCategoryId(), jsonUrl+"/universities/"+userUniversity.getId());
 			poiJson.setAddress(addPoi.poiAddress());
+			// Try to get the coordinates :
+			GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(addPoi.poiAddress()).setLanguage("fr").getGeocoderRequest();
+			GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
+			if (geocoderResponse.getResults() != null && geocoderResponse.getResults().size() > 0 && geocoderResponse.getResults().get(0).getGeometry()!= null
+					&& geocoderResponse.getResults().get(0).getGeometry().getLocation() != null) {
+				poiJson.setLat(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLat().doubleValue());
+				poiJson.setLng(geocoderResponse.getResults().get(0).getGeometry().getLocation().getLng().doubleValue());
+			}
+			log.info("Coordianate got by google geocoder for address '" + addPoi.poiAddress() + "' : " + poiJson.getLat() + " , " + poiJson.getLng());
 			poiJson.setPhones(addPoi.poiPhone());
 			poiJson.setEmail(addPoi.poiEmail());
 			poiJson.setDescription(addPoi.poiDescription());
@@ -103,8 +131,9 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 				pois = filterPois(pois);
 				setAttribute("allPois", pois);
 			}
-
+		
 			Category[] categories = provideCategories();
+			Category globalBiblioCat = restTemplate().getForObject(jsonUrl + "/categories/4", Category.class);
 			if (categories != null) {			
 				categories = filterCategories(categories);
 				setAttribute("allCategories", categories);
@@ -118,6 +147,9 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 							poi.setCategory(category);
 							break;
 						}
+					}
+					if (poi.getCategoryId() == 4) {
+						poi.setCategory(globalBiblioCat);
 					}
 				}
 			}		
@@ -263,7 +295,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 	
 	// HTTP POST request
 	private void sendPostAddBookmark(String poiId, int userId) throws Exception {
- 
+		log.info("poi ID :" + poiId + " ; user ID : " + String.valueOf(userId));
 		if (!poiId.equals("") && userId != 0) {
 			String url = jsonUrl + "/bookmarks/";
 			 
@@ -272,6 +304,8 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 	 
 			// add header		
 			post.addHeader("Content-Type", "application/json");
+			post.addHeader("Authentication-Token", getSessionAttribute("authenticationToken", String.class));
+			
 			
 			String userUrl = jsonUrl + "/users/" + userId;
 			String poiUrl = jsonUrl + "/pois/" + poiId;
@@ -280,7 +314,8 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 	 
 			post.setEntity(input);
 	 
-			client.execute(post);
+			HttpResponse response = client.execute(post);
+			
 		}
 	}
 	

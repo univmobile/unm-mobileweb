@@ -10,7 +10,7 @@
 		<servlet-class>fr.univmobile.mobileweb.UnivMobileServlet</servlet-class>
 		<init-param>
 			<param-name>baseURL</param-name>
-			<param-value>http://localhost:8380/unm-mobileweb/</param-value>
+			<param-value>http://localhost:8080/unm-mobileweb/</param-value>
 		</init-param>
 		<init-param>
 			<param-name>inject:File ref:dataDirRegions</param-name>

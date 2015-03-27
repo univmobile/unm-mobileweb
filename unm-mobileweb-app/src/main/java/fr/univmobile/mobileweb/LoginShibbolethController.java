@@ -11,6 +11,9 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 
 import fr.univmobile.backend.client.AppToken;
 import fr.univmobile.backend.client.ClientException;
@@ -83,7 +86,14 @@ public class LoginShibbolethController extends AsbtractMobileWebJspController {
 				// Valid login
 				log.info("Login successfull for user of id : " + appToken.getUser().getUid());
 				
-				User currentUser = restTemplate().getForObject(jsonUrl + "/users/ " + appToken.getUser().getUid(), User.class);
+				log.info(jsonUrl + "/users/" + appToken.getUser().getUid());
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.add("Authentication-Token", appToken.getId());
+				HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+				
+				User currentUser = restTemplate().exchange(jsonUrl + "/users/" + appToken.getUser().getUid(), HttpMethod.GET, entity, User.class).getBody();
+				
 				if (currentUser != null) {
 					setSessionAttribute("currentUser", currentUser);
 				}

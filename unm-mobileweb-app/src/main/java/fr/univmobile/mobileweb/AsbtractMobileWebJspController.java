@@ -65,7 +65,7 @@ public abstract class AsbtractMobileWebJspController extends
 	
 	private HashMap<Integer, String> predefinedMenusMap;
 	
-	public void setUniversity(University newUniversity) {
+	private void setUniversity(University newUniversity) {
 		University currentUniversity = getUniversity();
 		if (currentUniversity != null && currentUniversity != newUniversity) {
 			//when university is changed, menuContainer must be recreated

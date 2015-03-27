@@ -3,6 +3,9 @@ package fr.univmobile.mobileweb;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 import fr.univmobile.mobileweb.models.Bookmark;
@@ -59,7 +62,12 @@ public class BookmarksController extends AsbtractMobileWebJspController {
 			
 			// Get the list of bookmarks
 			RestTemplate template = restTemplate();
-			BookmarkEmbedded bookmarksContainer = template.getForObject(jsonUrl + "/users/" + userId + "/bookmarks", BookmarkEmbedded.class);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Authentication-Token", getSessionAttribute("authenticationToken", String.class));
+			HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+				
+			BookmarkEmbedded bookmarksContainer = restTemplate().exchange(jsonUrl + "/users/" + userId + "/bookmarks", HttpMethod.GET, entity, BookmarkEmbedded.class).getBody();
 			Bookmark[] bookmarksList = null;
 			if (bookmarksContainer._embedded != null) {
 				//must be prevented somewhere else, because if bookmarks do not exist the view gonna be empty

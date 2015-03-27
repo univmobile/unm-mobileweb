@@ -12,6 +12,8 @@ public class University {
 	private Double centralLat;
 	private Double centralLng;
 	
+	private boolean crous;
+	
 	public int getId() {
 		return id;
 	}
@@ -38,6 +40,10 @@ public class University {
 
 	public Double getCentralLng() {
 		return centralLng;
+	}
+
+	public boolean isCrous() {
+		return crous;
 	}
 	
 }

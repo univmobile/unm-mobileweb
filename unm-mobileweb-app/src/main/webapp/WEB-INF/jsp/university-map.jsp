@@ -93,7 +93,7 @@
 			$('#map-canvas').height(mapHeight);
 			$('#poiCategoriesFilter').css('max-height', mapHeight + 'px');
 			var mapOptions = {
-				center: { lat: ${university.centralLat}, lng: ${university.centralLng} }, //Paris
+				center: { lat: ${university.centralLat}, lng: ${university.centralLng} },
 				zoom: 18
 		    };
 		    window.map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -148,7 +148,7 @@
 				$('.poi-wrap .body').append('<p>'+markerItem.descriptionPOI+'</p>');
 			}
 			if (markerItem.website) {
-				$('.poi-wrap .body').append('<p><strong>Site web : </strong> '+markerItem.website+'</p>');
+				$('.poi-wrap .body').append('<p><strong>Site web : </strong> <a href="' + markerItem.website + '" target="blank">' + markerItem.website + '</a></p>');
 			}
 			if (markerItem.publicWelcome) {
 				$('.poi-wrap .body').append('<p><strong>Public accueillis : </strong> '+markerItem.publicWelcome+'</p>');
@@ -173,10 +173,10 @@
 			$('#addressPOI').append(markerItem.addressPOI);
 
 			$('#phonePOI').empty();
-			$('#phonePOI').append(markerItem.phonesPOI);
+			$('#phonePOI').append('<a href="tel:' + markerItem.phonesPOI  + '">' + markerItem.phonesPOI + '</a>');
 
 			$('#emailPOI').empty();
-			$('#emailPOI').append(markerItem.emailPOI);
+			$('#emailPOI').append('<a href="mailto:' + markerItem.emailPOI + '">' + markerItem.emailPOI + '</a>');
 
 			if (markerItem.categoryIdPOI == "${restaurationUniversitaireCategoryId}") {
 				$('#menuTab').show();
