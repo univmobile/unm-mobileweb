@@ -172,7 +172,8 @@
 		var east = new google.maps.geometry.spherical.computeOffset(mapCenter, imageWidth/2, 90); 
 		var west  = new google.maps.geometry.spherical.computeOffset(mapCenter, imageWidth/2, 270); 
 		var southWest = new google.maps.LatLng(south.lat(), west.lng());
-		var northEast = new google.maps.LatLng(north.lat(), east.lng())
+		var northEast = new google.maps.LatLng(north.lat(), east.lng());
+		var selectedMarker = null;
 		
 	    var imageBounds = new google.maps.LatLngBounds(
 	        southWest,
@@ -239,6 +240,10 @@
 		google.maps.event.addListener(marker, 'click', function() {
 			openPoi(this);
 		});
+		
+		<c:if test="${imageMap.selectedPoi.id == poiItem.id}">
+		selectedMarker = marker;
+		</c:if>
 
 		markersTemp.push(marker);
 		</c:forEach>
@@ -256,7 +261,11 @@
 	            return; 
 	        }   
 	        map.panTo(lastValidCenter);
-	    });  
+	    });
+		
+		if (selectedMarker != null) {
+			openPoi(selectedMarker);
+		}
 	  }
 
 	  function addOverlay() {
