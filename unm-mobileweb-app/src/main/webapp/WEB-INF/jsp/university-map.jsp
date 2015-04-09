@@ -178,7 +178,7 @@
 			}
 			
 			$('#phonePOI').empty();
-			$('#phonePOI').append(markerItem.phonesPOI);
+			$('#phonePOI').append('<a href="tel:' + markerItem.phonesPOI + '"> ' + markerItem.phonesPOI + '</a>');
 			if (markerItem.phonesPOI) {
 				$('#phoneContainer').show();
 			} else {
@@ -186,13 +186,13 @@
 			}
 			
 			$('#emailPOI').empty();
-			$('#emailPOI').append(markerItem.emailPOI);
+			$('#emailPOI').append('<a href="mailto:' + markerItem.emailPOI + '"> ' + markerItem.emailPOI + '</a>');
 			if (markerItem.emailPOI) {
 				$('#emailContainer').show();
 			} else {
 				$('#emailContainer').hide();
 			}
-
+			
 			if (markerItem.categoryIdPOI == "${restaurationUniversitaireCategoryId}") {
 				$('#menuTab').show();
 				$('#menu').show();
