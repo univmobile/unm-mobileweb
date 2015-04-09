@@ -47,7 +47,8 @@
                 </div>
                 <div class="form-info"><p>Champs obligatoires*</p></div>
             </div>
-            <button class="btn confirm long-button center-block" type="submit">Valider</button>
+            <button class="btn confirm long-button center-block" type="submit"
+            	<c:if test="${currentUser == null}">onclick="javascript:return inviteToLogin('Vous devez vous connecter pour pouvoir poster un bon plan.');"</c:if>>Valider</button>
         </form>
     </div>
 </div>

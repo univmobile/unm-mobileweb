@@ -49,7 +49,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 	public View action() throws IOException {
 		
 		final SelectedUniversity selected = getHttpInputs(SelectedUniversity.class);
-
+		
 		if (selected.isHttpValid()) {
 
 			final String univ = selected.univ();
@@ -63,6 +63,15 @@ public class HomeController extends AsbtractMobileWebJspController {
 			usage.setSource("W");
 			usage.setUniversity(jsonUrl + "/universities/" + univ);
 			restTemplate().postForObject(jsonUrl + "/usageStats", usage, Object.class);
+		}
+		
+		final ChangeUniversityRequested changeUniversity = getHttpInputs(ChangeUniversityRequested.class);
+		
+		if (changeUniversity.isHttpValid() && changeUniversity.changeUniv().equals("true")) {
+			// The user asked to change the university
+			removeSessionAttribute("univ");
+			sendRedirect(getBaseURL());
+			return null;
 		}
 		
 		//a.k.a. if(getUniversity() == null)
@@ -206,6 +215,14 @@ public class HomeController extends AsbtractMobileWebJspController {
 		@HttpRequired
 		@HttpParameter(trim = true)
 		String poi();
+	}
+	
+	private interface ChangeUniversityRequested extends HttpInputs {
+		
+		@HttpRequired
+		@HttpParameter(trim = true)
+		String changeUniv();
+		
 	}
 	
 	private interface WebMapRequested extends HttpInputs {

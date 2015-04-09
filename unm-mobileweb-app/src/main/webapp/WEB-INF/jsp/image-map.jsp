@@ -122,13 +122,28 @@
 			}
 			
 			$('#addressPOI').empty();
-			$('#addressPOI').append(markerItem.addressPOI);
-
+			$('#addressPOI').append('<a href="https://maps.google.fr/maps?q=' + encodeURIComponent(markerItem.addressPOI) + '" target="blank"> ' + markerItem.addressPOI + '</a>');
+			if (markerItem.addressPOI) {
+				$('#addressContainer').show();
+			} else {
+				$('#addressContainer').hide();
+			}
+			
 			$('#phonePOI').empty();
-			$('#phonePOI').append('<a href="tel:' + markerItem.phonesPOI  + '">' + markerItem.phonesPOI + '</a>');
-
+			$('#phonePOI').append(markerItem.phonesPOI);
+			if (markerItem.phonesPOI) {
+				$('#phoneContainer').show();
+			} else {
+				$('#phoneContainer').hide();
+			}
+			
 			$('#emailPOI').empty();
-			$('#emailPOI').append('<a href="mailto:' + markerItem.emailPOI + '">' + markerItem.emailPOI + '</a>');
+			$('#emailPOI').append(markerItem.emailPOI);
+			if (markerItem.emailPOI) {
+				$('#emailContainer').show();
+			} else {
+				$('#emailContainer').hide();
+			}
 
 			if (markerItem.categoryIdPOI == "${restaurationUniversitaireCategoryId}") {
 				$('#menuTab').show();

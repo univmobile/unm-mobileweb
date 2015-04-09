@@ -1121,7 +1121,8 @@ form.add-poi .confirm {
   .poi-screen .poi-info {
     padding: 10px;
     padding-left: 70px;
-    padding-right: 20px; }
+    padding-right: 20px;
+    min-height: 70px; }
     .category-one .poi-screen .poi-info {
       background-color: #ffb103; }
     .category-two .poi-screen .poi-info {
@@ -1347,3 +1348,9 @@ form.add-poi .confirm {
         border-bottom: medium none; }
 
 .user-nav div.notifications a { top:-50%; position:relative;}
+
+#dataConfirmModal { color : #000000;}
+#dataConfirmModal .modal-body { padding: 30px;}
+#dataConfirmactionModal { color : #000000;}
+#dataConfirmactionModal .modal-body { padding: 30px;}
+#univHeader .universite-name a, #univHeader .universite-name a:visited, .poi-info a, .poi-info a:visited  { color: #ffffff;}

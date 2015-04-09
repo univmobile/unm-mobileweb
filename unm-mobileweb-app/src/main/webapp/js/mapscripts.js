@@ -1,3 +1,12 @@
+function inviteToLogin(message) {
+	if ($('#dataConfirmModal')) {
+		$('#dataConfirmModal').remove();
+	}
+	$('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Merci de vous connecter</h3></div><div class="modal-body">'+message+'</div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">OK</button></div></div></div></div>');	
+	$('#dataConfirmModal').modal({show:true});
+	return false;
+}
+
 function displayAllMarkers(map) {
 	for (var i = 0; i < markers.length; i++) {
 		markers[i].setMap(map);
@@ -10,7 +19,10 @@ function removeAllMarkers() {
 	}
 }
 
-function displayMarkers(map, categoryId) {	
+function displayMarkers(map, categoryId) {
+	if ($("#poiCategoriesFilter button.active").length == 1) {
+		removeAllMarkers();
+	}
 	for (var i = 0; i < markers.length; i++) {
 		if (categoryId == markers[i].categoryIdPOI) {
 			markers[i].setMap(map);
@@ -19,16 +31,21 @@ function displayMarkers(map, categoryId) {
 }
 
 function removeMarkers(categoryId) {
+	// If no category is selected, we display all the markers
+	var noSelectedCategory = ($("#poiCategoriesFilter button.active").length == 0);
 	for (var i = 0; i < markers.length; i++) {
-		if (categoryId == markers[i].categoryIdPOI) {
-			markers[i].setMap(null);
+		if (noSelectedCategory) {
+			markers[i].setMap(map);
+		} else {
+			if (categoryId == markers[i].categoryIdPOI) {
+				markers[i].setMap(null);
+			}
 		}
 	}
 }
 
 function refreshPois(categoryId, status) {
-	
-	if (status == true) {
+	if (status == false) {
 		removeMarkers(categoryId)		
 	} else {
 		displayMarkers(map, categoryId)

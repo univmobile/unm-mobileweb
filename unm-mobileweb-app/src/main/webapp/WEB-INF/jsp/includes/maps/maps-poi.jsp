@@ -14,17 +14,17 @@
             <button class="btn show-hide-poi hide-poi"><i class="icon text-hide"></i></button>
         </div>
         <div class="poi-info">
-        	<c:if test="${not empty currentUser}">
-	        	<form id="add-bookmark" class="add-bookmark" method="post">
-		        	<div style="position: absolute;  left:-1px;">
-		        		<input id="poiIdInputFieldForBookmark" type="hidden" name="poiIdBookmark">
-		        		<button type="submit" style="font-size:10px; color:black">Bookmark</button>
-		        	</div>
-	        	</form>
-        	</c:if>
-            <address><i class="fa fa-map-marker fa-fw"></i><span id="addressPOI"></span></address>
-            <div class="phone"><i class="fa fa-phone fa-fw"></i><span id="phonePOI"></span></div>
-            <div class="email"><i class="fa fa-envelope fa-fw"></i><span id="emailPOI"></span></div>
+			<form id="add-bookmark" class="add-bookmark" method="post">
+				<div style="position: absolute; left: -1px;">
+					<input id="poiIdInputFieldForBookmark" type="hidden"
+						name="poiIdBookmark">
+					<button type="submit" style="font-size: 10px; color: black"
+						<c:if test="${currentUser == null}">onclick="javascript:return inviteToLogin('Vous devez vous connecter pour pouvoir ajouter un bookmark.');"</c:if>>Bookmark</button>
+				</div>
+			</form>
+			<address id="addressContainer"><i class="fa fa-map-marker fa-fw"></i><span id="addressPOI"></span></address>
+            <div class="phone" id="phoneContainer"><i class="fa fa-phone fa-fw"></i><span id="phonePOI"></span></div>
+            <div class="email" id="emailContainer"><i class="fa fa-envelope fa-fw"></i><span id="emailPOI"></span></div>
         </div>
         <div id="poiTabPanel" class="tabpanel" role="tabpanel">
             <ul id="poiTabs" class="nav nav-tabs" role="tablist">
@@ -45,17 +45,16 @@
                 		<div class="alert alert-danger alert-message" role="alert">${statusFail}</div>
                 	</c:if>
                     <ul id="commentsList" class="comments-list"></ul>
-                    <c:if test="${currentUser != null}">
 	                    <div class="new-comment-wrap">
 	                        <form id="new-comment" class="new-comment" method="post">
 	                            <div class="form-group comment-field">
 	                                <textarea name="commentMessage" class="form-control" rows="6" placeholder=""></textarea>
 	                                <input id="poiIdInputField" type="hidden" name="poiId">
 	                            </div>
-	                            <button type="submit" class="btn long-button submit center-block">Valider</button>
+	                            <button type="submit" class="btn long-button submit center-block"
+	                            	<c:if test="${currentUser == null}">onclick="javascript:return inviteToLogin('Vous devez vous connecter pour pouvoir poster un commentaire.');"</c:if>>Valider</button>
 	                        </form>
 	                    </div>
-                    </c:if>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="menu">
                 	<span id="emptyString" style="padding: 10px">vide</span>

@@ -16,9 +16,7 @@
                 <jsp:include page="includes/maps/maps-search.jsp" />
                 <div class="main-container container">
                     <div class="map" style="height:${mapHeight};" id="map-canvas"></div>
-                    <c:if test="${currentUser != null}">
-                    	<jsp:include page="includes/maps/addpoi.jsp" />
-                    </c:if>
+                   	<jsp:include page="includes/maps/addpoi.jsp" />
                     <jsp:include page="includes/maps/maps-poi.jsp" />
                     <div class="category-wrap">
                         <div class="list-wrap">
@@ -29,7 +27,7 @@
                             <ul class="category-list row">
                                 <c:forEach var="categoryItem" items="${allCategories}" varStatus="loop">
 	                           		<li class="list-item">                                
-	                                   <button id="category-btn-${categoryItem.id}" class="btn category-btn active" onClick="refreshPois('${categoryItem.id}',$(this).hasClass('active'))">
+	                                   <button id="category-btn-${categoryItem.id}" class="btn category-btn" onClick="$(this).toggleClass('active'); refreshPois('${categoryItem.id}',$(this).hasClass('active'));">
 	                                       <c:if test="${not empty categoryItem.activeIconUrl}">
 												<img class="icon" id="inactive-category-btn-${categoryItem.id}" src="${categoriesIconsUrl}${categoryItem.activeIconUrl}" alt="" style="background-image: none;">
 										   </c:if>
@@ -135,16 +133,54 @@
 		$('.poi-wrap .title').append(markerItem.namePOI);
 		
 		$('.poi-wrap .body').empty();
-		$('.poi-wrap .body').append(markerItem.descriptionPOI);
+		if (markerItem.descriptionPOI) {
+			$('.poi-wrap .body').append('<p>'+markerItem.descriptionPOI+'</p>');
+		}
+		if (markerItem.website) {
+			$('.poi-wrap .body').append('<p><strong>Site web : </strong> <a href="' + markerItem.website + '" target="blank">' + markerItem.website + '</a></p>');
+		}
+		if (markerItem.publicWelcome) {
+			$('.poi-wrap .body').append('<p><strong>Public accueillis : </strong> '+markerItem.publicWelcome+'</p>');
+		}
+		if (markerItem.disciplines) {
+			$('.poi-wrap .body').append('<p><strong>Disciplines : </strong> '+markerItem.disciplines+'</p>');
+		}
+		if (markerItem.openingHours) {
+			$('.poi-wrap .body').append('<p><strong>Horaires et jours d\'ouverture : </strong> '+markerItem.openingHours+'</p>');
+		}
+		if (markerItem.closingHours) {
+			$('.poi-wrap .body').append('<p><strong>Horaires et jours de fermeture : </strong> '+markerItem.closingHours+'</p>');
+		}
+		if (markerItem.floorPOI) {
+			$('.poi-wrap .body').append('<p><strong>Emplacement : </strong> '+markerItem.floorPOI+'</p>');
+		}
+		if (markerItem.itinerary) {
+			$('.poi-wrap .body').append('<p><strong>Accès : </strong> '+markerItem.itinerary+'</p>');
+		}
 		
 		$('#addressPOI').empty();
-		$('#addressPOI').append(markerItem.addressPOI);
+		$('#addressPOI').append('<a href="https://maps.google.fr/maps?q=' + encodeURIComponent(markerItem.addressPOI) + '" target="blank"> ' + markerItem.addressPOI + '</a>');
+		if (markerItem.addressPOI) {
+			$('#addressContainer').show();
+		} else {
+			$('#addressContainer').hide();
+		}
 		
 		$('#phonePOI').empty();
 		$('#phonePOI').append(markerItem.phonesPOI);
+		if (markerItem.phonesPOI) {
+			$('#phoneContainer').show();
+		} else {
+			$('#phoneContainer').hide();
+		}
 		
 		$('#emailPOI').empty();
 		$('#emailPOI').append(markerItem.emailPOI);
+		if (markerItem.emailPOI) {
+			$('#emailContainer').show();
+		} else {
+			$('#emailContainer').hide();
+		}
 		
 		if (markerItem.categoryIdPOI == "${restaurationUniversitaireCategoryId}") {
 			$('#menuTab').show();

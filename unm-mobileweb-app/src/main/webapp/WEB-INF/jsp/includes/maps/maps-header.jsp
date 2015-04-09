@@ -29,7 +29,7 @@
 	        	</c:otherwise>
 	        </c:choose>   
 	    <div class="universite-name">
-	        ${university.title}
+	        <a href="./?changeUniv=true" data-confirm="Êtes-vous sûr de vouloir changer d'Université ?">${university.title}</a>
 	    </div>
 	    <div class="notifications">
 	    	<a href="notifications">
