@@ -11,10 +11,18 @@
 function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
 }
-setTimeout(function() {
-  window.location = "http://univmobile-dev.univ-paris1.fr/unm-mobileweb/?im="+getURLParameter('im')+"&poi="+getURLParameter('poi')+"&web=1";
-}, 700);
-window.location = "univmobile://?ID="+getURLParameter('im')+"&poiID="+getURLParameter('poi');
+var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod');
+var isAndroid = navigator.userAgent.match('Android');
+if (isiOS || isAndroid) { 
+	setTimeout(function() {
+	    window.location = "http://univmobile-dev.univ-paris1.fr/unm-mobileweb/?im="+getURLParameter('im')+"&poi="+getURLParameter('poi')+"&web=1";
+		//window.location = "http://localhost:8080/unm-mobileweb/?im="+getURLParameter('im')+"&poi="+getURLParameter('poi')+"&web=1";
+	}, 700);
+	window.location = "univmobile://?im="+getURLParameter('im')+"&poi="+getURLParameter('poi');
+} else {
+	window.location = "http://univmobile-dev.univ-paris1.fr/unm-mobileweb/?im="+getURLParameter('im')+"&poi="+getURLParameter('poi')+"&web=1";
+	//window.location = "http://localhost:8080/unm-mobileweb/?im="+getURLParameter('im')+"&poi="+getURLParameter('poi')+"&web=1";
+}
 </script>
 </body>
 </html>

@@ -12,6 +12,7 @@ import fr.univmobile.backend.client.RegionClient;
 import fr.univmobile.backend.client.SessionClient;
 import fr.univmobile.mobileweb.models.Category;
 import fr.univmobile.mobileweb.models.CategoryEmbedded;
+import fr.univmobile.mobileweb.models.Menu;
 import fr.univmobile.mobileweb.models.News;
 import fr.univmobile.mobileweb.models.NewsEmbedded;
 import fr.univmobile.mobileweb.models.Poi;
@@ -26,9 +27,10 @@ import fr.univmobile.web.commons.HttpMethods;
 import fr.univmobile.web.commons.HttpParameter;
 import fr.univmobile.web.commons.HttpRequired;
 import fr.univmobile.web.commons.Paths;
+import fr.univmobile.web.commons.UnivMobileHttpUtils;
 import fr.univmobile.web.commons.View;
 
-@Paths({ "" })
+@Paths({ "", "api/imagemap" })
 public class HomeController extends AsbtractMobileWebJspController {
 
 	public HomeController(final String jsonUrl, String universiteCategoryId, final String apiKey,
@@ -36,7 +38,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 
 		this.jsonUrl = jsonUrl;
 		this.universiteCategoryId = universiteCategoryId;
-		this.categoriesIconsUrl = "http://univmobile-dev.univ-paris1.fr/testSP/files/categoriesicons/";
+		this.categoriesIconsUrl = "http://univmobile-dev.univ-paris1.fr/admin/files/categoriesicons/";
 	}
 
 	private final String jsonUrl;
@@ -49,6 +51,26 @@ public class HomeController extends AsbtractMobileWebJspController {
 	public View action() throws IOException {
 		
 		final SelectedUniversity selected = getHttpInputs(SelectedUniversity.class);
+		
+		String uriPath = UnivMobileHttpUtils
+				.extractUriPath(checkedRequest());
+		
+		final MapRequested mapRequested = getHttpInputs(MapRequested.class);
+		final WebMapRequested webMapRequested = getHttpInputs(WebMapRequested.class);
+
+		if (uriPath.equals("api/imagemap") && mapRequested.isHttpValid()) {
+			sendRedirect(getBaseURL()+"/?im="+mapRequested.im()+"&poi="+mapRequested.poi());
+			return null;
+		}
+
+		if (webMapRequested.isHttpValid()) {
+			
+			sendRedirect(getBaseURL()+"/image-map?im="+webMapRequested.im()+"&poi="+webMapRequested.poi());
+			return null;
+		} else if (mapRequested.isHttpValid()) {
+			return new View("mapRequested.jsp");
+		}
+		
 		
 		if (selected.isHttpValid()) {
 
@@ -95,7 +117,37 @@ public class HomeController extends AsbtractMobileWebJspController {
 			setAttribute("universityLogo", getUniversityLogo());
 			setAttribute("university", getUniversity());
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
-			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
+			Menu[] auMenus = getMenuItems(jsonUrl, "AU");
+			setAttribute("menuAU", auMenus);
+			setAttribute("isActUniv", Boolean.FALSE);
+			if (auMenus != null) {
+				for (Menu auMenu : auMenus) {
+					if (auMenu.getId() == 49) {
+						setAttribute("isActUniv", Boolean.TRUE);
+						break;
+					}
+				}
+			}
+			Menu[] ttMenus = getMenuItems(jsonUrl, "TT");
+			setAttribute("menuTT", ttMenus);
+			int nbTTMenus = 0;
+			if (ttMenus != null) {
+				for (Menu ttMenu : ttMenus) {
+					if (ttMenu.getId() == 20) {
+						setAttribute("isUnivMap", Boolean.TRUE);
+						nbTTMenus++;
+					}
+					if (ttMenu.getId() == 21) {
+						setAttribute("isParisMap", Boolean.TRUE);
+						nbTTMenus++;
+					}
+					if (ttMenu.getId() == 22) {
+						setAttribute("isBB", Boolean.TRUE);
+						nbTTMenus++;
+					}
+				}
+			}
+			setAttribute("nbTTMenus", nbTTMenus);
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
 			setAttribute("currentAbsolutePath", getAbsolutePath());
 			
@@ -104,28 +156,11 @@ public class HomeController extends AsbtractMobileWebJspController {
 			setAttribute("mapUrl", generateMapUrl(getUniversity()));
 			setAttribute("isIDF", getUniversity().getRegionId() == 1);
 
-			final WebMapRequested mapRequested = getHttpInputs(WebMapRequested.class);
 
-			if (mapRequested.isHttpValid()) {
-				sendRedirect(getBaseURL()+"/image-map?im="+mapRequested.im()+"&poi="+mapRequested.poi());
-				return null;
-			}
 			
 			return new View("home.jsp");
 		} else {
 
-			final MapRequested mapRequested = getHttpInputs(MapRequested.class);
-
-			if (mapRequested.isHttpValid()) {
-				
-				final WebMapRequested webMapRequested = getHttpInputs(WebMapRequested.class);
-				
-				if (!webMapRequested.isHttpValid() || !webMapRequested.web().trim().equals("1")) {
-					return new View("mapRequested.jsp");
-				}
-				
-			}
-		
 		
 			// Get the list of region
 			RestTemplate template = restTemplate();
@@ -136,7 +171,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 			int i = 0;
 			for (Region region : regionContainer._embedded.getRegions()) {
 				i++;
-				UniversityEmbedded universityContainer = template.getForObject(jsonUrl + "/regions/" + i/*region.getId()*/ + "/universities", UniversityEmbedded.class);
+				UniversityEmbedded universityContainer = template.getForObject(jsonUrl + "/universities/search/findAllActiveWithoutCrousByRegion?regionId=" + region.getId(), UniversityEmbedded.class);
 				region.setUniversities(universityContainer._embedded.getUniversities());
 			}
 			

@@ -68,6 +68,7 @@ public class MenuContentController extends AsbtractMobileWebJspController {
 			//menu attributes
 			setAttribute("universityLogo", getUniversityLogo());
 			setAttribute("university", getUniversity());
+			setAttribute("menuAU", getMenuItems(jsonUrl, "AU"));
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));

@@ -40,16 +40,15 @@
 		        </ul>
 		    </li>
 	    </c:if>
-	    <li class="menu-item two dropdown">
-	        <a class="dropdown-toggle" role="button" href="news">Act'Universitaire<span class="menu-item-icon"><i class="icon"></i></span></a>
-	        <!--
-	        <ul class="dropdown-menu" role="menu">
-	            <li><a href="#">Menu 1</a></li>
-	            <li><a href="#">Menu 2</a></li>
-	            <li><a href="#">Menu 3</a></li>
-	        </ul>
-	        -->
-	    </li>
+	    <c:if test="${fn:length(menuAU) != 0}">
+		    <li class="menu-item two dropdown">
+		            <c:forEach var="menuItem" items="${menuAU}">
+		        		<c:if test="${menuItem.id == 49}">
+					        <a class="dropdown-toggle" role="button" href="${menuItem.url}">${menuItem.name}<span class="menu-item-icon"><i class="icon"></i></span></a>
+						</c:if>
+					</c:forEach>
+		    </li>
+	    </c:if>
 	    <c:if test="${fn:length(menuTT) != 0}">
 		    <li class="menu-item three dropdown">
 		        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Tou'Trouver<span class="menu-item-icon"><i class="icon"></i></span></a>

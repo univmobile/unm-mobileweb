@@ -11,8 +11,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import fr.univmobile.mobileweb.models.ImageMap;
+import fr.univmobile.mobileweb.models.Menu;
 import fr.univmobile.mobileweb.models.Poi;
 import fr.univmobile.mobileweb.models.PoiEmbedded;
+import fr.univmobile.mobileweb.models.University;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
 import fr.univmobile.web.commons.HttpParameter;
@@ -24,7 +26,7 @@ import fr.univmobile.web.commons.View;
 public class ImageMapController extends AsbtractMobileWebJspController {
 
 	protected final String jsonUrl;
-	protected final String imagesMapsBaseUrl = "http://univmobile-dev.univ-paris1.fr/testSP/files/imagemaps/";
+	protected final String imagesMapsBaseUrl = "http://univmobile-dev.univ-paris1.fr/admin/files/imagemaps/";
 	
 	private static final Log log = LogFactory
 			.getLog(ImageMapController.class);
@@ -35,15 +37,31 @@ public class ImageMapController extends AsbtractMobileWebJspController {
 	
 	@Override
 	public View action() throws Exception {
-		if (!hasSessionAttribute("univ")) {		
-
-			sendRedirect(getBaseURL()+"/");
-			return null;
-		}  else {
 			MapRequested mapRequested = getHttpInputs(MapRequested.class);
 			if (mapRequested.isHttpValid()) {
 				Long mapId = Long.parseLong(mapRequested.im());
 				Long selectedPoiId = Long.parseLong(mapRequested.poi());
+				
+				// try to get the poi
+				Poi poi = restTemplate().getForObject(jsonUrl + "/pois/" + selectedPoiId, Poi.class);
+				
+				if (poi != null && poi.getId() == selectedPoiId.longValue()) {
+					int universityId = poi.getUniversityId();
+					if (universityId > 0) {
+						boolean selectUniversity = true;
+						if (hasSessionAttribute("univ")) {
+							University selectedUniv = getSessionAttribute("univ", University.class);
+							if (selectedUniv.getId() == universityId) {
+								// The selected university is the correct one, nothing to do...
+								selectUniversity = false;
+							}
+						}
+						if (selectUniversity) {
+							setUniversity(jsonUrl, universityId);
+						}
+					}
+				}
+
 				
 				// Get the information of the map :
 				ImageMap map = restTemplate().getForObject(jsonUrl + "/imageMaps/" + String.valueOf(mapId), ImageMap.class);
@@ -51,9 +69,9 @@ public class ImageMapController extends AsbtractMobileWebJspController {
 				// Get the list of Pois :
 				PoiEmbedded embedded = restTemplate().getForObject(jsonUrl + "/imageMaps/" + String.valueOf(mapId) + "/pois", PoiEmbedded.class);
 				map.setPois(Arrays.asList(embedded._embedded.getPois()));
-				for (Poi poi : map.getPois()) {
-					if (poi.getId() == selectedPoiId) {
-						map.setSelectedPoi(poi);
+				for (Poi poiM : map.getPois()) {
+					if (poiM.getId() == selectedPoiId) {
+						map.setSelectedPoi(poiM);
 					}
 				}
 				
@@ -67,7 +85,30 @@ public class ImageMapController extends AsbtractMobileWebJspController {
 				setAttribute("universityLogo", getUniversityLogo());
 				setAttribute("university", getUniversity());
 				setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
-				setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
+				setAttribute("menuAU", getMenuItems(jsonUrl, "AU"));
+				Menu[] ttMenus = getMenuItems(jsonUrl, "TT");
+				setAttribute("menuTT", ttMenus);
+				int nbTTMenus = 0;
+				setAttribute("isUnivMap", Boolean.FALSE);
+				setAttribute("isParisMap", Boolean.FALSE);
+				setAttribute("isBB", Boolean.FALSE);
+				if (ttMenus != null) {
+					for (Menu ttMenu : ttMenus) {
+						if (ttMenu.getId() == 20) {
+							setAttribute("isUnivMap", Boolean.TRUE);
+							nbTTMenus++;
+						}
+						if (ttMenu.getId() == 21) {
+							setAttribute("isParisMap", Boolean.TRUE);
+							nbTTMenus++;
+						}
+						if (ttMenu.getId() == 22) {
+							setAttribute("isBB", Boolean.TRUE);
+							nbTTMenus++;
+						}
+					}
+				}
+				setAttribute("nbTTMenus", nbTTMenus);
 				setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
 				setAttribute("currentAbsolutePath", getAbsolutePath());
 				
@@ -79,7 +120,6 @@ public class ImageMapController extends AsbtractMobileWebJspController {
 				setAttribute("isIDF", getUniversity().getRegionId() == 1);
 				return new View("image-map.jsp");
 			}
-		}
 		sendRedirect(getBaseURL()+"/");
 		return null;
 	}

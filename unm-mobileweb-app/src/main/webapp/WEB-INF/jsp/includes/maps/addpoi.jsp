@@ -32,6 +32,10 @@
                             <i class="fa fa-map-marker fa-fw"></i>
                             <input type="text" class="form-control" id="InputAddress" placeholder="Adresse *" name="poiAddress" required>
                         </div>
+                        <div class="form-group address">
+                            <i class="fa fa-map-marker fa-fw"></i>
+                            <input type="text" class="form-control" id="InputCity" placeholder="Ville *" name="poiCity" required>
+                        </div>
                         <div class="form-group phone">
                             <i class="fa fa-phone fa-fw"></i>
                             <input type="text" class="form-control" id="InputPhone" placeholder="Numéro de téléphone" name="poiPhone">

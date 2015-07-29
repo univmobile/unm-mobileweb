@@ -1,3 +1,79 @@
+/*!
+    query-string
+    Parse and stringify URL query strings
+    https://github.com/sindresorhus/query-string
+    by Sindre Sorhus
+    MIT License
+*/
+(function () {
+    'use strict';
+    var queryString = {};
+
+    queryString.parse = function (str) {
+        if (typeof str !== 'string') {
+            return {};
+        }
+
+        str = str.trim().replace(/^\?/, '');
+
+        if (!str) {
+            return {};
+        }
+
+        return str.trim().split('&').reduce(function (ret, param) {
+            var parts = param.replace(/\+/g, ' ').split('=');
+            var key = parts[0];
+            var val = parts[1];
+
+            key = decodeURIComponent(key);
+            // missing `=` should be `null`:
+            // http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
+            val = val === undefined ? null : decodeURIComponent(val);
+
+            if (!ret.hasOwnProperty(key)) {
+                ret[key] = val;
+            } else if (Array.isArray(ret[key])) {
+                ret[key].push(val);
+            } else {
+                ret[key] = [ret[key], val];
+            }
+
+            return ret;
+        }, {});
+    };
+
+    queryString.stringify = function (obj) {
+        return obj ? Object.keys(obj).map(function (key) {
+            var val = obj[key];
+
+            if (Array.isArray(val)) {
+                return val.map(function (val2) {
+                    return encodeURIComponent(key) + '=' + encodeURIComponent(val2);
+                }).join('&');
+            }
+
+            return encodeURIComponent(key) + '=' + encodeURIComponent(val);
+        }).join('&') : '';
+    };
+
+    queryString.push = function (key, new_value) {
+    var params = queryString.parse(location.search);
+    if (new_value != null) {
+    	params[key] = new_value;
+    } else {
+    	delete params[key];
+    }
+    var new_params_string = queryString.stringify(params)
+    history.pushState({}, "", window.location.pathname + '?' + new_params_string);
+  }
+
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = queryString;
+    } else {
+        window.queryString = queryString;
+    }
+})();
+
 function inviteToLogin(message) {
 	if ($('#dataConfirmModal')) {
 		$('#dataConfirmModal').remove();
@@ -114,39 +190,71 @@ function appendRestaurantMenu(menuItem) {
 //poi hash
 function checkHash(){
 	$('.show-hide-poi').click(function(){
-		window.location.replace("# ");
+		queryString.push('poi', null);
      });
 	
-	if (window.location.hash) {
-
-		var hash = window.location.hash.substring(1);
-		
-		
-		if (hash == "libraries" && !(typeof librariesCategoryId === 'undefined')) {
-			removeAllMarkers();
-			$('.category-btn').each(function() {
-				if ($(this).attr('id') != "category-btn-"+librariesCategoryId) {
-					$(this).toggleClass('active');
-					
-					$('#active-'+$(this).attr('id')).hide();
-					$('#inactive-'+$(this).attr('id')).show();
-				}				
-			});
-			//display only library pois
-			refreshPois(librariesCategoryId, false);
-		} else {
-			for (var i = 0; i < markers.length; i++) {
-				if (markers[i].idPOI == hash) {
-					openPoi(markers[i]);
-					break;
+	var queryParams = queryString.parse(location.search);
+	var poiId = null;
+	if (queryParams != null) {
+		poiId = queryParams['poi'];
+	}
+	if (poiId != null) {
+			if (poiId == "libraries" && !(typeof librariesCategoryId === 'undefined')) {
+				removeAllMarkers();
+				$('.category-btn').each(function() {
+					if ($(this).attr('id') != "category-btn-"+librariesCategoryId) {
+						$(this).toggleClass('active');
+						
+						$('#active-'+$(this).attr('id')).hide();
+						$('#inactive-'+$(this).attr('id')).show();
+					}				
+				});
+				//display only library pois
+				refreshPois(librariesCategoryId, false);
+			} else {
+				for (var i = 0; i < markers.length; i++) {
+					if (markers[i].idPOI == poiId) {
+						openPoi(markers[i]);
+						break;
+					}
 				}
-			}
-		}	
+			}	
 	}
 }
 
-function addPoiIdHash(poiId) {
-	window.location.replace("#" + poiId);
+function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
+
+function changeUrlParam (param, value, markerItem) {
+    var currentURL = window.location.href+'&';
+    var change = new RegExp('('+param+')=(.*)&', 'g');
+    var newURL = currentURL.replace(change, '$1='+value+'&');
+
+    var markerName = '';
+    if (markerItem != null) {
+    	markerName = markerItem.namePOI;
+    }
+    if (getURLParameter(param) !== null){
+        try {
+            window.history.replaceState(markerItem, markerName, newURL.slice(0, - 1) );
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        var currURL = window.location.href;
+        if (currURL.indexOf("?") !== -1){
+            window.history.replaceState(markerItem, markerName, currentURL.slice(0, - 1) + '&' + param + '=' + value);
+        } else {
+            window.history.replaceState(markerItem, markerName, currentURL.slice(0, - 1) + '?' + param + '=' + value);
+        }
+    }
+}
+
+function addPoiIdHash(poiId, markerItem) {
+	queryString.push("poi", poiId);
+	//changeUrlParam("poi", poiId, markerItem);
+	//window.location.replace("#" + poiId);
 }
 
 //category icons

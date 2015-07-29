@@ -7,6 +7,7 @@ public class PoiJson {
 	private String category;
 	private String university;
 	private String address;
+	private String city;
 	private String description;
 	private String phones;
 	private String email;
@@ -99,6 +100,14 @@ public class PoiJson {
 
 	public void setLng(Double lng) {
 		this.lng = lng;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 	
 }

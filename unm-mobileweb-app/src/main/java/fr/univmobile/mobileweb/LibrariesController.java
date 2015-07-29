@@ -54,6 +54,7 @@ public class LibrariesController extends AsbtractMobileWebJspController {
 			setAttribute("universityLogo", getUniversityLogo());
 			setAttribute("university", getUniversity());
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
+			setAttribute("menuAU", getMenuItems(jsonUrl, "AU"));
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
 			setAttribute("currentAbsolutePath", getAbsolutePath());

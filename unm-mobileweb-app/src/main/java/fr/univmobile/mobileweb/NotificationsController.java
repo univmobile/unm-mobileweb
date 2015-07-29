@@ -47,18 +47,14 @@ public class NotificationsController extends AsbtractMobileWebJspController {
 		}  else {
 			
 			User user = null;
-			if (!hasSessionAttribute("currentUser")) {
-				//redirect to home or previous page
-				sendRedirect(getBaseURL() + "/login?path="+getAbsolutePath());
-				return null;
-			} else {
+			if (hasSessionAttribute("currentUser")) {
 				user = getSessionAttribute("currentUser", User.class);
 				userId = user.getId();
 			}
 			
 			// Get the list of notifications
 			NotificationEmbedded notificationsContainer;
-			if (user.getNotificationsReadDate() != null) {
+			if (user != null && user.getNotificationsReadDate() != null) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ");
 				notificationsContainer = template.getForObject(jsonUrl + "/notifications/search/findNotificationsForUniversitySince?universityId=" + getUniversity().getId() + "&since=" + sdf.format(user.getNotificationsReadDate()) + "&size=200", NotificationEmbedded.class);
 			} else {
@@ -74,7 +70,7 @@ public class NotificationsController extends AsbtractMobileWebJspController {
 			}
 			
 			//set new notification read date for the user
-			if (notificationsList.length > 0) {
+			if (user != null && notificationsList.length > 0) {
 				HttpHeaders headers = new HttpHeaders();
 				headers.add("Authentication-Token", getSessionAttribute("authenticationToken", String.class));
 				HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
@@ -90,6 +86,7 @@ public class NotificationsController extends AsbtractMobileWebJspController {
 			setAttribute("universityLogo", getUniversityLogo());
 			setAttribute("university", getUniversity());
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
+			setAttribute("menuAU", getMenuItems(jsonUrl, "AU"));
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
 			setAttribute("currentAbsolutePath", getAbsolutePath());

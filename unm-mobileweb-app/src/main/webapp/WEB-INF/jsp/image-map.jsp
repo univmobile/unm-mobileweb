@@ -52,14 +52,24 @@
 				<div class="category-wrap">
 					<div class="bottom-buttons" id="univBottomButtons">
 						<div class="category-buttons row">
-                              <c:if test="${not isIDF}">
-								<a href="university-map" class="active category-link one col-xs-12"><i class="icon"></i></a>
-                          	  </c:if>
-                              <c:if test="${isIDF}">
-                                <a href="university-map" class="active category-link one col-xs-4"><i class="icon"></i></a>
-                              	<a href="paris-map" class="category-link two col-xs-4"><i class="icon"></i></a>
-                              	<a href="goodplans-map" class="category-link three col-xs-4"><i class="icon"></i></a>
-                              </c:if>
+							<c:if test="${isUnivMap}">
+								<a href="university-map"
+									class="active category-link one <c:if test="${nbTTMenus == 1}">col-xs-12</c:if><c:if test="${nbTTMenus == 2}">col-xs-6</c:if><c:if test="${nbTTMenus == 3}">col-xs-4</c:if>">
+										<i class="icon"></i>
+								</a>
+							</c:if>
+							<c:if test="${isParisMap}">
+								<a href="paris-map" 
+									class="category-link two <c:if test="${nbTTMenus == 1}">col-xs-12</c:if><c:if test="${nbTTMenus == 2}">col-xs-6</c:if><c:if test="${nbTTMenus == 3}">col-xs-4</c:if>">
+										<i class="icon"></i>
+								</a>
+							</c:if>
+							<c:if test="${isBB}">
+								<a href="goodplans-map" 
+									class="category-link three <c:if test="${nbTTMenus == 1}">col-xs-12</c:if><c:if test="${nbTTMenus == 2}">col-xs-6</c:if><c:if test="${nbTTMenus == 3}">col-xs-4</c:if>">
+										<i class="icon"></i>
+								</a>
+							</c:if>
 						</div>
 					</div>
 				</div>

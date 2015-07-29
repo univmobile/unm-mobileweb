@@ -150,7 +150,7 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			}
 			
 			//get list of all universities
-			UniversityEmbedded universityContainer = template.getForObject(jsonUrl + "/universities/search/findAllByOrderByTitleAsc", UniversityEmbedded.class);
+			UniversityEmbedded universityContainer = template.getForObject(jsonUrl + "/universities/search/findAllActiveWithoutCrousByRegion?regionId=" + getUniversity().getRegionId(), UniversityEmbedded.class);
 			University[] universitiesList = null;
 			if (universityContainer._embedded != null) {
 				//must be prevented somewhere else, because if universites do not exist the view gonna be empty
@@ -164,6 +164,7 @@ public class ProfileController extends AsbtractMobileWebJspController {
 			//menu attributes
 			setAttribute("universityLogo", getUniversityLogo());
 			setAttribute("university", getUniversity());
+			setAttribute("menuAU", getMenuItems(jsonUrl, "AU"));
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
 			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));

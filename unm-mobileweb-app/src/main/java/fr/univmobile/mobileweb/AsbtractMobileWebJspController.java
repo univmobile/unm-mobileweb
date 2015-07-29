@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univmobile.mobileweb.models.Menu;
 import fr.univmobile.mobileweb.models.MenuEmbedded;
 import fr.univmobile.mobileweb.models.University;
+import fr.univmobile.mobileweb.models.UsageStats;
 import fr.univmobile.web.commons.AbstractJspController;
 
 public abstract class AsbtractMobileWebJspController extends
@@ -65,7 +66,13 @@ public abstract class AsbtractMobileWebJspController extends
 	
 	private HashMap<Integer, String> predefinedMenusMap;
 	
-	private void setUniversity(University newUniversity) {
+	protected void setUniversity(String jsonUrl, int universityId) {
+		University univObj = restTemplate().getForObject(jsonUrl + "/universities/" + universityId, University.class);
+
+		setUniversity(jsonUrl, univObj);
+	}
+	
+	private void setUniversity(String jsonUrl, University newUniversity) {
 		University currentUniversity = getUniversity();
 		if (currentUniversity != null && currentUniversity != newUniversity) {
 			//when university is changed, menuContainer must be recreated
@@ -74,6 +81,14 @@ public abstract class AsbtractMobileWebJspController extends
 			}
 		}
 		setSessionAttribute("univ", newUniversity);
+
+		// We track the selected university
+		UsageStats usage = new UsageStats();
+		usage.setSource("W");
+		usage.setUniversity(jsonUrl + "/universities/" + newUniversity.getId());
+		restTemplate().postForObject(jsonUrl + "/usageStats", usage, Object.class);
+
+
 	}
 	
 	/**
@@ -109,35 +124,19 @@ public abstract class AsbtractMobileWebJspController extends
 		if (menus == null) {
 			
 			//menus with university id
-			Menu[] menusWithUniversity = null;
-			MenuEmbedded menuContainerWithUniversity = restTemplate().getForObject(jsonUrl + "/menues/search/findByUniversityOrderByCreatedOnDesc?universityId="+tempUniversity.getId(), MenuEmbedded.class);			
+			MenuEmbedded menuContainerWithUniversity = restTemplate().getForObject(jsonUrl + "/menues/search/findAllForUniversity?universityId="+tempUniversity.getId()+"&size=100", MenuEmbedded.class);			
 			if (menuContainerWithUniversity._embedded != null) {
-				menusWithUniversity = menuContainerWithUniversity._embedded.getMenu();
+				menus = menuContainerWithUniversity._embedded.getMenu();
 			} else {
-				menusWithUniversity = new Menu[0];
-			}
-			
-			//menus without university id
-			Menu[] menusWithoutUniversity = null;
-			MenuEmbedded menuContainerWithoutUniversity = restTemplate().getForObject(jsonUrl + "/menues/search/findByUniversityOrderByCreatedOnDesc?universityId=null", MenuEmbedded.class);
-			if (menuContainerWithoutUniversity._embedded != null) {
-				menusWithoutUniversity = menuContainerWithoutUniversity._embedded.getMenu();
-			} else {
-				menusWithoutUniversity = new Menu[0];
+				menus = new Menu[0];
 			}
 			
 			//join two arrays
-			menus = ArrayUtils.addAll(menusWithUniversity, menusWithoutUniversity);
 			setSessionAttribute("menus", menus);
 		}
 
 		//if at least one menu item exists
-		if (menus.length > 0) {
-			return filterMenuByGrouping(menus, grouping);
-		} else {
-			//must return empty array, because null cannot be set to attribute so it should be validated by attribute.length instead
-			return new Menu[0];
-		}
+		return filterMenuByGrouping(menus, grouping);
 	}
 	
 	private Menu[] filterMenuByGrouping(Menu[] menu, String grouping) {
@@ -147,17 +146,17 @@ public abstract class AsbtractMobileWebJspController extends
 			if (menuItem.getGrouping().equals(grouping)) {
 				changePredefinedMenuUrl(menuItem);
 				// Paris API and the "Bons plans are only displayed for"
-				if ( (menuItem.getId() == 21 || menuItem.getId() == 22) && getUniversity().getRegionId() == 1 ||  menuItem.getId() != 21 && menuItem.getId() != 22) {
+				//if ( (menuItem.getId() == 21 || menuItem.getId() == 22) && getUniversity().getRegionId() == 1 ||  menuItem.getId() != 21 && menuItem.getId() != 22) {
 					filteredMenu.add(menuItem);
-				}
+				//}
 			}
 		}
 		//sorting
-		filteredMenu = sortMenuByOrdinal(filteredMenu);
+		//filteredMenu = sortMenuByOrdinal(filteredMenu);
 		return (Menu[]) filteredMenu.toArray(new Menu[filteredMenu.size()]);
 	}
 	
-	private ArrayList<Menu> sortMenuByOrdinal(ArrayList<Menu> menu) {
+/*	private ArrayList<Menu> sortMenuByOrdinal(ArrayList<Menu> menu) {
 		
 		Collections.sort(menu, new Comparator<Menu>() {
 
@@ -169,7 +168,7 @@ public abstract class AsbtractMobileWebJspController extends
 			
 		});
 		return menu;
-	}
+	}*/
 	
 	private void changePredefinedMenuUrl(Menu menuItem) {
 		if (getPredefinedMenusMap().containsKey(menuItem.getId())) {
@@ -189,6 +188,7 @@ public abstract class AsbtractMobileWebJspController extends
 			predefinedMenusMap.put(20, "university-map");
 			predefinedMenusMap.put(21, "paris-map");
 			predefinedMenusMap.put(22, "goodplans-map");
+			predefinedMenusMap.put(49, "news");
 		}
 		return predefinedMenusMap;
 	}

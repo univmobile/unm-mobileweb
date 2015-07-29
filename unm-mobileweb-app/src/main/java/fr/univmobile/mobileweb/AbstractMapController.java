@@ -23,9 +23,12 @@ import com.google.code.geocoder.model.GeocoderRequest;
 
 import fr.univmobile.mobileweb.models.Category;
 import fr.univmobile.mobileweb.models.CommentJson;
+import fr.univmobile.mobileweb.models.Menu;
 import fr.univmobile.mobileweb.models.Poi;
+import fr.univmobile.mobileweb.models.PoiEmbedded;
 import fr.univmobile.mobileweb.models.PoiJson;
 import fr.univmobile.mobileweb.models.University;
+import fr.univmobile.mobileweb.models.UsageStats;
 import fr.univmobile.mobileweb.models.User;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
@@ -51,7 +54,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 
 		this.jsonUrl = jsonUrl;
 		this.restaurationUniversitaireCategoryId = restaurationUniversitaireCategoryId;
-		categoriesIconsUrl = "http://univmobile-dev.univ-paris1.fr/testSP/files/categoriesicons/";
+		categoriesIconsUrl = "http://univmobile-dev.univ-paris1.fr/admin/files/categoriesicons/";
 		geocoder = new Geocoder();
 	}
 
@@ -99,8 +102,9 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 
 			PoiJson poiJson = new PoiJson(true, addPoi.poiName(), jsonUrl+"/categories/"+addPoi.poiCategoryId(), jsonUrl+"/universities/"+userUniversity.getId());
 			poiJson.setAddress(addPoi.poiAddress());
+			poiJson.setCity(addPoi.poiCity());
 			// Try to get the coordinates :
-			GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(addPoi.poiAddress()).setLanguage("fr").getGeocoderRequest();
+			GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(addPoi.poiAddress() + ", " + addPoi.poiCity()).setLanguage("fr").getGeocoderRequest();
 			GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
 			if (geocoderResponse.getResults() != null && geocoderResponse.getResults().size() > 0 && geocoderResponse.getResults().get(0).getGeometry()!= null
 					&& geocoderResponse.getResults().get(0).getGeometry().getLocation() != null) {
@@ -120,8 +124,31 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 			}
 		}
 		
+		final OpenPoi openPoi = getHttpInputs(OpenPoi.class);
+		if (openPoi.isHttpValid()) {
+			// try to get the poi
+			Poi poi = restTemplate().getForObject(jsonUrl + "/pois/" + openPoi.poi(), Poi.class);
+			
+			if (poi != null && poi.getId() == Integer.valueOf(openPoi.poi())) {
+				int universityId = poi.getUniversityId();
+				if (universityId > 0) {
+					boolean selectUniversity = true;
+					if (hasSessionAttribute("univ")) {
+						University selectedUniv = getSessionAttribute("univ", University.class);
+						if (selectedUniv.getId() == universityId) {
+							// The selected university is the correct one, nothing to do...
+							selectUniversity = false;
+						}
+					}
+					if (selectUniversity) {
+						setUniversity(jsonUrl, universityId);
+					}
+				}
+			}
+		}
+		
 		if (!hasSessionAttribute("univ")) {		
-
+			
 			sendRedirect(getBaseURL()+"/");
 			return null;
 		}  else {
@@ -160,7 +187,27 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 			setAttribute("universityLogo", getUniversityLogo());
 			setAttribute("university", getUniversity());
 			setAttribute("menuMS", getMenuItems(jsonUrl, "MS"));
-			setAttribute("menuTT", getMenuItems(jsonUrl, "TT"));
+			setAttribute("menuAU", getMenuItems(jsonUrl, "AU"));
+			Menu[] ttMenus = getMenuItems(jsonUrl, "TT");
+			setAttribute("menuTT", ttMenus);
+			int nbTTMenus = 0;
+			if (ttMenus != null) {
+				for (Menu ttMenu : ttMenus) {
+					if (ttMenu.getId() == 20) {
+						setAttribute("isUnivMap", Boolean.TRUE);
+						nbTTMenus++;
+					}
+					if (ttMenu.getId() == 21) {
+						setAttribute("isParisMap", Boolean.TRUE);
+						nbTTMenus++;
+					}
+					if (ttMenu.getId() == 22) {
+						setAttribute("isBB", Boolean.TRUE);
+						nbTTMenus++;
+					}
+				}
+			}
+			setAttribute("nbTTMenus", nbTTMenus);
 			setAttribute("menuMU", getMenuItems(jsonUrl, "MU"));
 			setAttribute("currentAbsolutePath", getAbsolutePath());
 			
@@ -176,6 +223,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 				setAttribute("categoryRootId", getCategoryRootId());
 			}
 			setAttribute("isIDF", getUniversity().getRegionId() == 1);
+			
 			
 			return new View(provideViewName());
 		}	
@@ -213,9 +261,17 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 	}
 	
 	//should be overridden, if id exist
-		protected String getCategoryRootId() {
-			return null;
-		}
+	protected String getCategoryRootId() {
+		return null;
+	}
+	
+	@HttpMethods("GET")
+	private interface OpenPoi extends HttpInputs {
+
+		@HttpRequired
+		@HttpParameter(trim = true)
+		String poi();
+	}
 	
 	@HttpMethods("POST")
 	private interface Comment extends HttpInputs {
@@ -251,6 +307,10 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 		@HttpRequired
 		@HttpParameter(trim = true)
 		String poiAddress();
+		
+		@HttpRequired
+		@HttpParameter(trim = true)
+		String poiCity();
 		
 		@HttpParameter(trim = true)
 		String poiPhone();
