@@ -5,7 +5,7 @@
 	<header>
 		<c:choose>
 			<c:when test="${not empty universityLogo}">
-				<a class="universite-logo" href="./"><img class="img-responsive" alt="Universite Paris" src="http://univmobile-dev.univ-paris1.fr/testSP/files/universitieslogos/${universityLogo}"></a>
+				<a class="universite-logo" href="./"><img class="img-responsive" src="http://admin.unpidf.univmobile.fr/admin/files/universitieslogos/${universityLogo}"></a>
 			</c:when>
 			<c:otherwise>
 				<a class="universite-logo" href="./"></a>

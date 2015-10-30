@@ -54,7 +54,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 
 		this.jsonUrl = jsonUrl;
 		this.restaurationUniversitaireCategoryId = restaurationUniversitaireCategoryId;
-		categoriesIconsUrl = "http://univmobile-dev.univ-paris1.fr/admin/files/categoriesicons/";
+		categoriesIconsUrl = "http://admin.unpidf.univmobile.fr/admin/files/categoriesicons/";
 		geocoder = new Geocoder();
 	}
 

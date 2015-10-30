@@ -38,7 +38,7 @@ public class HomeController extends AsbtractMobileWebJspController {
 
 		this.jsonUrl = jsonUrl;
 		this.universiteCategoryId = universiteCategoryId;
-		this.categoriesIconsUrl = "http://univmobile-dev.univ-paris1.fr/admin/files/categoriesicons/";
+		this.categoriesIconsUrl = "http://admin.unpidf.univmobile.fr/admin/categoriesicons/";
 	}
 
 	private final String jsonUrl;

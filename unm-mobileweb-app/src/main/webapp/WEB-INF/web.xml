@@ -7,26 +7,34 @@
 	<servlet>
 		<servlet-name>JsonServlet</servlet-name>
 		<servlet-class>fr.univmobile.mobileweb.JsonServlet</servlet-class>
-		<init-param>
+ 		<init-param>
 			<param-name>inject:String ref:jsonURL</param-name>
-			<param-value>https://univmobile-dev.univ-paris1.fr/testSP/api</param-value>
+			<param-value>https://admin.unpidf.univmobile.fr/admin/api</param-value>
 		</init-param>
+<!-- 		<init-param>
+			<param-name>inject:String ref:jsonURL</param-name>
+			<param-value>http://127.0.0.1:8080/unm-backend/api</param-value>
+		</init-param> -->
 	</servlet>
 	<servlet>
 		<servlet-name>UnivMobileServlet</servlet-name>
 		<servlet-class>fr.univmobile.mobileweb.UnivMobileServlet</servlet-class>
-  		<init-param>
+    		<init-param>
 			<param-name>baseURL</param-name>
-			<param-value>http://univmobile-dev.univ-paris1.fr/unm-mobileweb/</param-value>
+			<param-value>http://www.univmobile.fr/</param-value>
 		</init-param>
 <!--		<init-param>
 			<param-name>baseURL</param-name>
 			<param-value>http://localhost:8080/unm-mobileweb/</param-value>
 		</init-param>-->
- 		<init-param>
+  		<init-param>
 			<param-name>inject:String ref:jsonURL</param-name>
-			<param-value>https://univmobile-dev.univ-paris1.fr/testSP/api</param-value>
+			<param-value>https://admin.unpidf.univmobile.fr/admin/api</param-value>
 		</init-param>
+<!-- 		<init-param>
+			<param-name>inject:String ref:jsonURL</param-name>
+			<param-value>http://127.0.0.1:8080/unm-backend/api</param-value>
+		</init-param> -->
 		<init-param>
 			<param-name>inject:String ref:regionsJsonURL</param-name>
 			<param-value>${ref:jsonURL}/regions</param-value>
@@ -37,7 +45,7 @@
 		</init-param>
 		<init-param>
 			<param-name>inject:String ref:sessionJsonURL</param-name>
-			<param-value>https://univmobile-dev.univ-paris1.fr/testSP/json/session</param-value>
+			<param-value>https://admin.unpidf.univmobile.fr/admin/json/session</param-value>
 		</init-param>
 		<init-param>
 			<param-name>inject-packages</param-name>

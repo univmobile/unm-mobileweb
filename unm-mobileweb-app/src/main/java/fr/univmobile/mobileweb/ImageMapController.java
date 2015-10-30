@@ -26,7 +26,7 @@ import fr.univmobile.web.commons.View;
 public class ImageMapController extends AsbtractMobileWebJspController {
 
 	protected final String jsonUrl;
-	protected final String imagesMapsBaseUrl = "http://univmobile-dev.univ-paris1.fr/admin/files/imagemaps/";
+	protected final String imagesMapsBaseUrl = "http://admin.unpidf.univmobile.fr/admin/files/imagemaps/";
 	
 	private static final Log log = LogFactory
 			.getLog(ImageMapController.class);
