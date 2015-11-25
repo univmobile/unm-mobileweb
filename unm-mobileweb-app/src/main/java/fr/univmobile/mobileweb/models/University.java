@@ -13,6 +13,7 @@ public class University {
 	private Double centralLng;
 	
 	private boolean crous;
+	private boolean active;
 	
 	public int getId() {
 		return id;
@@ -44,6 +45,10 @@ public class University {
 
 	public boolean isCrous() {
 		return crous;
+	}
+
+	public boolean isActive() {
+		return active;
 	}
 	
 }

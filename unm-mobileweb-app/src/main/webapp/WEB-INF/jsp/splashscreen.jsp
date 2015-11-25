@@ -28,7 +28,15 @@
      						    	
      						    		<c:forEach var="university" items = "${region.universities}">
      						    			<c:if test="${!university.crous}">
-     						    				<option value="${university.id}">${university.title}</option>
+     						    				<option value="${university.id}"
+     						    					<c:if test="${!university.active}">
+     						    						class="univInactive"
+     						    					</c:if>
+     						    				>${university.title}
+     						    				<c:if test="${!university.active}">
+     						    					(INACTIVE)
+     						    				</c:if>
+     						    				</option>
      						    			</c:if>
      						    		</c:forEach>
      						    	

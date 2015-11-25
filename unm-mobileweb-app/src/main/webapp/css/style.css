@@ -1354,3 +1354,5 @@ form.add-poi .confirm {
 #dataConfirmactionModal { color : #000000;}
 #dataConfirmactionModal .modal-body { padding: 30px;}
 #univHeader .universite-name a, #univHeader .universite-name a:visited, .poi-info a, .poi-info a:visited  { color: #ffffff;}
+
+.univInactive { color: orange;font-style: italic;}

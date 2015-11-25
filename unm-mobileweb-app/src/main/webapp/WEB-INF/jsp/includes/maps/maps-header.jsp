@@ -30,6 +30,9 @@
 	        </c:choose>   
 	    <div class="universite-name">
 	        <a href="./?changeUniv=true" data-confirm="Êtes-vous sûr de vouloir changer d'Université ?">${university.title}</a>
+	        <c:if test="${not university.active}">
+		    		<span style="font-weight: bold;text-transform: uppercase;" class="univInactive">(Université inactive)</span>
+		    </c:if>
 	    </div>
 	    <div class="notifications">
 	    	<a href="notifications">

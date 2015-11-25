@@ -168,10 +168,22 @@ public class HomeController extends AsbtractMobileWebJspController {
 			RegionEmbedded regionContainer = template.getForObject(jsonUrl + "/regions", RegionEmbedded.class);
 			setAttribute("regionsList", regionContainer._embedded.getRegions());
 			
+			boolean showOffline = false;
+			final ShowOffineRequested showOfflineRequested = getHttpInputs(ShowOffineRequested.class);
+			
+			if (showOfflineRequested.isHttpValid() && showOfflineRequested.showOffline().equals("true")) {
+				showOffline = true;
+			}
+			
 			int i = 0;
 			for (Region region : regionContainer._embedded.getRegions()) {
 				i++;
-				UniversityEmbedded universityContainer = template.getForObject(jsonUrl + "/universities/search/findAllActiveWithoutCrousByRegion?regionId=" + region.getId(), UniversityEmbedded.class);
+				UniversityEmbedded universityContainer = null;
+				if (showOffline) {
+					universityContainer = template.getForObject(jsonUrl + "/universities/search/findAllWithoutCrousByRegion?regionId=" + region.getId(), UniversityEmbedded.class);					
+				} else {
+					universityContainer = template.getForObject(jsonUrl + "/universities/search/findAllActiveWithoutCrousByRegion?regionId=" + region.getId(), UniversityEmbedded.class);
+				}
 				region.setUniversities(universityContainer._embedded.getUniversities());
 			}
 			
@@ -257,6 +269,15 @@ public class HomeController extends AsbtractMobileWebJspController {
 		@HttpRequired
 		@HttpParameter(trim = true)
 		String changeUniv();
+		
+	}
+	
+	@HttpMethods("GET")
+	private interface ShowOffineRequested extends HttpInputs {
+		
+		@HttpRequired
+		@HttpParameter(trim = true)
+		String showOffline();
 		
 	}
 	

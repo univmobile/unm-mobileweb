@@ -11,10 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 import fr.univmobile.mobileweb.models.Bookmark;
 import fr.univmobile.mobileweb.models.BookmarkEmbedded;
-import fr.univmobile.mobileweb.models.Category;
 import fr.univmobile.mobileweb.models.Link;
 import fr.univmobile.mobileweb.models.LinkEmbedded;
-import fr.univmobile.mobileweb.models.Poi;
 import fr.univmobile.mobileweb.models.University;
 import fr.univmobile.mobileweb.models.UniversityEmbedded;
 import fr.univmobile.mobileweb.models.UniversityLibrary;
@@ -149,9 +147,24 @@ public class ProfileController extends AsbtractMobileWebJspController {
 				bookmarksList = new Bookmark[0];
 			}
 			
-			//get list of all universities
-			UniversityEmbedded universityContainer = template.getForObject(jsonUrl + "/universities/search/findAllActiveWithoutCrousByRegion?regionId=" + getUniversity().getRegionId(), UniversityEmbedded.class);
+			boolean showOffline = false;
+			final ShowOffineRequested showOfflineRequested = getHttpInputs(ShowOffineRequested.class);
+			
+			if (showOfflineRequested.isHttpValid() && showOfflineRequested.showOffline().equals("true")) {
+				showOffline = true;
+			}
+
+			UniversityEmbedded universityContainer = null;
 			University[] universitiesList = null;
+			
+			if (showOffline) {
+				//get list of all universities
+				universityContainer = template.getForObject(jsonUrl + "/universities/search/findAllWithoutCrousByRegion?regionId=" + getUniversity().getRegionId(), UniversityEmbedded.class);
+				
+			} else {
+				//get list of all universities
+				universityContainer = template.getForObject(jsonUrl + "/universities/search/findAllActiveWithoutCrousByRegion?regionId=" + getUniversity().getRegionId(), UniversityEmbedded.class);
+			}
 			if (universityContainer._embedded != null) {
 				//must be prevented somewhere else, because if universites do not exist the view gonna be empty
 				universitiesList = universityContainer._embedded.getUniversities();
@@ -187,4 +200,14 @@ public class ProfileController extends AsbtractMobileWebJspController {
 		@HttpParameter(trim = true)
 		String universityId();
 	}
+	
+	@HttpMethods("GET")
+	private interface ShowOffineRequested extends HttpInputs {
+		
+		@HttpRequired
+		@HttpParameter(trim = true)
+		String showOffline();
+		
+	}
+
 }
