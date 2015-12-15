@@ -133,7 +133,7 @@ function getComments(poiId) {
 	$.ajax({
 		type: "GET",
 		dataType: "json",
-		url: "/unm-mobileweb/json/?action=Comments&poiId="+poiId /* +"&size=200&page=0" */,
+		url: "json/?action=Comments&poiId="+poiId /* +"&size=200&page=0" */,
 
 		success: function (response) {
 			$('#commentsList').empty();
@@ -160,7 +160,7 @@ function getRestaurantMenus(poiId) {
 	$.ajax({
 		type: "GET",
 		dataType: "json",
-		url: "/unm-mobileweb/json/?action=RestaurantMenu&poiId="+poiId /* +"&size=200&page=0" */,
+		url: "json/?action=RestaurantMenu&poiId="+poiId /* +"&size=200&page=0" */,
 
 		success: function (response) {
 			var todaysDate = new Date().setHours(0,0,0,0);
@@ -315,9 +315,9 @@ function getPoiSearchResults(searchInput) {
 	
 	var requestUrl = "";
 	if (searchPoisWithoutUniversity) {
-		requestUrl = "/unm-mobileweb/json/?action=SearchPoi&searchInput="+ searchInput + "&categoryRootId=" + categoryRootId +"&size=10&page=0";
+		requestUrl = "json/?action=SearchPoi&searchInput="+ searchInput + "&categoryRootId=" + categoryRootId +"&size=10&page=0";
 	} else {
-		requestUrl = "/unm-mobileweb/json/?action=SearchPoi&searchInput="+ searchInput + "&universityId=" + universityId + "&categoryRootId=" + categoryRootId +"&size=10&page=0";
+		requestUrl = "json/?action=SearchPoi&searchInput="+ searchInput + "&universityId=" + universityId + "&categoryRootId=" + categoryRootId +"&size=10&page=0";
 	}
 	
 	$.ajax({
@@ -350,13 +350,13 @@ function appendSearchResult(poiItem) {
 	
 	$('#'+poiItem.id).click(function(){     
         $('.search-wrap').toggle("slide", {direction: "up"});
-        openPoi(getMarker(poiItem.id));
+        openPoi(getMarker(this.id));
     });
 }
 
 function getMarker(poiId) {
 	for (var i = 0; i < markers.length; i++) {
-		if (markers[i].idPOI == poiId) {
+		if ("" + markers[i].idPOI == "" + poiId) {
 			return markers[i];
 		}
 	}

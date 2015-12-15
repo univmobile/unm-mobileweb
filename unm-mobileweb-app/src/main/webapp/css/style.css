@@ -1389,3 +1389,13 @@ form.add-poi .confirm {
     background-color: #ffb103;
     color:#fff;
 }
+
+body.external {
+	background: #ffffff;
+}
+body.external .content-wrap {
+	padding: 0px;
+}
+body.external .category-wrap .list-wrap {
+	bottom: 42px;
+}

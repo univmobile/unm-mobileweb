@@ -25,10 +25,8 @@ import fr.univmobile.mobileweb.models.Category;
 import fr.univmobile.mobileweb.models.CommentJson;
 import fr.univmobile.mobileweb.models.Menu;
 import fr.univmobile.mobileweb.models.Poi;
-import fr.univmobile.mobileweb.models.PoiEmbedded;
 import fr.univmobile.mobileweb.models.PoiJson;
 import fr.univmobile.mobileweb.models.University;
-import fr.univmobile.mobileweb.models.UsageStats;
 import fr.univmobile.mobileweb.models.User;
 import fr.univmobile.web.commons.HttpInputs;
 import fr.univmobile.web.commons.HttpMethods;
@@ -133,7 +131,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 				int universityId = poi.getUniversityId();
 				if (universityId > 0) {
 					boolean selectUniversity = true;
-					if (hasSessionAttribute("univ")) {
+					if (getUniversity() != null) {
 						University selectedUniv = getSessionAttribute("univ", University.class);
 						if (selectedUniv.getId() == universityId) {
 							// The selected university is the correct one, nothing to do...
@@ -147,7 +145,7 @@ public abstract class AbstractMapController extends AsbtractMobileWebJspControll
 			}
 		}
 		
-		if (!hasSessionAttribute("univ")) {		
+		if (getUniversity() == null) {		
 			
 			sendRedirect(getBaseURL()+"/");
 			return null;

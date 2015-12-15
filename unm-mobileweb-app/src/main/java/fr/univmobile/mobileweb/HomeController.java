@@ -109,9 +109,9 @@ public class HomeController extends AsbtractMobileWebJspController {
 				for (String feedId : feedsIds) {
 					url += "&feedIds=" + feedId;
 				}
-				url += "&size=40";
+				url += "&size=5";
 			} else {
-				url = "/news/search/findNewsForUniversity?universityId=" + getUniversity().getId() + "&size=40";
+				url = "/news/search/findNewsForUniversity?universityId=" + getUniversity().getId() + "&size=5";
 			}
 			NewsEmbedded newsContainer = template.getForObject(jsonUrl + url, NewsEmbedded.class);
 			//NewsEmbedded newsContainer = template.getForObject(jsonUrl + "/news/search/findNewsForUniversity?universityId=" + getUniversity().getId() + "&size=5", NewsEmbedded.class);
