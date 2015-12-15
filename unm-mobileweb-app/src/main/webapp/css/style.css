@@ -1356,3 +1356,36 @@ form.add-poi .confirm {
 #univHeader .universite-name a, #univHeader .universite-name a:visited, .poi-info a, .poi-info a:visited  { color: #ffffff;}
 
 .univInactive { color: orange;font-style: italic;}
+
+/*Filter bar*/
+#filter-bar{
+    position:relative;
+    display: block;
+    background-color: #dc9800;
+    height: 60px;
+}
+#filter-bar .scroller{
+    white-space: nowrap;
+    position: absolute;
+}
+#filter-bar .filter{
+    display:inline;
+    line-height: 1;
+    background-color: #a57200;
+    color:#ffb103;
+    margin:15px 8px;
+    font-size: 14px;
+    padding: 8px 15px;
+    border-radius: 30px 30px 30px 30px;
+    -moz-border-radius: 30px 30px 30px 30px;
+    -webkit-border-radius: 30px 30px 30px 30px;
+    border: 0px solid #000000;
+    transition: backgroun,color 300ms;
+}
+#filter-bar .filter:focus{
+    outline: none;
+}
+#filter-bar .filter.active{
+    background-color: #ffb103;
+    color:#fff;
+}

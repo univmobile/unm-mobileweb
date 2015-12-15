@@ -1,6 +1,29 @@
 (function($){
     
    $(document).ready(function(){
+       if ( $("#filter-bar").length) {
+           //Toggle filter
+           $('#filter-bar').on('click', '.filter', function () {
+               $(this).toggleClass('active');
+               window.selectedFeedIds = "";
+               $("#filter-bar .active").each(function() {
+            	   window.selectedFeedIds = window.selectedFeedIds + $(this).data("feedid") + ",";
+               });
+               if (window.selectedFeedIds != "") {
+	               $.get("news?feedsIds="+window.selectedFeedIds, function(data) {
+	            	   $("#accordion").html(data);
+	               });
+               } else {
+            	   $("#accordion").html("");
+               }
+           });
+           //Filter bar scrollable
+	       var filterScroll;
+	       filterScroll = new IScroll('#filter-bar', { scrollX: true, scrollY: false, mouseWheel: true });
+	       document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+       }
+
+       
         $('select').customSelect();
         
         $('.navbar-menu-toggle').click(function(){

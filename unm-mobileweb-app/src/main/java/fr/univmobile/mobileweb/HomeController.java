@@ -101,7 +101,20 @@ public class HomeController extends AsbtractMobileWebJspController {
 			
 			// Get the list of news
 			RestTemplate template = restTemplate();
-			NewsEmbedded newsContainer = template.getForObject(jsonUrl + "/news/search/findNewsForUniversity?universityId=" + getUniversity().getId() + "&size=5", NewsEmbedded.class);
+			String url = "";
+			String[] feedsIds = null;
+			if (hasSessionAttribute("feedsIds")) {
+				feedsIds = getSessionAttribute("feedsIds", String[].class);
+				url = "/news/search/findNewsForUniversityAndFeeds?universityId=" + getUniversity().getId();
+				for (String feedId : feedsIds) {
+					url += "&feedIds=" + feedId;
+				}
+				url += "&size=40";
+			} else {
+				url = "/news/search/findNewsForUniversity?universityId=" + getUniversity().getId() + "&size=40";
+			}
+			NewsEmbedded newsContainer = template.getForObject(jsonUrl + url, NewsEmbedded.class);
+			//NewsEmbedded newsContainer = template.getForObject(jsonUrl + "/news/search/findNewsForUniversity?universityId=" + getUniversity().getId() + "&size=5", NewsEmbedded.class);
 			
 			News[] newsList = null;
 			if (newsContainer._embedded != null) {

@@ -2,29 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page pageEncoding="utf-8"%>
-
-<!DOCTYPE html>
-<html lang="fr">
-  <jsp:include page="includes/head.jsp" />
-  <body>
-      <div class="mask"></div>
-      <jsp:include page="includes/nav.jsp" />
-      <div class="main-wrap">
-          <jsp:include page="includes/maps/maps-header.jsp" />
-          <div class="content-wrap yellow-section">
-              <div class="container">
-                  <div class="list-title"><i class="icon"></i>Act’Universitaire</div>
-                  <c:if test="${fn:length(feedsList) > 0}">
-                  <div id="filter-bar" class="clearfix">
-                      <div class="scroller">
-                      	  <c:forEach var="feedItem" items="${feedsList}">
-                          	<button class="filter <c:if test="${not empty feedsIds}"><c:forEach var="feedId" items="${feedsIds}"><c:if test="${feedId eq feedItem.id}">active</c:if></c:forEach></c:if><c:if test="${empty feedsIds}">active</c:if>" data-feedid="${feedItem.id}">${feedItem.name}</button>
-                          </c:forEach>
-                      </div>
-                  </div>
-                  </c:if>
                   <c:if test="${fn:length(newsList) > 0}">
-	                   <div class="list-wrap" id="accordion" role="tablist" aria-multiselectable="true">
 	                      <ul class="article-list">
 	                          <c:forEach var="newsItem" items="${newsList}" varStatus="loop">
 	                      			<li class="list-item">
@@ -53,18 +31,4 @@
 	                          		</li>                     		          
 	                      	</c:forEach>
 	                      </ul>
-	                  </div>
 	              </c:if>
-              </div>
-          </div>
-      </div>
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
-    <script src="./js/jquery.customSelect.min.js"></script>
-    <script src="./js/jquery.customSelect.min.js"></script>
-    <script src="./js/iscroll.js" type="text/javascript"></script>
-    <script src="./js/script.js"></script>
-  </body>
-</html>
