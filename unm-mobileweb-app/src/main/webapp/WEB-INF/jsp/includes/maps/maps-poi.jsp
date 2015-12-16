@@ -14,14 +14,16 @@
             <button class="btn show-hide-poi hide-poi"><i class="icon text-hide"></i></button>
         </div>
         <div class="poi-info">
-			<form id="add-bookmark" class="add-bookmark" method="post">
+        	<c:if test="${source ne 'external'}">
+        		<form id="add-bookmark" class="add-bookmark" method="post">
 				<div style="position: absolute; left: -1px;">
 					<input id="poiIdInputFieldForBookmark" type="hidden"
 						name="poiIdBookmark">
 					<button type="submit" style="font-size: 10px; color: black"
 						<c:if test="${currentUser == null}">onclick="javascript:return inviteToLogin('Vous devez vous connecter pour pouvoir ajouter un bookmark.');"</c:if>>Bookmark</button>
 				</div>
-			</form>
+				</form>
+			</c:if>
 			<address id="addressContainer"><i class="fa fa-map-marker fa-fw"></i><span id="addressPOI"></span></address>
             <div class="phone" id="phoneContainer"><i class="fa fa-phone fa-fw"></i><span id="phonePOI"></span></div>
             <div class="email" id="emailContainer"><i class="fa fa-envelope fa-fw"></i><span id="emailPOI"></span></div>

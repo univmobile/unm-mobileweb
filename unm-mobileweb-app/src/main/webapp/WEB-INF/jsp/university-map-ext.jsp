@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <jsp:include page="includes/maps/maps-head.jsp" />
+<c:set var="source" value="external" scope="request"></c:set>
 <body class="external">
 	<div class="mask"></div>
 	<div class="main-wrap">

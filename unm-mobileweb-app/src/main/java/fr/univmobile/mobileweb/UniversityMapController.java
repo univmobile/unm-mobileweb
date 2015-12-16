@@ -1,5 +1,8 @@
 package fr.univmobile.mobileweb;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.web.client.RestTemplate;
 
 import fr.univmobile.mobileweb.models.Category;
@@ -18,9 +21,8 @@ public class UniversityMapController extends AbstractMapController {
 	
 	private final String universiteCategoryId;
 	private final String librariesCategoryId;
+	private final Map<Long, University> universities = new HashMap<Long, University>();
 	
-	private University university = null;
-		
 	public UniversityMapController(String jsonUrl, String universiteCategoryId, String restaurationUniversitaireCategoryId, String librariesCategoryId) {
 		super(jsonUrl, restaurationUniversitaireCategoryId);
 		this.universiteCategoryId = universiteCategoryId;
@@ -80,11 +82,16 @@ public class UniversityMapController extends AbstractMapController {
 		final ShowExternalized showExternalized = getHttpInputs(ShowExternalized.class);
 		
 		if (showExternalized.isHttpValid() && (showExternalized.external().equals("true") || showExternalized.external().equals("1"))) {
-			if (this.university == null) {
+			University university = null;
+			if (!this.universities.containsKey(showExternalized.universityId())) {
 				university = restTemplate().getForObject(jsonUrl + "/universities/" + String.valueOf(showExternalized.universityId()), University.class);
 				if (university.getId() == 0) {
 					university = null;
+				} else {
+					this.universities.put(showExternalized.universityId(), university);
 				}
+			} else {
+				university = this.universities.get(showExternalized.universityId());
 			}
 			return university;
 		} else {
